@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYROX Benelux · Market Intelligence Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src="data/dashboard_data.js"></script>
+<style>
+/* ── Reset & Base ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0d0d0d;
+  --white:#ffffff;
+  --red:#e8000d;
+  --red-dark:#b5000a;
+  --grey-100:#f5f5f5;
+  --grey-200:#e8e8e8;
+  --grey-500:#888;
+  --grey-700:#444;
+  --male:#2563eb;
+  --female:#db2777;
+  --font-sans:'Inter',system-ui,-apple-system,sans-serif;
+  --max-w:1280px;
+  --radius:12px;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--grey-100);color:var(--black);font-family:var(--font-sans);line-height:1.5}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+
+/* ── Typography ──────────────────────────────────────────────── */
+h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.1;letter-spacing:-0.03em}
+h2{font-size:clamp(1.25rem,2.5vw,1.75rem);font-weight:700;letter-spacing:-0.02em}
+h3{font-size:1.1rem;font-weight:700}
+.label{font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--grey-500)}
+.num{font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1;letter-spacing:-0.03em}
+
+/* ── Layout ──────────────────────────────────────────────────── */
+.container{max-width:var(--max-w);margin-inline:auto;padding-inline:clamp(1rem,4vw,2.5rem)}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+@media(max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+
+/* ── Nav ─────────────────────────────────────────────────────── */
+nav{position:sticky;top:0;z-index:100;background:var(--black);color:var(--white)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0;gap:1rem;flex-wrap:wrap}
+.nav-brand{display:flex;align-items:center;gap:.75rem}
+.nav-logo{width:36px;height:36px;background:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:22px;height:22px;fill:white}
+.nav-title{font-weight:700;font-size:.95rem;line-height:1.2}
+.nav-title span{display:block;color:var(--grey-500);font-weight:400;font-size:.75rem}
+.nav-links{display:flex;gap:1.5rem;font-size:.85rem;color:var(--grey-500)}
+.nav-links a:hover{color:var(--white)}
+
+/* ── Hero ────────────────────────────────────────────────────── */
+.hero{background:var(--black);color:var(--white);padding:clamp(3rem,8vw,6rem) 0}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+@media(max-width:700px){.hero-inner{grid-template-columns:1fr}}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(232,0,13,.15);color:var(--red);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .8rem;border-radius:999px;margin-bottom:1.25rem;border:1px solid rgba(232,0,13,.3)}
+.hero p{color:var(--grey-500);font-size:1.05rem;margin-top:1rem;max-width:38ch;line-height:1.7}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.hero-stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:1.25rem}
+.hero-stat .num{color:var(--white)}
+.hero-stat .label{color:var(--grey-500);margin-top:.25rem}
+.hero-stat .trend{font-size:.8rem;color:#22c55e;margin-top:.25rem;font-weight:600}
+
+/* ── Section ─────────────────────────────────────────────────── */
+section{padding:clamp(2.5rem,6vw,5rem) 0}
+section:nth-child(odd){background:var(--white)}
+.section-header{margin-bottom:2rem}
+.section-header h2{margin-top:.5rem}
+.section-header p{color:var(--grey-700);margin-top:.5rem;max-width:65ch;font-size:.95rem}
+
+/* ── Cards ───────────────────────────────────────────────────── */
+.card{background:var(--white);border:1px solid var(--grey-200);border-radius:var(--radius);padding:1.5rem;position:relative;overflow:hidden}
+section:nth-child(odd) .card{background:var(--grey-100);border-color:var(--grey-200)}
+.card-title{font-weight:700;font-size:.9rem;color:var(--grey-700);margin-bottom:1rem}
+.chart-wrap{position:relative;height:260px}
+.chart-wrap-tall{position:relative;height:340px}
+
+/* ── Insight banner ──────────────────────────────────────────── */
+.insight{display:flex;gap:1rem;background:rgba(232,0,13,.05);border:1px solid rgba(232,0,13,.2);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-top:1.5rem}
+.insight-icon{font-size:1.5rem;flex-shrink:0;margin-top:.1rem}
+.insight strong{display:block;font-size:.9rem;color:var(--red-dark);margin-bottom:.25rem}
+.insight p{font-size:.85rem;color:var(--grey-700);line-height:1.6}
+
+/* ── KPI row ─────────────────────────────────────────────────── */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:-3rem;position:relative;z-index:10}
+@media(max-width:900px){.kpi-row{grid-template-columns:repeat(2,1fr);margin-top:-2rem}}
+@media(max-width:500px){.kpi-row{grid-template-columns:1fr;margin-top:-1.5rem}}
+.kpi{background:var(--white);border:1px solid var(--grey-200);border-radius:var(--radius);padding:1.5rem;box-shadow:0 4px 24px rgba(0,0,0,.07)}
+.kpi .num{color:var(--black)}
+.kpi .label{margin-top:.4rem}
+
+/* ── Pill legend ─────────────────────────────────────────────── */
+.legend{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.legend-item{display:flex;align-items:center;gap:.4rem;font-size:.8rem;font-weight:600}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+
+/* ── Marketing section ───────────────────────────────────────── */
+.marketing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+@media(max-width:900px){.marketing-grid{grid-template-columns:1fr}}
+.mcard{border-radius:var(--radius);padding:1.75rem;border:1px solid var(--grey-200)}
+.mcard .mcard-num{font-size:2rem;font-weight:800;line-height:1;margin-bottom:.5rem}
+.mcard h3{margin-bottom:.75rem}
+.mcard p{font-size:.875rem;color:var(--grey-700);line-height:1.7}
+.mcard.red{background:var(--red);color:var(--white);border-color:var(--red)}
+.mcard.red p{color:rgba(255,255,255,.8)}
+.mcard.dark{background:var(--black);color:var(--white);border-color:var(--black)}
+.mcard.dark p{color:rgba(255,255,255,.7)}
+.mcard.light{background:var(--white)}
+
+/* ── Footer ──────────────────────────────────────────────────── */
+footer{background:var(--black);color:var(--grey-500);padding:2.5rem 0}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.8rem}
+footer a{color:var(--grey-500)}footer a:hover{color:white}
+.footer-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.08);padding:.4rem .8rem;border-radius:999px;font-size:.75rem;font-weight:600;color:white}
+</style>
+</head>
+<body>
+
+<!-- ── Nav ──────────────────────────────────────────────────────────── -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <div class="nav-logo">
+          <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div class="nav-title">
+          HYROX Benelux
+          <span>Market Intelligence · 2021–2026</span>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="#growth">Growth</a>
+        <a href="#audience">Audience</a>
+        <a href="#performance">Performance</a>
+        <a href="#insights">Insights</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">
+          <span>●</span> Benelux Market · S4–S8
+        </div>
+        <h1>HYROX is the fastest-growing fitness race in Benelux</h1>
+        <p>Five seasons of data across Amsterdam, Rotterdam, Maastricht and Utrecht reveal explosive growth — and a premium, internationally mobile audience ready to be activated.</p>
+      </div>
+      <div class="hero-stats" id="hero-stats">
+        <div class="hero-stat">
+          <div class="num" id="kpi-total">—</div>
+          <div class="label">Total Participants</div>
+          <div class="trend">↑ 2021–2026</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num" id="kpi-nations">—</div>
+          <div class="label">Nationalities</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num" id="kpi-growth">—×</div>
+          <div class="label">Season-on-Season Growth (S4→S8)</div>
+          <div class="trend">↑ Benelux field size</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num" id="kpi-intl">—%</div>
+          <div class="label">International Athletes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── KPI Strip ─────────────────────────────────────────────────────── -->
+<div class="container">
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="num" id="kpi2-events">—</div>
+      <div class="label">Benelux Events Analysed</div>
+    </div>
+    <div class="kpi">
+      <div class="num" id="kpi2-female">—%</div>
+      <div class="label">Female Participation</div>
+    </div>
+    <div class="kpi">
+      <div class="num" id="kpi2-seasons">5</div>
+      <div class="label">Seasons Covered</div>
+    </div>
+    <div class="kpi">
+      <div class="num" id="kpi2-local">—%</div>
+      <div class="label">Benelux-Origin Athletes (NL/BE/LU)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Section 1: Growth ─────────────────────────────────────────────── -->
+<section id="growth">
+  <div class="container">
+    <div class="section-header">
+      <div class="label">01 · Participation Growth</div>
+      <h2>From niche to mainstream: Benelux field sizes explode</h2>
+      <p>Season 4 marked HYROX's Benelux debut with two events. By Season 8, four cities host the race — and each venue draws thousands of athletes.</p>
+    </div>
+
+    <div style="gap:1.5rem;display:grid;grid-template-columns:2fr 1fr">
+      <div class="card">
+        <div class="card-title">Participants per Event · All Benelux (S4–S8)</div>
+        <div class="chart-wrap-tall"><canvas id="chart-participation"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Total Participants by Season</div>
+        <div class="chart-wrap-tall"><canvas id="chart-growth"></canvas></div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-icon">💡</div>
+      <div>
+        <strong>Marketing Opportunity: Expansion Momentum</strong>
+        <p>Each new city (Rotterdam S5, Maastricht S7, Utrecht S8) attracted thousands of first-time Benelux participants, signalling strong latent demand. Pre-event campaigns in new markets convert quickly — audiences are already race-curious.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 2: Audience ───────────────────────────────────────────── -->
+<section id="audience">
+  <div class="container">
+    <div class="section-header">
+      <div class="label">02 · Audience Profile</div>
+      <h2>Who is the HYROX Benelux athlete?</h2>
+      <p>Understanding nationality, age, and gender unlocks targeted sponsorship activations, media buying, and community-building strategies.</p>
+    </div>
+
+    <!-- Gender -->
+    <div class="grid-2" style="margin-bottom:1.5rem">
+      <div class="card">
+        <div class="card-title">Gender Split — Evolution by Season</div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--male)"></div>Male</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--female)"></div>Female</div>
+        </div>
+        <div class="chart-wrap"><canvas id="chart-gender"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Age Group Distribution (All Genders)</div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--male)"></div>Male</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--female)"></div>Female</div>
+        </div>
+        <div class="chart-wrap"><canvas id="chart-age"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Nationality -->
+    <div class="card" style="margin-bottom:1.5rem">
+      <div class="card-title">Top 15 Nationalities — Benelux Events (All Seasons)</div>
+      <div class="chart-wrap-tall"><canvas id="chart-nationality"></canvas></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="insight">
+        <div class="insight-icon">🎯</div>
+        <div>
+          <strong>Insight: The 30–44 Core</strong>
+          <p>The 30–44 age band consistently dominates participation — prime career age, high disposable income, strong fitness identity. This demographic responds to premium race-day experience, travel packages, and recovery/nutrition brands.</p>
+        </div>
+      </div>
+      <div class="insight">
+        <div class="insight-icon">🌍</div>
+        <div>
+          <strong>Insight: A Global Event on Benelux Soil</strong>
+          <p>Over 96% of athletes travel internationally to compete in Benelux venues. Germany, the UK, and France are consistently the largest feeder markets — creating a cross-border sponsorship opportunity that local-only brands often miss.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 3: Performance ────────────────────────────────────────── -->
+<section id="performance">
+  <div class="container">
+    <div class="section-header">
+      <div class="label">03 · Performance Data</div>
+      <h2>Race times reveal an aspirational, improvement-driven community</h2>
+      <p>The broad finish-time distribution signals a large recreational middle segment — not just elites. Brands that speak to the "I finished" moment resonate with the majority.</p>
+    </div>
+
+    <div style="gap:1.5rem;display:grid;grid-template-columns:1fr 1fr;margin-bottom:1.5rem">
+      <div class="card">
+        <div class="card-title">Finish Time Distribution — Open Division (all events)</div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--male)"></div>Male</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--female)"></div>Female</div>
+        </div>
+        <div class="chart-wrap-tall"><canvas id="chart-histogram"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Division Breakdown (Overall)</div>
+        <div class="chart-wrap-tall"><canvas id="chart-division"></canvas></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Median Finish Time (Open Division) per Event · Male vs Female</div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--male)"></div>Male median</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--female)"></div>Female median</div>
+      </div>
+      <div class="chart-wrap-tall"><canvas id="chart-finish-time"></canvas></div>
+    </div>
+
+    <div class="insight" style="margin-top:1.5rem">
+      <div class="insight-icon">⏱️</div>
+      <div>
+        <strong>Insight: The 75–100 Min Sweet Spot</strong>
+        <p>The largest share of open-division athletes finish between 75–100 minutes (male) and 85–115 minutes (female). This is the "achiever" segment — not elite, but highly motivated and brand-engaged. Post-race recovery, apparel, and nutrition campaigns targeting this window deliver outsized reach.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 4: Strategic Insights ────────────────────────────────── -->
+<section id="insights">
+  <div class="container">
+    <div class="section-header">
+      <div class="label">04 · Strategic Insights for House of Sports</div>
+      <h2>Data-driven opportunities for the Benelux market</h2>
+    </div>
+
+    <div class="marketing-grid">
+      <div class="mcard red">
+        <div class="mcard-num">24.9×</div>
+        <h3>Ride the Growth Wave</h3>
+        <p>Seasonal participant volume has grown 24.9× from S4 to S8. Early brand partnerships and digital campaigns in new host cities (Utrecht launched S8) lock in audience share before competitors arrive.</p>
+      </div>
+      <div class="mcard dark">
+        <div class="mcard-num">96.8%</div>
+        <h3>Cross-Border Activation</h3>
+        <p>The overwhelming majority of Benelux HYROX athletes are international travellers. This justifies pan-European digital targeting (Meta, Google) rather than Benelux-only buys — and opens hotel, airline, and travel brand partnership conversations.</p>
+      </div>
+      <div class="mcard light">
+        <div class="mcard-num">39%</div>
+        <h3>Growing Female Segment</h3>
+        <p>Female participation has grown steadily season-on-season and represents the fastest-growing demographic in fitness race formats globally. Women-first campaign assets and category-specific sponsorship (apparel, wellness) are underserved and high-ROI.</p>
+      </div>
+      <div class="mcard light">
+        <div class="mcard-num">117</div>
+        <h3>Nations. One Race Day.</h3>
+        <p>Athletes from 117 nationalities compete in Benelux venues. This creates unique social amplification: a Dutch race finish shared in Germany, the UK, or France multiplies the organic reach of any branded activation beyond the event footprint.</p>
+      </div>
+      <div class="mcard light">
+        <div class="mcard-num">30–44</div>
+        <h3>Premium Demographic</h3>
+        <p>The 30–44 age band is HYROX's core. These are established professionals with disposable income, high brand loyalty, and influence in their social networks. They spend on gear, travel, nutrition, and experience — making them ideal for premium and lifestyle brand alignment.</p>
+      </div>
+      <div class="mcard light">
+        <div class="mcard-num">4 Cities</div>
+        <h3>Multi-Market Presence</h3>
+        <p>Amsterdam, Rotterdam, Maastricht and Utrecht give House of Sports four annual touchpoints across distinct Dutch audiences. Each city has a different demographic profile that can be activated with city-specific creative and community partnerships.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div style="color:white;font-weight:700;margin-bottom:.25rem">HYROX Benelux · Market Intelligence</div>
+        <div>Data: Seasons 4–8 · 2021–2026 · 52,647 participants · 12 events</div>
+        <div style="margin-top:.25rem">Sources: Kaggle HYROX Dataset (S4–S6) · HYROX Official Results (S7–S8)</div>
+      </div>
+      <div style="text-align:right">
+        <div class="footer-badge">Case Study · House of Sports Application</div>
+        <div style="margin-top:.5rem">Built by LT Gao · 2025</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ── Charts JS ─────────────────────────────────────────────────────── -->
+<script>
+const D = DASHBOARD_DATA;
+
+// ── Helpers ──────────────────────────────────────────────────────────────
+const MALE_COLOR = '#2563eb';
+const FEMALE_COLOR = '#db2777';
+const RED = '#e8000d';
+const palette = ['#e8000d','#2563eb','#16a34a','#d97706','#7c3aed','#0891b2','#be185d','#65a30d','#9333ea','#0369a1','#b45309','#047857','#6d28d9','#0e7490','#c2410c'];
+
+function fmtNum(n){return n>=1000?(n/1000).toFixed(1).replace(/\.0$/,'')+'k':n}
+function minToHM(m){const h=Math.floor(m/60),mn=Math.round(m%60);return h>0?`${h}h ${mn}m`:`${mn}m`}
+
+const baseFont = {family:"Inter,system-ui,sans-serif",size:11};
+Chart.defaults.font = baseFont;
+Chart.defaults.color = '#666';
+Chart.defaults.plugins.legend.display = false;
+
+function barOpts(opts={}){
+  return {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{...opts.tooltip}},
+    scales:{
+      x:{grid:{display:false},ticks:{font:baseFont,...(opts.xTicks||{})}},
+      y:{grid:{color:'#eee'},border:{dash:[4,4]},ticks:{font:baseFont,...(opts.yTicks||{})}}
+    },
+    ...opts.extra,
+  };
+}
+
+// ── KPIs ─────────────────────────────────────────────────────────────────
+document.getElementById('kpi-total').textContent = fmtNum(D.kpis.total_participants);
+document.getElementById('kpi-nations').textContent = D.kpis.unique_nationalities;
+document.getElementById('kpi-growth').textContent = D.kpis.growth_multiple + '×';
+document.getElementById('kpi-intl').textContent = D.kpis.intl_pct + '%';
+document.getElementById('kpi2-events').textContent = D.kpis.events_covered;
+document.getElementById('kpi2-female').textContent = D.kpis.female_pct + '%';
+document.getElementById('kpi2-local').textContent = D.kpis.local_pct + '%';
+
+// ── 1. Participation per event ────────────────────────────────────────────
+(function(){
+  const labels = D.participation.map(p=>p.event);
+  const counts = D.participation.map(p=>p.participants);
+  const bgColors = D.participation.map(p=>{
+    const loc = p.location;
+    return {amsterdam:'#e8000d',rotterdam:'#2563eb',maastricht:'#16a34a',utrecht:'#d97706'}[loc]||'#888';
+  });
+  new Chart(document.getElementById('chart-participation'),{
+    type:'bar',
+    data:{labels,datasets:[{data:counts,backgroundColor:bgColors,borderRadius:6,borderSkipped:false}]},
+    options:{
+      ...barOpts({
+        yTicks:{callback:v=>fmtNum(v)},
+        xTicks:{maxRotation:35,minRotation:35,font:{size:10}},
+        tooltip:{callbacks:{label:c=>`${c.raw.toLocaleString()} participants`}}
+      }),
+      plugins:{
+        legend:{display:true,
+          labels:{generateLabels:()=>[
+            {text:'Amsterdam',fillStyle:'#e8000d',strokeStyle:'#e8000d'},
+            {text:'Rotterdam',fillStyle:'#2563eb',strokeStyle:'#2563eb'},
+            {text:'Maastricht',fillStyle:'#16a34a',strokeStyle:'#16a34a'},
+            {text:'Utrecht',fillStyle:'#d97706',strokeStyle:'#d97706'},
+          ]}
+        }
+      }
+    }
+  });
+})();
+
+// ── 2. Season growth ──────────────────────────────────────────────────────
+(function(){
+  const labels = D.growth.map(g=>g.season);
+  const data = D.growth.map(g=>g.participants);
+  new Chart(document.getElementById('chart-growth'),{
+    type:'bar',
+    data:{labels,datasets:[{
+      data,backgroundColor:labels.map((_,i)=>i===data.length-1?RED:'#222'),
+      borderRadius:6,borderSkipped:false
+    }]},
+    options:barOpts({
+      yTicks:{callback:v=>fmtNum(v)},
+      tooltip:{callbacks:{label:c=>`${c.raw.toLocaleString()} participants`}}
+    })
+  });
+})();
+
+// ── 3. Gender split ───────────────────────────────────────────────────────
+(function(){
+  const labels = D.gender.map(g=>g.season);
+  const male = D.gender.map(g=>g.male);
+  const female = D.gender.map(g=>g.female);
+  new Chart(document.getElementById('chart-gender'),{
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Male',data:male,backgroundColor:MALE_COLOR,borderRadius:4,borderSkipped:false,stack:'s'},
+      {label:'Female',data:female,backgroundColor:FEMALE_COLOR,borderRadius:4,borderSkipped:false,stack:'s'},
+    ]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:true,labels:{boxWidth:10,boxHeight:10,font:baseFont}},
+        tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.raw.toLocaleString()}`}}
+      },
+      scales:{
+        x:{stacked:true,grid:{display:false},ticks:{font:baseFont}},
+        y:{stacked:true,grid:{color:'#eee'},border:{dash:[4,4]},ticks:{callback:v=>fmtNum(v),font:baseFont}}
+      }
+    }
+  });
+})();
+
+// ── 4. Age ────────────────────────────────────────────────────────────────
+(function(){
+  const AG = D.age_gender;
+  new Chart(document.getElementById('chart-age'),{
+    type:'bar',
+    data:{
+      labels:AG.age_groups,
+      datasets:[
+        {label:'Male',data:AG.male,backgroundColor:MALE_COLOR,borderRadius:4,borderSkipped:false,stack:'s'},
+        {label:'Female',data:AG.female,backgroundColor:FEMALE_COLOR,borderRadius:4,borderSkipped:false,stack:'s'},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:true,labels:{boxWidth:10,boxHeight:10,font:baseFont}},
+        tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.raw.toLocaleString()}`}}
+      },
+      scales:{
+        x:{stacked:true,grid:{display:false},ticks:{font:baseFont}},
+        y:{stacked:true,grid:{color:'#eee'},border:{dash:[4,4]},ticks:{callback:v=>fmtNum(v),font:baseFont}}
+      }
+    }
+  });
+})();
+
+// ── 5. Nationality ────────────────────────────────────────────────────────
+(function(){
+  const labels = D.nationality.map(n=>n.country);
+  const counts = D.nationality.map(n=>n.participants);
+  new Chart(document.getElementById('chart-nationality'),{
+    type:'bar',
+    data:{labels,datasets:[{
+      data:counts,
+      backgroundColor:labels.map((c,i)=>['NLD','BEL','LUX'].includes(c)?RED:palette[i]||'#888'),
+      borderRadius:6,borderSkipped:false
+    }]},
+    options:{
+      ...barOpts({
+        yTicks:{callback:v=>fmtNum(v)},
+        tooltip:{callbacks:{label:c=>`${c.label}: ${c.raw.toLocaleString()} participants`}}
+      }),
+      indexAxis:'y',
+      scales:{
+        x:{grid:{color:'#eee'},border:{dash:[4,4]},ticks:{callback:v=>fmtNum(v),font:baseFont}},
+        y:{grid:{display:false},ticks:{font:{...baseFont,weight:'600'}}}
+      }
+    }
+  });
+})();
+
+// ── 6. Histogram ─────────────────────────────────────────────────────────
+(function(){
+  const H = D.time_histogram;
+  new Chart(document.getElementById('chart-histogram'),{
+    type:'bar',
+    data:{
+      labels:H.labels,
+      datasets:[
+        {label:'Male',data:H.male,backgroundColor:MALE_COLOR+'99',borderColor:MALE_COLOR,borderWidth:1,borderRadius:2,borderSkipped:false},
+        {label:'Female',data:H.female,backgroundColor:FEMALE_COLOR+'99',borderColor:FEMALE_COLOR,borderWidth:1,borderRadius:2,borderSkipped:false},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:true,labels:{boxWidth:10,boxHeight:10,font:baseFont}},
+        tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.raw.toLocaleString()} athletes`}}
+      },
+      scales:{
+        x:{grid:{display:false},ticks:{maxRotation:45,font:{size:9}}},
+        y:{grid:{color:'#eee'},border:{dash:[4,4]},ticks:{callback:v=>fmtNum(v),font:baseFont}}
+      }
+    }
+  });
+})();
+
+// ── 7. Division ───────────────────────────────────────────────────────────
+(function(){
+  const labels = D.division.map(d=>d.division);
+  const counts = D.division.map(d=>d.participants);
+  new Chart(document.getElementById('chart-division'),{
+    type:'doughnut',
+    data:{labels,datasets:[{data:counts,backgroundColor:palette,borderWidth:2,borderColor:'#fff',hoverOffset:6}]},
+    options:{
+      responsive:true,maintainAspectRatio:false,cutout:'55%',
+      plugins:{
+        legend:{display:true,position:'right',labels:{boxWidth:12,boxHeight:12,font:baseFont,padding:8}},
+        tooltip:{callbacks:{label:c=>`${c.label}: ${c.raw.toLocaleString()}`}}
+      }
+    }
+  });
+})();
+
+// ── 8. Median finish time ─────────────────────────────────────────────────
+(function(){
+  const T = D.finish_time;
+  const labels = T.events;
+  const maleData = T.male.map(d=>d?d.median:null);
+  const femaleData = T.female.map(d=>d?d.median:null);
+  new Chart(document.getElementById('chart-finish-time'),{
+    type:'line',
+    data:{
+      labels,
+      datasets:[
+        {label:'Male',data:maleData,borderColor:MALE_COLOR,backgroundColor:MALE_COLOR+'20',tension:.3,pointRadius:5,pointHoverRadius:7,fill:false},
+        {label:'Female',data:femaleData,borderColor:FEMALE_COLOR,backgroundColor:FEMALE_COLOR+'20',tension:.3,pointRadius:5,pointHoverRadius:7,fill:false},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:true,labels:{boxWidth:10,boxHeight:10,font:baseFont}},
+        tooltip:{callbacks:{label:c=>c.raw!==null?`${c.dataset.label}: ${minToHM(c.raw)}`:'No data'}}
+      },
+      scales:{
+        x:{grid:{display:false},ticks:{maxRotation:35,font:{size:9}}},
+        y:{grid:{color:'#eee'},border:{dash:[4,4]},
+          ticks:{callback:v=>minToHM(v),font:baseFont},
+          title:{display:true,text:'Finish Time',font:{size:10}}}
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>

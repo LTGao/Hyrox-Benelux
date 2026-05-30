@@ -113,6 +113,45 @@ section:nth-child(odd) .card{background:var(--grey-100);border-color:var(--grey-
 .mcard.dark p{color:rgba(255,255,255,.7)}
 .mcard.light{background:var(--white)}
 
+/* ── Persona cards ───────────────────────────────────────────── */
+.persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+@media(max-width:900px){.persona-grid{grid-template-columns:1fr}}
+.persona{border-radius:var(--radius);border:1px solid var(--grey-200);overflow:hidden;background:var(--white)}
+.persona-header{padding:1.5rem 1.5rem 1rem;display:flex;align-items:flex-start;gap:1rem}
+.persona-avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.persona-meta{flex:1}
+.persona-meta h3{font-size:1rem;margin-bottom:.3rem}
+.persona-tag{font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.2rem .6rem;border-radius:999px;display:inline-block}
+.persona-body{padding:0 1.5rem 1.5rem;font-size:.84rem;color:var(--grey-700);line-height:1.65}
+.persona-stats{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--grey-200)}
+.persona-stat-label{font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--grey-500)}
+.persona-stat-val{font-size:.95rem;font-weight:700;margin-top:.1rem}
+.persona-channels{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--grey-200)}
+.ch-pill{font-size:.7rem;font-weight:700;padding:.25rem .6rem;border-radius:999px;background:var(--grey-100);color:var(--grey-700);border:1px solid var(--grey-200)}
+
+/* ── Campaign cards ──────────────────────────────────────────── */
+.campaign-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+@media(max-width:900px){.campaign-grid{grid-template-columns:1fr}}
+.camp{border-radius:var(--radius);border:1px solid var(--grey-200);background:var(--white);overflow:hidden}
+.camp-top{padding:1.5rem 1.5rem 1rem}
+.camp-num{font-size:2.5rem;font-weight:800;line-height:1;color:var(--grey-200)}
+.camp-title{font-size:1.1rem;font-weight:700;margin:.5rem 0 .75rem}
+.camp-body{font-size:.84rem;color:var(--grey-700);line-height:1.7}
+.camp-bottom{padding:1rem 1.5rem 1.5rem;background:var(--grey-100);border-top:1px solid var(--grey-200)}
+.camp-tag{display:inline-block;font-size:.72rem;font-weight:700;padding:.22rem .6rem;border-radius:999px;margin:.2rem .2rem 0 0}
+
+/* ── Opportunity / about ─────────────────────────────────────── */
+.opp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:700px){.opp-grid{grid-template-columns:1fr}}
+.opp-card{border-radius:var(--radius);padding:1.75rem;border:1px solid var(--grey-200)}
+.opp-stat{font-size:2.25rem;font-weight:800;line-height:1;margin-bottom:.5rem}
+.opp-card h3{font-size:1rem;font-weight:700;margin-bottom:.6rem}
+.opp-card p{font-size:.875rem;color:var(--grey-700);line-height:1.7}
+.about-card{background:var(--black);color:var(--white);border-radius:var(--radius);padding:2rem}
+.about-card h3{color:white;margin-bottom:.75rem;font-size:1.1rem}
+.about-card p{color:rgba(255,255,255,.72);font-size:.875rem;line-height:1.7}
+.about-tag{display:inline-flex;align-items:center;gap:.35rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:.28rem .7rem;font-size:.73rem;font-weight:600;color:rgba(255,255,255,.85);margin:.25rem .25rem 0 0}
+
 /* ── Footer ──────────────────────────────────────────────────── */
 footer{background:var(--black);color:var(--grey-500);padding:2.5rem 0}
 .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.8rem}
@@ -140,6 +179,9 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
         <a href="#audience">Audience</a>
         <a href="#performance">Performance</a>
         <a href="#insights">Insights</a>
+        <a href="#personas">Personas</a>
+        <a href="#campaigns">Campaigns</a>
+        <a href="#opportunity">Opportunity</a>
       </div>
     </div>
   </div>
@@ -369,6 +411,252 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
         <p>Amsterdam, Rotterdam, Maastricht and Utrecht give House of Sports four annual touchpoints across distinct Dutch audiences. Each city has a different demographic profile that can be activated with city-specific creative and community partnerships.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ── Section 5: Audience Personas ─────────────────────────────────── -->
+<section id="personas">
+  <div class="container">
+    <div class="section-header">
+      <div class="label">05 · Audience Personas</div>
+      <h2>Three athletes. Three different activation strategies.</h2>
+      <p>Behind every data point is a person. These personas — built from the race results — translate segments into targetable human profiles with distinct channel affinities.</p>
+    </div>
+
+    <div class="persona-grid">
+
+      <!-- Persona 1 -->
+      <div class="persona">
+        <div class="persona-header">
+          <div class="persona-avatar" style="background:#dbeafe">🏃‍♂️</div>
+          <div class="persona-meta">
+            <h3>The Performance Chaser</h3>
+            <span class="persona-tag" style="background:#dbeafe;color:#1d4ed8">Male · 35–44 · Open</span>
+          </div>
+        </div>
+        <div class="persona-body">
+          <p>Works in finance or tech. Tracks every split on Garmin. Drove from Düsseldorf to Amsterdam specifically to race. His LinkedIn reads "amateur triathlete." Finishes in 75–90 min and immediately checks the leaderboard.</p>
+          <div class="persona-stats">
+            <div>
+              <div class="persona-stat-label">Largest Segment</div>
+              <div class="persona-stat-val">35–44 male</div>
+            </div>
+            <div>
+              <div class="persona-stat-label">Typical Finish</div>
+              <div class="persona-stat-val">75–90 min</div>
+            </div>
+            <div>
+              <div class="persona-stat-label">Top Origin</div>
+              <div class="persona-stat-val">GER / GBR / NLD</div>
+            </div>
+            <div>
+              <div class="persona-stat-label">Division</div>
+              <div class="persona-stat-val">Open (solo)</div>
+            </div>
+          </div>
+          <div class="persona-channels">
+            <span class="ch-pill">Strava</span>
+            <span class="ch-pill">Instagram</span>
+            <span class="ch-pill">YouTube</span>
+            <span class="ch-pill">Garmin Connect</span>
+            <span class="ch-pill">LinkedIn</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Persona 2 -->
+      <div class="persona">
+        <div class="persona-header">
+          <div class="persona-avatar" style="background:#fce7f3">🏋️‍♀️</div>
+          <div class="persona-meta">
+            <h3>The Lifestyle Athlete</h3>
+            <span class="persona-tag" style="background:#fce7f3;color:#9d174d">Female · 30–39 · Open</span>
+          </div>
+        </div>
+        <div class="persona-body">
+          <p>CrossFit 3×/week, podcast listener, oat milk latte. She follows fitness creators on Instagram and TikTok. Signed up after seeing a friend finish Amsterdam 2024. The race is a social experience as much as an athletic one.</p>
+          <div class="persona-stats">
+            <div>
+              <div class="persona-stat-label">Fastest Growing</div>
+              <div class="persona-stat-val">Female +S4→S8</div>
+            </div>
+            <div>
+              <div class="persona-stat-label">Typical Finish</div>
+              <div class="persona-stat-val">90–115 min</div>
+            </div>
+            <div>
+              <div class="persona-stat-label">Top Origin</div>
+              <div class="persona-stat-val">NLD / GBR / BEL</div>
+            </div>
+            <div>
+              <div class="persona-stat-label">Decision Driver</div>
+              <div class="persona-stat-val">Social proof</div>
+            </div>
+          </div>
+          <div class="persona-channels">
+            <span class="ch-pill">Instagram</span>
+            <span class="ch-pill">TikTok</span>
+            <span class="ch-pill">Pinterest</span>
+            <span class="ch-pill">WhatsApp communities</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Persona 3 -->
+      <div class="persona">
+        <div class="persona-header">
+          <div class="persona-avatar" style="background:#dcfce7">👫</div>
+          <div class="persona-meta">
+            <h3>The Social Racer</h3>
+            <span class="persona-tag" style="background:#dcfce7;color:#166534">Mixed · 25–34 · Doubles</span>
+          </div>
+        </div>
+        <div class="persona-body">
+          <p>Signed up with a partner, colleague, or gym friend. The finish line photo is going on Instagram. Community is the product for this persona — they come for the race, stay for the identity. High organic share rate post-event.</p>
+          <div class="persona-stats">
+            <div>
+              <div class="persona-stat-label">Division Share</div>
+              <div class="persona-stat-val">Doubles ~30%</div>
+            </div>
+            <div>
+              <div class="persona-stat-label">Motivation</div>
+              <div class="persona-stat-val">Community</div>
+            </div>
+            <div>
+              <div class="persona-stat-label">Age Range</div>
+              <div class="persona-stat-val">25–34 peak</div>
+            </div>
+            <div>
+              <div class="persona-stat-label">Amplification</div>
+              <div class="persona-stat-val">Very High</div>
+            </div>
+          </div>
+          <div class="persona-channels">
+            <span class="ch-pill">Instagram</span>
+            <span class="ch-pill">TikTok</span>
+            <span class="ch-pill">Facebook groups</span>
+            <span class="ch-pill">Gym communities</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 6: Campaign Concepts ──────────────────────────────────── -->
+<section id="campaigns">
+  <div class="container">
+    <div class="section-header">
+      <div class="label">06 · Campaign Concepts</div>
+      <h2>Data-informed ideas, ready to activate</h2>
+      <p>Each concept is rooted directly in the data above — not generic sports marketing, but specific opportunities the Benelux audience reveals.</p>
+    </div>
+
+    <div class="campaign-grid">
+
+      <div class="camp">
+        <div class="camp-top">
+          <div class="camp-num">01</div>
+          <div class="camp-title">"Recruit From The Results"</div>
+          <div class="camp-body">
+            <p>Every finisher who crosses the line in Amsterdam or Rotterdam is a warm lead for the next event. A retargeting campaign using race-day email data + Instagram Custom Audiences, timed 48–72 hours post-finish when endorphins are still high, converts at 3–5× the rate of cold acquisition.</p>
+            <p style="margin-top:.75rem"><strong>Data backing:</strong> 52k+ finishers across Benelux — a built-in retargeting pool that grows every season.</p>
+          </div>
+        </div>
+        <div class="camp-bottom">
+          <div class="label">Channels & Format</div>
+          <span class="camp-tag" style="background:#dbeafe;color:#1d4ed8">Meta retargeting</span>
+          <span class="camp-tag" style="background:#dbeafe;color:#1d4ed8">Email automation</span>
+          <span class="camp-tag" style="background:#dbeafe;color:#1d4ed8">Strava ads</span>
+        </div>
+      </div>
+
+      <div class="camp">
+        <div class="camp-top">
+          <div class="camp-num">02</div>
+          <div class="camp-title">"The 90-Minute Club"</div>
+          <div class="camp-body">
+            <p>The largest group of open-division athletes finishes between 75–105 minutes — aspirational, not elite. A content series built around this "achiever middle" (training guides, station breakdowns, pacing tips) speaks directly to the majority, not just the podium. Partner with mid-range gear and nutrition brands whose audience matches exactly.</p>
+            <p style="margin-top:.75rem"><strong>Data backing:</strong> Histogram peak at 80–100 min for males, 90–110 min for females.</p>
+          </div>
+        </div>
+        <div class="camp-bottom">
+          <div class="label">Channels & Format</div>
+          <span class="camp-tag" style="background:#dcfce7;color:#166534">YouTube series</span>
+          <span class="camp-tag" style="background:#dcfce7;color:#166534">Instagram Reels</span>
+          <span class="camp-tag" style="background:#dcfce7;color:#166534">TikTok</span>
+          <span class="camp-tag" style="background:#dcfce7;color:#166534">Brand partnership</span>
+        </div>
+      </div>
+
+      <div class="camp">
+        <div class="camp-top">
+          <div class="camp-num">03</div>
+          <div class="camp-title">"Benelux Homecoming"</div>
+          <div class="camp-body">
+            <p>96.8% of athletes are international. The top feeder markets are Germany, UK, and France. A geo-targeted pre-event campaign in those markets — in German, English, and French — positions Benelux HYROX events as the destination race. Hotel, rail, and airline co-marketing partnerships lower the acquisition cost while expanding the commercial footprint.</p>
+            <p style="margin-top:.75rem"><strong>Data backing:</strong> Top 15 nationalities show consistent DE/GBR/FRA dominance across all seasons.</p>
+          </div>
+        </div>
+        <div class="camp-bottom">
+          <div class="label">Channels & Format</div>
+          <span class="camp-tag" style="background:#fce7f3;color:#9d174d">Google Ads (DE/UK/FR)</span>
+          <span class="camp-tag" style="background:#fce7f3;color:#9d174d">Meta geo-targeting</span>
+          <span class="camp-tag" style="background:#fce7f3;color:#9d174d">Travel co-marketing</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 7: Opportunity + About ────────────────────────────────── -->
+<section id="opportunity">
+  <div class="container">
+    <div class="section-header">
+      <div class="label">07 · Untapped Opportunity + About This Analysis</div>
+      <h2>One market no one else is talking about</h2>
+      <p>The data hints at an emerging segment that most Western sports marketers overlook entirely.</p>
+    </div>
+
+    <div class="opp-grid" style="margin-bottom:1.5rem">
+      <div class="opp-card" style="background:var(--white)">
+        <div class="opp-stat" style="color:var(--red)">~20,000+</div>
+        <h3>Chinese Expats in the Netherlands</h3>
+        <p>The Netherlands hosts one of Europe's largest Chinese communities, concentrated in Amsterdam, Rotterdam, and The Hague. Chinese fitness culture has undergone a revolution — marathon and functional fitness participation in China grew 400%+ from 2015–2023. This community is almost entirely absent from current HYROX Benelux marketing, yet they match the demographic profile exactly: urban, educated, 25–44, high disposable income.</p>
+      </div>
+      <div class="opp-card" style="background:var(--white)">
+        <div class="opp-stat" style="color:var(--red)">小红书 + 微信</div>
+        <h3>Platforms Western Marketers Don't Use</h3>
+        <p>Xiaohongshu (Little Red Book) is where Chinese millennials discover fitness and lifestyle brands. A single authentic HYROX race diary post from a Chinese athlete in Amsterdam can generate thousands of impressions among Benelux-based and China-based Chinese audiences simultaneously — seeding HYROX's brand ahead of its Asia expansion. WeChat community groups are how this audience organises events and shares recommendations. Neither platform requires Chinese market access — they work now, in the Netherlands.</p>
+      </div>
+      <div class="opp-card" style="background:var(--white)">
+        <div class="opp-stat" style="color:var(--red)">HYROX Asia</div>
+        <h3>Bridge Role for Benelux Events</h3>
+        <p>HYROX launched its first Asian events in 2023–2024. Benelux venues are already attracting international athletes — positioning them as the gateway for Asian athletes to experience HYROX in Europe is a natural story. Localised race-day experiences (Mandarin-language signage, WeChat QR codes, Chinese partner brands) create immediate differentiation and PR value that no competitor offers.</p>
+      </div>
+      <div class="opp-card" style="background:var(--black);color:white">
+        <div class="opp-stat" style="color:var(--red)">Li-Ning · Anta · Castore</div>
+        <h3>Asian Sportswear Brands Entering Europe</h3>
+        <p style="color:rgba(255,255,255,.72)">Chinese sportswear giants Li-Ning and Anta are actively seeking European sports event partnerships to build brand awareness. HYROX Benelux — with its premium, internationally mobile audience and strong visual identity — is an ideal activation platform. This is a white-space sponsorship category that European-only agencies are structurally unable to develop.</p>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <h3>About This Analysis</h3>
+      <p>This dashboard was built as a case study for a digital marketing role application — demonstrating the ability to go from raw data to audience insight to actionable strategy. The analysis combines a Kaggle HYROX dataset (Seasons 4–6, 92k rows) with race results scraped from the HYROX official platform (Seasons 7–8, Benelux only), merged, cleaned, and visualised in a single-page dashboard.</p>
+      <p style="margin-top:.75rem">The Asian market opportunity section reflects 10 years of living and working in the Netherlands as a Chinese digital marketer in the sports industry — a perspective that doesn't come from a spreadsheet.</p>
+      <div style="margin-top:1.25rem">
+        <span class="about-tag">🇳🇱 10 Years Netherlands</span>
+        <span class="about-tag">📊 Data Analysis</span>
+        <span class="about-tag">🏋️ Sports Industry</span>
+        <span class="about-tag">🌏 Cross-Cultural Marketing</span>
+        <span class="about-tag">小红书 Xiaohongshu</span>
+        <span class="about-tag">Python · Chart.js</span>
+      </div>
+    </div>
+
   </div>
 </section>
 

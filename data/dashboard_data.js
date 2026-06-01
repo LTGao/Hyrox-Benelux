@@ -923,13 +923,19 @@ const DASHBOARD_DATA = {
     }
   ],
   "retention": {
-    "unique_athletes_s78": 38387,
-    "raced_once_pct": 87.1,
-    "raced_twice_pct": 9.5,
-    "raced_3plus_pct": 3.4,
-    "raced_once": 33441,
-    "raced_twice": 3650,
-    "raced_3plus": 1296,
+    "unique_athletes": 46069,
+    "one_season_pct": 89.1,
+    "two_season_pct": 8.8,
+    "three_season_pct": 1.7,
+    "fourplus_season_pct": 0.4,
+    "one_season": 41053,
+    "two_season": 4067,
+    "three_season": 772,
+    "fourplus_season": 177,
+    "s46_athletes": 10035,
+    "s78_athletes": 38387,
+    "crossover": 2353,
+    "crossover_pct": 23.4,
     "global_firsttimer_pct": 70
   }
 };

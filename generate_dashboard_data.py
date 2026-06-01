@@ -247,29 +247,53 @@ time_histogram = {
     "female": female_hist_counts,
 }
 
-# ── 11. Retention (S7-S8 only, has names) ────────────────────────────────────
-s78 = df[
-    df["season"].astype(str).isin(["7","8"]) &
-    df["name"].notna() &
-    (df["name"].astype(str).str.strip() != "") &
-    (df["name"].astype(str) != "nan")
-].copy()
-s78["name_clean"] = s78["name"].astype(str).str.strip().str.lower()
-name_counts = s78.groupby("name_clean").size().reset_index(name="races")
-ret_total = len(name_counts)
-ret_once  = int((name_counts["races"] == 1).sum())
-ret_two   = int((name_counts["races"] == 2).sum())
-ret_three = int((name_counts["races"] >= 3).sum())
+# ── 11. Retention (full S4-S8, all named data) ───────────────────────────────
+s46_named = pd.read_csv(
+    Path(r"D:\Tool\Claude Code\Projects\WSL\hyrox_analysis\hyrox_benelux_s4_s6_named.csv"),
+    low_memory=False
+)
+s46_named["season"] = s46_named["season"].astype(str).str.replace(r"\.0$", "", regex=True)
+
+# Combine all named rows
+named_all = pd.concat([
+    s46_named[["name", "season"]],
+    df[df["name"].astype(str).str.strip().str.lower() != "nan"][["name", "season"]]
+], ignore_index=True)
+named_all["name_clean"] = named_all["name"].astype(str).str.strip().str.lower()
+named_all = named_all[
+    named_all["name_clean"].notna() &
+    (named_all["name_clean"] != "") &
+    (named_all["name_clean"] != "nan")
+]
+
+# Seasons raced per athlete
+seasons_per_athlete = named_all.groupby("name_clean")["season"].nunique().reset_index(name="seasons_raced")
+ret_total    = len(seasons_per_athlete)
+ret_one      = int((seasons_per_athlete["seasons_raced"] == 1).sum())
+ret_two      = int((seasons_per_athlete["seasons_raced"] == 2).sum())
+ret_three    = int((seasons_per_athlete["seasons_raced"] == 3).sum())
+ret_fourplus = int((seasons_per_athlete["seasons_raced"] >= 4).sum())
+
+# Cross-era: S4-S6 athletes who returned in S7-S8
+s46_names = set(named_all[named_all["season"].isin(["4","5","6"])]["name_clean"])
+s78_names = set(named_all[named_all["season"].isin(["7","8"])]["name_clean"])
+crossover = len(s46_names & s78_names)
 
 retention = {
-    "unique_athletes_s78": ret_total,
-    "raced_once_pct": round(ret_once / ret_total * 100, 1),
-    "raced_twice_pct": round(ret_two / ret_total * 100, 1),
-    "raced_3plus_pct": round(ret_three / ret_total * 100, 1),
-    "raced_once": ret_once,
-    "raced_twice": ret_two,
-    "raced_3plus": ret_three,
-    "global_firsttimer_pct": 70,  # HYROX global published stat
+    "unique_athletes":      ret_total,
+    "one_season_pct":       round(ret_one      / ret_total * 100, 1),
+    "two_season_pct":       round(ret_two      / ret_total * 100, 1),
+    "three_season_pct":     round(ret_three    / ret_total * 100, 1),
+    "fourplus_season_pct":  round(ret_fourplus / ret_total * 100, 1),
+    "one_season":           ret_one,
+    "two_season":           ret_two,
+    "three_season":         ret_three,
+    "fourplus_season":      ret_fourplus,
+    "s46_athletes":         len(s46_names),
+    "s78_athletes":         len(s78_names),
+    "crossover":            crossover,
+    "crossover_pct":        round(crossover / len(s46_names) * 100, 1),
+    "global_firsttimer_pct": 70,
 }
 
 # ── Assemble & write ──────────────────────────────────────────────────────────

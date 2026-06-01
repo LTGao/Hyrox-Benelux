@@ -932,10 +932,6 @@ const DASHBOARD_DATA = {
     "two_season": 4067,
     "three_season": 772,
     "fourplus_season": 177,
-    "s46_athletes": 10035,
-    "s78_athletes": 38387,
-    "crossover": 2353,
-    "crossover_pct": 23.4,
     "global_firsttimer_pct": 70
   }
 };

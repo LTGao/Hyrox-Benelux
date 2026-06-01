@@ -274,11 +274,6 @@ ret_two      = int((seasons_per_athlete["seasons_raced"] == 2).sum())
 ret_three    = int((seasons_per_athlete["seasons_raced"] == 3).sum())
 ret_fourplus = int((seasons_per_athlete["seasons_raced"] >= 4).sum())
 
-# Cross-era: S4-S6 athletes who returned in S7-S8
-s46_names = set(named_all[named_all["season"].isin(["4","5","6"])]["name_clean"])
-s78_names = set(named_all[named_all["season"].isin(["7","8"])]["name_clean"])
-crossover = len(s46_names & s78_names)
-
 retention = {
     "unique_athletes":      ret_total,
     "one_season_pct":       round(ret_one      / ret_total * 100, 1),
@@ -289,10 +284,6 @@ retention = {
     "two_season":           ret_two,
     "three_season":         ret_three,
     "fourplus_season":      ret_fourplus,
-    "s46_athletes":         len(s46_names),
-    "s78_athletes":         len(s78_names),
-    "crossover":            crossover,
-    "crossover_pct":        round(crossover / len(s46_names) * 100, 1),
     "global_firsttimer_pct": 70,
 }
 

@@ -679,9 +679,9 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
 
       <div style="display:flex;flex-direction:column;gap:1.5rem">
         <div class="card fade-up" style="background:var(--black);color:white;border-color:var(--black)">
-          <div style="font-size:2rem;font-weight:800;color:var(--red);line-height:1;margin-bottom:.5rem" id="ret-crossover">—</div>
-          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.6rem">Of early-season athletes returned in S7 or S8</div>
-          <p style="font-size:.875rem;color:rgba(255,255,255,.7);line-height:1.65">Nearly 1 in 4 athletes from the early Benelux seasons (S4 to S6) went on to participate again in Season 7 or 8. This loyal returning segment is identifiable by name and represents the most engaged part of the community. Two effective strategies to grow this group are performance-based re-engagement (personalised around their result and progression) and social conversion, where existing participants invite friends to race together in doubles or relay formats.</p>
+          <div style="font-size:2rem;font-weight:800;color:var(--red);line-height:1;margin-bottom:.5rem" id="ret-multi">—</div>
+          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.6rem">Of Benelux athletes participated in more than one season</div>
+          <p style="font-size:.875rem;color:rgba(255,255,255,.7);line-height:1.65">Across all five seasons, around 1 in 10 Benelux athletes returned to race again. This loyal recurring segment is identifiable by name and represents the most engaged part of the community. Two effective strategies to grow this group are performance-based re-engagement, personalised around each athlete's result and natural progression, and social conversion, where existing participants invite friends to race together in doubles or relay formats.</p>
         </div>
         <div class="card fade-up">
           <div style="font-size:2rem;font-weight:800;color:var(--red);line-height:1;margin-bottom:.5rem">26×</div>
@@ -971,7 +971,8 @@ document.getElementById('kpi2-local').textContent = D.kpis.local_pct + '%';
   document.getElementById('ret-once').textContent  = R.one_season_pct + '%';
   document.getElementById('ret-two').textContent   = R.two_season_pct + '%';
   document.getElementById('ret-three').textContent = R.three_season_pct + '%';
-  document.getElementById('ret-crossover').textContent = R.crossover_pct + '%';
+  const multiPct = (100 - R.one_season_pct).toFixed(1);
+  document.getElementById('ret-multi').textContent = multiPct + '%';
 
   new Chart(document.getElementById('chart-retention'), {
     type: 'doughnut',

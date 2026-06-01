@@ -200,6 +200,7 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
         <a href="#personas">Personas</a>
         <a href="#campaigns">Campaigns</a>
         <a href="#opportunity">Retention</a>
+        <a href="#community">Community</a>
       </div>
     </div>
   </div>
@@ -710,6 +711,68 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
   </div>
 </section>
 
+<!-- ── Section 8: Community ──────────────────────────────────────────── -->
+<section id="community">
+  <div class="container">
+    <div class="section-header">
+      <div class="label">08 · Community Growth</div>
+      <h2>The shift from solo racing to social sport</h2>
+      <p>Doubles participation has grown from 24% of the Benelux field in Season 4 to 43% in Season 8. Almost half of all athletes now race with a partner. This is not just a format preference — it is a structural shift in how people experience HYROX, and it opens a direct path for community-driven growth.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;margin-bottom:1.5rem">
+      <div class="card fade-up">
+        <div class="card-title">Division Split by Season: Open vs Doubles vs Pro</div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>Open</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#e8000d"></div>Doubles</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Pro</div>
+        </div>
+        <div class="chart-wrap-tall"><canvas id="chart-division-trend"></canvas></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:1.5rem">
+        <div class="card fade-up">
+          <div style="font-size:2rem;font-weight:800;color:var(--red);line-height:1;margin-bottom:.5rem">+18pp</div>
+          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--grey-500);margin-bottom:.6rem">Doubles share growth across 5 seasons</div>
+          <p style="font-size:.875rem;color:var(--grey-700);line-height:1.65">Doubles grew from 24% to 43% of the Benelux field over five seasons, an 18 percentage point increase. Solo open participation dropped from 56% to 50% over the same period. Athletes are actively choosing to race as a pair rather than alone.</p>
+        </div>
+        <div class="card fade-up">
+          <div style="font-size:2rem;font-weight:800;color:var(--red);line-height:1;margin-bottom:.5rem">2 in 1</div>
+          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--grey-500);margin-bottom:.6rem">Each doubles conversion is two registrations</div>
+          <p style="font-size:.875rem;color:var(--grey-700);line-height:1.65">Converting a solo participant into a doubles entry means one athlete recruits another. At the S8 field size of 28,897 participants, the 43% doubles share already represents over 12,000 athletes who came because someone brought them. That social recruitment loop is the most cost-effective acquisition channel available.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-bottom:1.5rem">
+      <div class="card fade-up">
+        <div style="font-size:1.5rem;margin-bottom:.75rem">🤝</div>
+        <h3 style="margin-bottom:.6rem">Bring a Friend Discount</h3>
+        <p style="font-size:.875rem;color:var(--grey-700);line-height:1.7">A targeted post-race email to solo finishers offering a reduced doubles entry for the next event converts individual participants into recruiting agents. The athlete who signs up gets a better price. The friend they bring is a brand new participant. Both are more likely to return because their commitment is now shared.</p>
+      </div>
+      <div class="card fade-up">
+        <div style="font-size:1.5rem;margin-bottom:.75rem">🏆</div>
+        <h3 style="margin-bottom:.6rem">First-Timer to Doubles Pathway</h3>
+        <p style="font-size:.875rem;color:var(--grey-700);line-height:1.7">First-time open finishers are the largest pool of potential doubles recruits. A follow-up campaign that celebrates their result, shows what doubles looks like in practice, and offers a time-limited discount on paired entry meets the athlete at peak motivation, shortly after their first finish line experience.</p>
+      </div>
+      <div class="card fade-up">
+        <div style="font-size:1.5rem;margin-bottom:.75rem">📍</div>
+        <h3 style="margin-bottom:.6rem">Gym and Club Partnerships</h3>
+        <p style="font-size:.875rem;color:var(--grey-700);line-height:1.7">Doubles and group entries are a natural fit for gym communities, running clubs, and CrossFit boxes. A partnership programme that gives affiliated gyms a referral discount code for team entries turns local fitness communities into recurring sourcing channels, city by city across Amsterdam, Rotterdam, Maastricht, and Utrecht.</p>
+      </div>
+    </div>
+
+    <div class="insight fade-up">
+      <div class="insight-icon">📈</div>
+      <div>
+        <strong>The Community Flywheel</strong>
+        <p>Doubles athletes recruit their partner before the race. Both athletes share the experience during the race. Both are more likely to return because the social bond with their partner carries through to the next season. The 10.9% multi-season return rate in the data is almost certainly higher among doubles participants than solo ones. Building campaigns around team formats does not just grow the field in one season — it compounds across seasons.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── Footer ────────────────────────────────────────────────────────── -->
 <footer>
   <div class="container">
@@ -991,6 +1054,34 @@ document.getElementById('kpi2-local').textContent = D.kpis.local_pct + '%';
       plugins: {
         legend: { display: false },
         tooltip: { callbacks: { label: c => `${c.label}: ${c.raw.toLocaleString()} athletes` } }
+      }
+    }
+  });
+})();
+
+// ── Division trend chart ─────────────────────────────────────────────────────
+(function(){
+  const DS = D.div_by_season;
+  new Chart(document.getElementById('chart-division-trend'), {
+    type: 'bar',
+    data: {
+      labels: DS.seasons,
+      datasets: [
+        { label: 'Open',    data: DS.open_pct,    backgroundColor: '#2563eb', borderRadius: 4, borderSkipped: false, stack: 's' },
+        { label: 'Doubles', data: DS.doubles_pct, backgroundColor: RED,       borderRadius: 4, borderSkipped: false, stack: 's' },
+        { label: 'Pro',     data: DS.pro_pct,     backgroundColor: '#16a34a', borderRadius: 4, borderSkipped: false, stack: 's' },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => `${c.dataset.label}: ${c.raw}%` } }
+      },
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { font: baseFont } },
+        y: { stacked: true, max: 100, grid: { color: '#eee' }, border: { dash: [4,4] },
+             ticks: { callback: v => v + '%', font: baseFont } }
       }
     }
   });

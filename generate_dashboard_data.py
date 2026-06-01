@@ -287,6 +287,28 @@ retention = {
     "global_firsttimer_pct": 70,
 }
 
+# ── 12. Division by season (community section) ───────────────────────────────
+s46_div = pd.read_csv(
+    Path(r"D:\Tool\Claude Code\Projects\WSL\hyrox_analysis\hyrox_benelux_s4_s6_named.csv"),
+    low_memory=False, usecols=["season","division"]
+)
+s46_div["season"] = s46_div["season"].astype(str).str.replace(r"\.0$","",regex=True)
+s78_div = df[["season","division"]].copy()
+div_df = pd.concat([s46_div, s78_div], ignore_index=True)
+div_df["division"] = div_df["division"].astype(str).str.strip().str.lower()
+div_piv = div_df.groupby(["season","division"]).size().unstack(fill_value=0).sort_index()
+div_piv["total"] = div_piv.sum(axis=1)
+
+div_by_season = {
+    "seasons": [f"S{s}" for s in div_piv.index.tolist()],
+    "open":    [int(div_piv.get("open", pd.Series(dtype=int)).get(s, 0)) for s in div_piv.index],
+    "doubles": [int(div_piv.get("doubles", pd.Series(dtype=int)).get(s, 0)) for s in div_piv.index],
+    "pro":     [int(div_piv.get("pro", pd.Series(dtype=int)).get(s, 0)) for s in div_piv.index],
+    "open_pct":    [round(div_piv.loc[s,"open"]    / div_piv.loc[s,"total"] * 100, 1) if "open"    in div_piv.columns else 0 for s in div_piv.index],
+    "doubles_pct": [round(div_piv.loc[s,"doubles"] / div_piv.loc[s,"total"] * 100, 1) if "doubles" in div_piv.columns else 0 for s in div_piv.index],
+    "pro_pct":     [round(div_piv.loc[s,"pro"]     / div_piv.loc[s,"total"] * 100, 1) if "pro"     in div_piv.columns else 0 for s in div_piv.index],
+}
+
 # ── Assemble & write ──────────────────────────────────────────────────────────
 dashboard = {
     "kpis": kpis,
@@ -304,6 +326,7 @@ dashboard = {
     "division": division_data,
     "location": location_data,
     "retention": retention,
+    "div_by_season": div_by_season,
 }
 
 out = DATA_DIR / "dashboard_data.js"

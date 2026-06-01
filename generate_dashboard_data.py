@@ -106,6 +106,13 @@ nationality_data = [
     for _, r in nat_counts.iterrows()
 ]
 
+# Top 15 nationalities per season
+nat_by_season = {}
+for season in sorted(df["season"].unique()):
+    sdf = df[(df["season"] == season) & (df["nationality"].str.len() == 3)]
+    top = sdf.groupby("nationality").size().reset_index(name="n").sort_values("n", ascending=False).head(15)
+    nat_by_season[f"S{season}"] = [{"country": r["nationality"], "participants": int(r["n"])} for _, r in top.iterrows()]
+
 # Local (NL+BE+LU) vs International
 local = {"NLD", "BEL", "LUX"}
 df["is_local"] = df["nationality"].isin(local)
@@ -247,6 +254,7 @@ dashboard = {
     "growth": growth,
     "gender": gender_data,
     "nationality": nationality_data,
+    "nationality_by_season": nat_by_season,
     "nat_trend": nat_trend,
     "top5_countries": top5,
     "age": age_data,

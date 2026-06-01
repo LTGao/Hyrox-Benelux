@@ -215,6 +215,318 @@ const DASHBOARD_DATA = {
       "participants": 72
     }
   ],
+  "nationality_by_season": {
+    "S4": [
+      {
+        "country": "NLD",
+        "participants": 516
+      },
+      {
+        "country": "GER",
+        "participants": 144
+      },
+      {
+        "country": "BEL",
+        "participants": 54
+      },
+      {
+        "country": "GBR",
+        "participants": 25
+      },
+      {
+        "country": "FRA",
+        "participants": 20
+      },
+      {
+        "country": "ESP",
+        "participants": 20
+      },
+      {
+        "country": "LUX",
+        "participants": 11
+      },
+      {
+        "country": "POR",
+        "participants": 10
+      },
+      {
+        "country": "ITA",
+        "participants": 7
+      },
+      {
+        "country": "POL",
+        "participants": 5
+      },
+      {
+        "country": "AUT",
+        "participants": 5
+      },
+      {
+        "country": "SUI",
+        "participants": 4
+      },
+      {
+        "country": "CIV",
+        "participants": 2
+      },
+      {
+        "country": "DEN",
+        "participants": 2
+      },
+      {
+        "country": "CZE",
+        "participants": 2
+      }
+    ],
+    "S5": [
+      {
+        "country": "NLD",
+        "participants": 1931
+      },
+      {
+        "country": "GER",
+        "participants": 304
+      },
+      {
+        "country": "GBR",
+        "participants": 130
+      },
+      {
+        "country": "BEL",
+        "participants": 95
+      },
+      {
+        "country": "FRA",
+        "participants": 59
+      },
+      {
+        "country": "IRL",
+        "participants": 50
+      },
+      {
+        "country": "SUI",
+        "participants": 18
+      },
+      {
+        "country": "AUT",
+        "participants": 15
+      },
+      {
+        "country": "NOR",
+        "participants": 15
+      },
+      {
+        "country": "USA",
+        "participants": 15
+      },
+      {
+        "country": "ITA",
+        "participants": 14
+      },
+      {
+        "country": "POR",
+        "participants": 13
+      },
+      {
+        "country": "LUX",
+        "participants": 10
+      },
+      {
+        "country": "ESP",
+        "participants": 10
+      },
+      {
+        "country": "SWE",
+        "participants": 7
+      }
+    ],
+    "S6": [
+      {
+        "country": "NLD",
+        "participants": 1353
+      },
+      {
+        "country": "GBR",
+        "participants": 76
+      },
+      {
+        "country": "GER",
+        "participants": 49
+      },
+      {
+        "country": "BEL",
+        "participants": 29
+      },
+      {
+        "country": "IRL",
+        "participants": 18
+      },
+      {
+        "country": "FRA",
+        "participants": 10
+      },
+      {
+        "country": "NOR",
+        "participants": 8
+      },
+      {
+        "country": "POL",
+        "participants": 7
+      },
+      {
+        "country": "ITA",
+        "participants": 5
+      },
+      {
+        "country": "USA",
+        "participants": 4
+      },
+      {
+        "country": "DEN",
+        "participants": 4
+      },
+      {
+        "country": "AUS",
+        "participants": 4
+      },
+      {
+        "country": "GRE",
+        "participants": 3
+      },
+      {
+        "country": "RSA",
+        "participants": 3
+      },
+      {
+        "country": "RUS",
+        "participants": 3
+      }
+    ],
+    "S7": [
+      {
+        "country": "NLD",
+        "participants": 13077
+      },
+      {
+        "country": "GBR",
+        "participants": 776
+      },
+      {
+        "country": "GER",
+        "participants": 619
+      },
+      {
+        "country": "BEL",
+        "participants": 567
+      },
+      {
+        "country": "IRL",
+        "participants": 345
+      },
+      {
+        "country": "FRA",
+        "participants": 229
+      },
+      {
+        "country": "RSA",
+        "participants": 48
+      },
+      {
+        "country": "ITA",
+        "participants": 47
+      },
+      {
+        "country": "USA",
+        "participants": 45
+      },
+      {
+        "country": "ESP",
+        "participants": 44
+      },
+      {
+        "country": "POR",
+        "participants": 35
+      },
+      {
+        "country": "LUX",
+        "participants": 35
+      },
+      {
+        "country": "DEN",
+        "participants": 26
+      },
+      {
+        "country": "POL",
+        "participants": 26
+      },
+      {
+        "country": "CAN",
+        "participants": 19
+      }
+    ],
+    "S8": [
+      {
+        "country": "NLD",
+        "participants": 23258
+      },
+      {
+        "country": "BEL",
+        "participants": 1611
+      },
+      {
+        "country": "GER",
+        "participants": 1088
+      },
+      {
+        "country": "FRA",
+        "participants": 608
+      },
+      {
+        "country": "GBR",
+        "participants": 575
+      },
+      {
+        "country": "IRL",
+        "participants": 175
+      },
+      {
+        "country": "ESP",
+        "participants": 106
+      },
+      {
+        "country": "RSA",
+        "participants": 103
+      },
+      {
+        "country": "USA",
+        "participants": 95
+      },
+      {
+        "country": "ITA",
+        "participants": 88
+      },
+      {
+        "country": "POR",
+        "participants": 86
+      },
+      {
+        "country": "LUX",
+        "participants": 62
+      },
+      {
+        "country": "POL",
+        "participants": 56
+      },
+      {
+        "country": "MAR",
+        "participants": 43
+      },
+      {
+        "country": "SUI",
+        "participants": 37
+      }
+    ]
+  },
   "nat_trend": {
     "seasons": [
       "S4",

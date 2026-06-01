@@ -152,6 +152,24 @@ section:nth-child(odd) .card{background:var(--grey-100);border-color:var(--grey-
 .about-card p{color:rgba(255,255,255,.72);font-size:.875rem;line-height:1.7}
 .about-tag{display:inline-flex;align-items:center;gap:.35rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:.28rem .7rem;font-size:.73rem;font-weight:600;color:rgba(255,255,255,.85);margin:.25rem .25rem 0 0}
 
+/* ── Scroll animations ───────────────────────────────────────── */
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity .55s ease,transform .55s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.fade-up:nth-child(2){transition-delay:.08s}
+.fade-up:nth-child(3){transition-delay:.16s}
+.fade-up:nth-child(4){transition-delay:.24s}
+.fade-up:nth-child(5){transition-delay:.32s}
+.fade-up:nth-child(6){transition-delay:.40s}
+.section-header{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+.section-header.visible{opacity:1;transform:translateY(0)}
+
+/* ── Tabs ────────────────────────────────────────────────────── */
+.tab-bar{display:flex;gap:.25rem;margin-bottom:1.25rem;background:var(--grey-100);padding:.3rem;border-radius:8px;width:fit-content}
+section:nth-child(odd) .tab-bar{background:var(--grey-200)}
+.tab-btn{padding:.35rem .9rem;border-radius:6px;border:none;background:transparent;font-size:.8rem;font-weight:600;color:var(--grey-500);cursor:pointer;transition:background .15s,color .15s}
+.tab-btn.active{background:var(--white);color:var(--black);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+section:nth-child(odd) .tab-btn.active{background:var(--white)}
+
 /* ── Footer ──────────────────────────────────────────────────── */
 footer{background:var(--black);color:var(--grey-500);padding:2.5rem 0}
 .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.8rem}
@@ -254,17 +272,17 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
     </div>
 
     <div style="gap:1.5rem;display:grid;grid-template-columns:2fr 1fr">
-      <div class="card">
+      <div class="card fade-up">
         <div class="card-title">Participants per Event · All Benelux (S4–S8)</div>
         <div class="chart-wrap-tall"><canvas id="chart-participation"></canvas></div>
       </div>
-      <div class="card">
+      <div class="card fade-up">
         <div class="card-title">Total Participants by Season</div>
         <div class="chart-wrap-tall"><canvas id="chart-growth"></canvas></div>
       </div>
     </div>
 
-    <div class="insight">
+    <div class="insight fade-up">
       <div class="insight-icon">💡</div>
       <div>
         <strong>Marketing Opportunity: Expansion Momentum</strong>
@@ -285,7 +303,7 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
 
     <!-- Gender -->
     <div class="grid-2" style="margin-bottom:1.5rem">
-      <div class="card">
+      <div class="card fade-up">
         <div class="card-title">Gender Split — Evolution by Season</div>
         <div class="legend">
           <div class="legend-item"><div class="legend-dot" style="background:var(--male)"></div>Male</div>
@@ -293,7 +311,7 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
         </div>
         <div class="chart-wrap"><canvas id="chart-gender"></canvas></div>
       </div>
-      <div class="card">
+      <div class="card fade-up">
         <div class="card-title">Age Group Distribution (All Genders)</div>
         <div class="legend">
           <div class="legend-item"><div class="legend-dot" style="background:var(--male)"></div>Male</div>
@@ -303,21 +321,29 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
       </div>
     </div>
 
-    <!-- Nationality -->
-    <div class="card" style="margin-bottom:1.5rem">
-      <div class="card-title">Top 15 Nationalities — Benelux Events (All Seasons)</div>
+    <!-- Nationality with tabs -->
+    <div class="card fade-up" style="margin-bottom:1.5rem">
+      <div class="card-title">Top 15 Nationalities — Benelux Events</div>
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchNatTab('all',this)">All Seasons</button>
+        <button class="tab-btn" onclick="switchNatTab('S4',this)">S4</button>
+        <button class="tab-btn" onclick="switchNatTab('S5',this)">S5</button>
+        <button class="tab-btn" onclick="switchNatTab('S6',this)">S6</button>
+        <button class="tab-btn" onclick="switchNatTab('S7',this)">S7</button>
+        <button class="tab-btn" onclick="switchNatTab('S8',this)">S8</button>
+      </div>
       <div class="chart-wrap-tall"><canvas id="chart-nationality"></canvas></div>
     </div>
 
     <div class="grid-2">
-      <div class="insight">
+      <div class="insight fade-up">
         <div class="insight-icon">🎯</div>
         <div>
           <strong>Insight: The 30–44 Core</strong>
           <p>The 30–44 age band consistently dominates participation — prime career age, high disposable income, strong fitness identity. This demographic responds to premium race-day experience, travel packages, and recovery/nutrition brands.</p>
         </div>
       </div>
-      <div class="insight">
+      <div class="insight fade-up">
         <div class="insight-icon">🌍</div>
         <div>
           <strong>Insight: A Local Community with an International Layer</strong>
@@ -338,21 +364,22 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
     </div>
 
     <div style="gap:1.5rem;display:grid;grid-template-columns:1fr 1fr;margin-bottom:1.5rem">
-      <div class="card">
-        <div class="card-title">Finish Time Distribution — Open Division (all events)</div>
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background:var(--male)"></div>Male</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--female)"></div>Female</div>
+      <div class="card fade-up">
+        <div class="card-title">Finish Time Distribution — Open Division</div>
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchHistTab('both',this)">Both</button>
+          <button class="tab-btn" onclick="switchHistTab('male',this)">Male</button>
+          <button class="tab-btn" onclick="switchHistTab('female',this)">Female</button>
         </div>
         <div class="chart-wrap-tall"><canvas id="chart-histogram"></canvas></div>
       </div>
-      <div class="card">
+      <div class="card fade-up">
         <div class="card-title">Division Breakdown (Overall)</div>
         <div class="chart-wrap-tall"><canvas id="chart-division"></canvas></div>
       </div>
     </div>
 
-    <div class="card">
+    <div class="card fade-up">
       <div class="card-title">Median Finish Time (Open Division) per Event · Male vs Female</div>
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:var(--male)"></div>Male median</div>
@@ -361,7 +388,7 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
       <div class="chart-wrap-tall"><canvas id="chart-finish-time"></canvas></div>
     </div>
 
-    <div class="insight" style="margin-top:1.5rem">
+    <div class="insight fade-up" style="margin-top:1.5rem">
       <div class="insight-icon">⏱️</div>
       <div>
         <strong>Insight: The 75–100 Min Sweet Spot</strong>
@@ -925,6 +952,87 @@ document.getElementById('kpi2-local').textContent = D.kpis.local_pct + '%';
     }
   });
 })();
+
+// ── Scroll-triggered fade-up animations ──────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up, .section-header').forEach(el => observer.observe(el));
+
+// ── Animated counters for hero KPIs ──────────────────────────────────────────
+function animateCounter(el, target, duration=1400, isFloat=false, suffix='') {
+  const start = performance.now();
+  const from = 0;
+  function tick(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3); // ease-out cubic
+    const val = from + (target - from) * ease;
+    el.textContent = isFloat ? val.toFixed(1) + suffix : Math.round(val).toLocaleString() + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+const heroObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    heroObserver.unobserve(e.target);
+    const id = e.target.id;
+    if (id === 'kpi-total')   animateCounter(e.target, D.kpis.total_participants, 1600);
+    if (id === 'kpi-nations') animateCounter(e.target, D.kpis.unique_nationalities, 1000);
+    if (id === 'kpi-growth')  animateCounter(e.target, D.kpis.growth_multiple, 1200, true, '×');
+    if (id === 'kpi-intl')    animateCounter(e.target, D.kpis.intl_pct, 1000, true, '%');
+    if (id === 'kpi2-events') animateCounter(e.target, D.kpis.events_covered, 800);
+    if (id === 'kpi2-female') animateCounter(e.target, D.kpis.female_pct, 900, false, '%');
+    if (id === 'kpi2-local')  animateCounter(e.target, D.kpis.local_pct, 1000, true, '%');
+  });
+}, { threshold: 0.5 });
+['kpi-total','kpi-nations','kpi-growth','kpi-intl','kpi2-events','kpi2-female','kpi2-local']
+  .forEach(id => { const el = document.getElementById(id); if (el) heroObserver.observe(el); });
+
+// ── Nationality tab switching ─────────────────────────────────────────────────
+let natChart = Chart.getChart('chart-nationality');
+
+function buildNatData(key) {
+  const src = key === 'all' ? D.nationality : (D.nationality_by_season[key] || D.nationality);
+  return {
+    labels: src.map(n => n.country),
+    data: src.map(n => n.participants),
+  };
+}
+
+function switchNatTab(key, btn) {
+  btn.closest('.tab-bar').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const {labels, data} = buildNatData(key);
+  natChart.data.labels = labels;
+  natChart.data.datasets[0].data = data;
+  natChart.data.datasets[0].backgroundColor = labels.map((c,i) =>
+    ['NLD','BEL','LUX'].includes(c) ? RED : palette[i] || '#888');
+  natChart.update('active');
+}
+
+// ── Histogram tab switching ───────────────────────────────────────────────────
+let histChart = Chart.getChart('chart-histogram');
+
+function switchHistTab(key, btn) {
+  btn.closest('.tab-bar').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const H = D.time_histogram;
+  if (key === 'both') {
+    histChart.data.datasets[0].data = H.male;
+    histChart.data.datasets[1].data = H.female;
+    histChart.data.datasets[0].hidden = false;
+    histChart.data.datasets[1].hidden = false;
+  } else if (key === 'male') {
+    histChart.data.datasets[0].hidden = false;
+    histChart.data.datasets[1].hidden = true;
+  } else {
+    histChart.data.datasets[0].hidden = true;
+    histChart.data.datasets[1].hidden = false;
+  }
+  histChart.update('active');
+}
 </script>
 </body>
 </html>

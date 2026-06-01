@@ -247,6 +247,31 @@ time_histogram = {
     "female": female_hist_counts,
 }
 
+# ── 11. Retention (S7-S8 only, has names) ────────────────────────────────────
+s78 = df[
+    df["season"].astype(str).isin(["7","8"]) &
+    df["name"].notna() &
+    (df["name"].astype(str).str.strip() != "") &
+    (df["name"].astype(str) != "nan")
+].copy()
+s78["name_clean"] = s78["name"].astype(str).str.strip().str.lower()
+name_counts = s78.groupby("name_clean").size().reset_index(name="races")
+ret_total = len(name_counts)
+ret_once  = int((name_counts["races"] == 1).sum())
+ret_two   = int((name_counts["races"] == 2).sum())
+ret_three = int((name_counts["races"] >= 3).sum())
+
+retention = {
+    "unique_athletes_s78": ret_total,
+    "raced_once_pct": round(ret_once / ret_total * 100, 1),
+    "raced_twice_pct": round(ret_two / ret_total * 100, 1),
+    "raced_3plus_pct": round(ret_three / ret_total * 100, 1),
+    "raced_once": ret_once,
+    "raced_twice": ret_two,
+    "raced_3plus": ret_three,
+    "global_firsttimer_pct": 70,  # HYROX global published stat
+}
+
 # ── Assemble & write ──────────────────────────────────────────────────────────
 dashboard = {
     "kpis": kpis,
@@ -263,6 +288,7 @@ dashboard = {
     "time_histogram": time_histogram,
     "division": division_data,
     "location": location_data,
+    "retention": retention,
 }
 
 out = DATA_DIR / "dashboard_data.js"

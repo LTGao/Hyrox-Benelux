@@ -921,5 +921,15 @@ const DASHBOARD_DATA = {
       "location": "Utrecht",
       "participants": 5739
     }
-  ]
+  ],
+  "retention": {
+    "unique_athletes_s78": 38387,
+    "raced_once_pct": 87.1,
+    "raced_twice_pct": 9.5,
+    "raced_3plus_pct": 3.4,
+    "raced_once": 33441,
+    "raced_twice": 3650,
+    "raced_3plus": 1296,
+    "global_firsttimer_pct": 70
+  }
 };

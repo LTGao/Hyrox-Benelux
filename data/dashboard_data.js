@@ -1,13 +1,13 @@
 const DASHBOARD_DATA = {
   "kpis": {
     "total_participants": 52647,
-    "unique_nationalities": 117,
+    "unique_nationalities": 127,
     "events_covered": 13,
     "seasons_covered": 5,
     "season_range": "2021–2026",
     "growth_multiple": 24.9,
-    "local_pct": 3.2,
-    "intl_pct": 96.8,
+    "local_pct": 80.9,
+    "intl_pct": 19.1,
     "male_pct": 61,
     "female_pct": 39
   },
@@ -155,64 +155,64 @@ const DASHBOARD_DATA = {
   ],
   "nationality": [
     {
-      "country": "NED",
-      "participants": 24212
-    },
-    {
-      "country": "GER",
-      "participants": 1725
+      "country": "NLD",
+      "participants": 40135
     },
     {
       "country": "BEL",
-      "participants": 1596
+      "participants": 2356
+    },
+    {
+      "country": "GER",
+      "participants": 2204
     },
     {
       "country": "GBR",
-      "participants": 1271
+      "participants": 1582
     },
     {
       "country": "FRA",
-      "participants": 716
+      "participants": 926
     },
     {
       "country": "IRL",
-      "participants": 454
+      "participants": 588
     },
     {
       "country": "ESP",
-      "participants": 138
-    },
-    {
-      "country": "USA",
-      "participants": 137
+      "participants": 181
     },
     {
       "country": "ITA",
-      "participants": 122
+      "participants": 161
     },
     {
-      "country": "POR",
-      "participants": 114
+      "country": "USA",
+      "participants": 160
     },
     {
       "country": "RSA",
-      "participants": 105
+      "participants": 154
+    },
+    {
+      "country": "POR",
+      "participants": 147
     },
     {
       "country": "LUX",
-      "participants": 97
+      "participants": 120
     },
     {
       "country": "POL",
-      "participants": 79
+      "participants": 96
     },
     {
       "country": "SUI",
-      "participants": 67
+      "participants": 75
     },
     {
       "country": "AUT",
-      "participants": 59
+      "participants": 72
     }
   ],
   "nat_trend": {
@@ -223,46 +223,46 @@ const DASHBOARD_DATA = {
       "S7",
       "S8"
     ],
-    "NED": [
+    "NLD": [
       516,
       1931,
       1353,
-      7827,
-      12585
-    ],
-    "GER": [
-      144,
-      304,
-      49,
-      431,
-      797
+      13077,
+      23258
     ],
     "BEL": [
       54,
       95,
       29,
-      391,
-      1027
+      567,
+      1611
+    ],
+    "GER": [
+      144,
+      304,
+      49,
+      619,
+      1088
     ],
     "GBR": [
       25,
       130,
       76,
-      572,
-      468
+      776,
+      575
     ],
     "FRA": [
       20,
       59,
       10,
-      178,
-      449
+      229,
+      608
     ]
   },
   "top5_countries": [
-    "NED",
-    "GER",
+    "NLD",
     "BEL",
+    "GER",
     "GBR",
     "FRA"
   ],

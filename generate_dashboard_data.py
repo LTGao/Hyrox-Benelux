@@ -18,7 +18,13 @@ df = pd.read_csv(SOURCE, low_memory=False)
 for col in ["gender", "division", "location", "nationality", "age_group"]:
     df[col] = df[col].astype(str).str.strip().str.lower()
 
-df["nationality"] = df["nationality"].str.upper()
+# Nationality: split "NED, NED, BEL" → take first value; normalise NED→NLD
+df["nationality"] = (
+    df["nationality"].str.upper()
+    .str.split(",").str[0]          # take first country for doubles/relay rows
+    .str.strip()
+    .str.replace(r"^NED$", "NLD", regex=True)   # normalise Dutch code
+)
 df["season"] = df["season"].astype(str).str.replace(r"\.0$", "", regex=True)
 df["total_time"] = pd.to_numeric(df["total_time"], errors="coerce")
 

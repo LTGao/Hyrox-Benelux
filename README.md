@@ -8,7 +8,7 @@ A data-driven case study analysing five seasons of HYROX race results across Ams
 
 ## What's in it
 
-**52,647 participants · 12 events · Seasons 4–8 · 2021–2026**
+**74,645 participants · 17 events · 7 cities · Seasons 4–8 · 2021–2026**
 
 The dashboard covers:
 - Participation growth per event and season
@@ -69,7 +69,7 @@ Hyrox-Benelux/
 
 ## Built by
 
-**LT Gao** — Digital marketer based in the Netherlands (10 years), sports industry background.  
+**LT Gao** — Digital marketer based in the Netherlands, sports industry background.  
 Built as a case study for a digital marketing role application in Benelux.
 
 - Python (pandas) for data merging and aggregation

@@ -1,15 +1,15 @@
 const DASHBOARD_DATA = {
   "kpis": {
-    "total_participants": 52647,
-    "unique_nationalities": 127,
-    "events_covered": 13,
+    "total_participants": 74645,
+    "unique_nationalities": 147,
+    "events_covered": 17,
     "seasons_covered": 5,
     "season_range": "2021–2026",
-    "growth_multiple": 24.9,
-    "local_pct": 80.9,
-    "intl_pct": 19.1,
-    "male_pct": 61,
-    "female_pct": 39
+    "growth_multiple": 40.2,
+    "local_pct": 80.7,
+    "intl_pct": 19.3,
+    "male_pct": 62,
+    "female_pct": 38
   },
   "participation": [
     {
@@ -62,6 +62,13 @@ const DASHBOARD_DATA = {
       "participants": 5876
     },
     {
+      "event": "S7 Heerenveen 2025",
+      "season": "7",
+      "location": "heerenveen",
+      "year": 2025,
+      "participants": 4309
+    },
+    {
       "event": "S7 Maastricht 2025",
       "season": "7",
       "location": "maastricht",
@@ -74,6 +81,13 @@ const DASHBOARD_DATA = {
       "location": "rotterdam",
       "year": 2025,
       "participants": 6591
+    },
+    {
+      "event": "S8 Gent 2025",
+      "season": "8",
+      "location": "gent",
+      "year": 2025,
+      "participants": 5190
     },
     {
       "event": "S8 Maastricht 2025",
@@ -95,6 +109,20 @@ const DASHBOARD_DATA = {
       "location": "amsterdam",
       "year": 2026,
       "participants": 8299
+    },
+    {
+      "event": "S8 Heerenveen 2026",
+      "season": "8",
+      "location": "heerenveen",
+      "year": 2026,
+      "participants": 6580
+    },
+    {
+      "event": "S8 Mechelen 2026",
+      "season": "8",
+      "location": "mechelen",
+      "year": 2026,
+      "participants": 5919
     },
     {
       "event": "S8 Rotterdam 2026",
@@ -119,11 +147,11 @@ const DASHBOARD_DATA = {
     },
     {
       "season": "S7",
-      "participants": 16315
+      "participants": 20624
     },
     {
       "season": "S8",
-      "participants": 28897
+      "participants": 46586
     }
   ],
   "gender": [
@@ -144,75 +172,75 @@ const DASHBOARD_DATA = {
     },
     {
       "season": "S7",
-      "male": 10386,
-      "female": 5929
+      "male": 12978,
+      "female": 7646
     },
     {
       "season": "S8",
-      "male": 16943,
-      "female": 11954
+      "male": 28201,
+      "female": 18385
     }
   ],
   "nationality": [
     {
       "country": "NLD",
-      "participants": 40135
+      "participants": 53914
     },
     {
       "country": "BEL",
-      "participants": 2356
+      "participants": 6142
     },
     {
       "country": "GER",
-      "participants": 2204
-    },
-    {
-      "country": "GBR",
-      "participants": 1582
+      "participants": 2974
     },
     {
       "country": "FRA",
-      "participants": 926
+      "participants": 2451
+    },
+    {
+      "country": "GBR",
+      "participants": 1986
     },
     {
       "country": "IRL",
-      "participants": 588
-    },
-    {
-      "country": "ESP",
-      "participants": 181
-    },
-    {
-      "country": "ITA",
-      "participants": 161
+      "participants": 775
     },
     {
       "country": "USA",
-      "participants": 160
+      "participants": 610
+    },
+    {
+      "country": "ESP",
+      "participants": 255
+    },
+    {
+      "country": "ITA",
+      "participants": 241
     },
     {
       "country": "RSA",
-      "participants": 154
+      "participants": 201
     },
     {
       "country": "POR",
-      "participants": 147
+      "participants": 201
     },
     {
       "country": "LUX",
-      "participants": 120
+      "participants": 198
     },
     {
       "country": "POL",
-      "participants": 96
+      "participants": 148
     },
     {
       "country": "SUI",
-      "participants": 75
+      "participants": 114
     },
     {
-      "country": "AUT",
-      "participants": 72
+      "country": "CAN",
+      "participants": 102
     }
   ],
   "nationality_by_season": {
@@ -405,125 +433,125 @@ const DASHBOARD_DATA = {
     "S7": [
       {
         "country": "NLD",
-        "participants": 13077
+        "participants": 17150
       },
       {
         "country": "GBR",
-        "participants": 776
+        "participants": 795
       },
       {
         "country": "GER",
-        "participants": 619
+        "participants": 687
       },
       {
         "country": "BEL",
-        "participants": 567
+        "participants": 605
       },
       {
         "country": "IRL",
-        "participants": 345
+        "participants": 359
       },
       {
         "country": "FRA",
-        "participants": 229
-      },
-      {
-        "country": "RSA",
-        "participants": 48
-      },
-      {
-        "country": "ITA",
-        "participants": 47
+        "participants": 248
       },
       {
         "country": "USA",
-        "participants": 45
+        "participants": 56
+      },
+      {
+        "country": "RSA",
+        "participants": 54
       },
       {
         "country": "ESP",
-        "participants": 44
+        "participants": 51
+      },
+      {
+        "country": "ITA",
+        "participants": 48
       },
       {
         "country": "POR",
-        "participants": 35
+        "participants": 41
       },
       {
         "country": "LUX",
         "participants": 35
       },
       {
-        "country": "DEN",
-        "participants": 26
-      },
-      {
         "country": "POL",
-        "participants": 26
+        "participants": 32
       },
       {
-        "country": "CAN",
-        "participants": 19
+        "country": "DEN",
+        "participants": 28
+      },
+      {
+        "country": "SUR",
+        "participants": 21
       }
     ],
     "S8": [
       {
         "country": "NLD",
-        "participants": 23258
+        "participants": 32964
       },
       {
         "country": "BEL",
-        "participants": 1611
-      },
-      {
-        "country": "GER",
-        "participants": 1088
+        "participants": 5359
       },
       {
         "country": "FRA",
-        "participants": 608
+        "participants": 2114
+      },
+      {
+        "country": "GER",
+        "participants": 1790
       },
       {
         "country": "GBR",
-        "participants": 575
-      },
-      {
-        "country": "IRL",
-        "participants": 175
-      },
-      {
-        "country": "ESP",
-        "participants": 106
-      },
-      {
-        "country": "RSA",
-        "participants": 103
+        "participants": 960
       },
       {
         "country": "USA",
-        "participants": 95
+        "participants": 534
+      },
+      {
+        "country": "IRL",
+        "participants": 348
+      },
+      {
+        "country": "ESP",
+        "participants": 173
       },
       {
         "country": "ITA",
-        "participants": 88
+        "participants": 167
       },
       {
-        "country": "POR",
-        "participants": 86
+        "country": "RSA",
+        "participants": 144
       },
       {
         "country": "LUX",
-        "participants": 62
+        "participants": 140
+      },
+      {
+        "country": "POR",
+        "participants": 134
       },
       {
         "country": "POL",
-        "participants": 56
+        "participants": 102
+      },
+      {
+        "country": "CAN",
+        "participants": 81
       },
       {
         "country": "MAR",
-        "participants": 43
-      },
-      {
-        "country": "SUI",
-        "participants": 37
+        "participants": 78
       }
     ]
   },
@@ -539,44 +567,44 @@ const DASHBOARD_DATA = {
       516,
       1931,
       1353,
-      13077,
-      23258
+      17150,
+      32964
     ],
     "BEL": [
       54,
       95,
       29,
-      567,
-      1611
+      605,
+      5359
     ],
     "GER": [
       144,
       304,
       49,
-      619,
-      1088
-    ],
-    "GBR": [
-      25,
-      130,
-      76,
-      776,
-      575
+      687,
+      1790
     ],
     "FRA": [
       20,
       59,
       10,
-      229,
-      608
+      248,
+      2114
+    ],
+    "GBR": [
+      25,
+      130,
+      76,
+      795,
+      960
     ]
   },
   "top5_countries": [
     "NLD",
     "BEL",
     "GER",
-    "GBR",
-    "FRA"
+    "FRA",
+    "GBR"
   ],
   "age": [
     {
@@ -585,31 +613,31 @@ const DASHBOARD_DATA = {
     },
     {
       "age_group": "25-29",
-      "participants": 10125
+      "participants": 14735
     },
     {
       "age_group": "30-34",
-      "participants": 11588
+      "participants": 16438
     },
     {
       "age_group": "35-39",
-      "participants": 7267
+      "participants": 10671
     },
     {
       "age_group": "40-44",
-      "participants": 5769
+      "participants": 8291
     },
     {
       "age_group": "45-49",
-      "participants": 2610
+      "participants": 3870
     },
     {
       "age_group": "50-54",
-      "participants": 1506
+      "participants": 2124
     },
     {
       "age_group": "55-59",
-      "participants": 644
+      "participants": 917
     },
     {
       "age_group": "60+",
@@ -630,24 +658,24 @@ const DASHBOARD_DATA = {
     ],
     "male": [
       0,
-      5792,
-      7728,
-      4812,
-      3725,
-      1744,
-      1066,
-      493,
+      8567,
+      10900,
+      7108,
+      5354,
+      2621,
+      1480,
+      699,
       0
     ],
     "female": [
       0,
-      4333,
-      3860,
-      2455,
-      2044,
-      866,
-      440,
-      151,
+      6168,
+      5538,
+      3563,
+      2937,
+      1249,
+      644,
+      218,
       0
     ]
   },
@@ -660,11 +688,15 @@ const DASHBOARD_DATA = {
       "S5 Rotterdam 2023",
       "S6 Amsterdam 2023",
       "S7 Amsterdam 2024",
+      "S7 Heerenveen 2025",
       "S7 Maastricht 2025",
       "S7 Rotterdam 2025",
+      "S8 Gent 2025",
       "S8 Maastricht 2025",
       "S8 Utrecht 2025",
       "S8 Amsterdam 2026",
+      "S8 Heerenveen 2026",
+      "S8 Mechelen 2026",
       "S8 Rotterdam 2026"
     ],
     "male": [
@@ -704,6 +736,11 @@ const DASHBOARD_DATA = {
         "q75": 96.6
       },
       {
+        "median": 85.3,
+        "q25": 77.4,
+        "q75": 95.5
+      },
+      {
         "median": 84.3,
         "q25": 76.2,
         "q75": 94.4
@@ -712,6 +749,11 @@ const DASHBOARD_DATA = {
         "median": 86.6,
         "q25": 78.4,
         "q75": 96.6
+      },
+      {
+        "median": 84.1,
+        "q25": 76.4,
+        "q75": 94.3
       },
       {
         "median": 89.1,
@@ -727,6 +769,16 @@ const DASHBOARD_DATA = {
         "median": 84.2,
         "q25": 76.2,
         "q75": 93.9
+      },
+      {
+        "median": 83.8,
+        "q25": 74.8,
+        "q75": 93.3
+      },
+      {
+        "median": 81.9,
+        "q25": 74.2,
+        "q75": 92.3
       },
       {
         "median": 86.5,
@@ -771,6 +823,11 @@ const DASHBOARD_DATA = {
         "q75": 105.8
       },
       {
+        "median": 94.6,
+        "q25": 85.9,
+        "q75": 105.8
+      },
+      {
         "median": 90.5,
         "q25": 81.9,
         "q75": 101.6
@@ -779,6 +836,11 @@ const DASHBOARD_DATA = {
         "median": 94.5,
         "q25": 85.7,
         "q75": 105.9
+      },
+      {
+        "median": 93.6,
+        "q25": 84.3,
+        "q75": 105.1
       },
       {
         "median": 95.8,
@@ -794,6 +856,16 @@ const DASHBOARD_DATA = {
         "median": 92.3,
         "q25": 83.6,
         "q75": 102.9
+      },
+      {
+        "median": 94.7,
+        "q25": 85.5,
+        "q75": 106.2
+      },
+      {
+        "median": 90.7,
+        "q25": 82.2,
+        "q75": 101.8
       },
       {
         "median": 96.8,
@@ -830,70 +902,70 @@ const DASHBOARD_DATA = {
       "165–170"
     ],
     "male": [
-      4,
-      76,
-      397,
-      977,
-      1763,
-      2486,
-      2709,
-      2551,
-      2154,
-      1609,
-      1120,
-      798,
-      601,
-      413,
-      275,
-      166,
-      110,
-      78,
-      47,
-      32,
-      28,
-      13,
-      9,
-      3
+      6,
+      128,
+      642,
+      1552,
+      2674,
+      3578,
+      3866,
+      3536,
+      2844,
+      2168,
+      1484,
+      1044,
+      766,
+      521,
+      356,
+      218,
+      144,
+      109,
+      60,
+      43,
+      37,
+      16,
+      14,
+      9
     ],
     "female": [
       0,
       1,
-      19,
-      127,
-      365,
-      728,
-      1137,
-      1304,
+      26,
+      178,
+      513,
+      1021,
+      1526,
+      1767,
+      1762,
+      1521,
       1283,
-      1126,
-      916,
-      702,
-      529,
-      397,
-      257,
-      187,
-      119,
-      118,
-      66,
-      64,
-      31,
-      24,
-      10,
-      9
+      955,
+      697,
+      536,
+      353,
+      252,
+      167,
+      154,
+      91,
+      74,
+      39,
+      34,
+      12,
+      18
     ]
   },
   "division": [
     {
       "division": "Open",
-      "participants": 27988
+      "participants": 38865
     },
     {
       "division": "Doubles",
-      "participants": 20568
+      "participants": 29223
     },
     {
       "division": "Pro",
-      "participants": 3925
+      "participants": 6391
     },
     {
       "division": "Relay",
@@ -918,20 +990,32 @@ const DASHBOARD_DATA = {
       "participants": 11291
     },
     {
+      "location": "Heerenveen",
+      "participants": 10889
+    },
+    {
+      "location": "Mechelen",
+      "participants": 5919
+    },
+    {
       "location": "Utrecht",
       "participants": 5739
+    },
+    {
+      "location": "Gent",
+      "participants": 5190
     }
   ],
   "retention": {
-    "unique_athletes": 46069,
-    "one_season_pct": 89.1,
-    "two_season_pct": 8.8,
-    "three_season_pct": 1.7,
-    "fourplus_season_pct": 0.4,
-    "one_season": 41053,
-    "two_season": 4067,
-    "three_season": 772,
-    "fourplus_season": 177,
+    "unique_athletes": 61661,
+    "one_season_pct": 89.5,
+    "two_season_pct": 8.7,
+    "three_season_pct": 1.5,
+    "fourplus_season_pct": 0.3,
+    "one_season": 55210,
+    "two_season": 5340,
+    "three_season": 903,
+    "fourplus_season": 208,
     "global_firsttimer_pct": 70
   },
   "div_by_season": {
@@ -946,43 +1030,43 @@ const DASHBOARD_DATA = {
       1223,
       4911,
       5991,
-      8976,
-      14498
+      11268,
+      23083
     ],
     "doubles": [
       519,
       2310,
       3247,
-      6163,
-      12272
+      7859,
+      19231
     ],
     "pro": [
       429,
       496,
       650,
-      1176,
-      2127
+      1497,
+      4272
     ],
     "open_pct": [
       54.6,
       63.1,
       60.4,
-      55.0,
-      50.2
+      54.6,
+      49.5
     ],
     "doubles_pct": [
       23.2,
       29.7,
       32.7,
-      37.8,
-      42.5
+      38.1,
+      41.3
     ],
     "pro_pct": [
       19.2,
       6.4,
       6.6,
-      7.2,
-      7.4
+      7.3,
+      9.2
     ]
   }
 };

@@ -273,6 +273,38 @@ section:nth-child(odd) .card{background:var(--grey-100);border-color:var(--grey-
 .ccamp p{font-size:.83rem;opacity:.8;line-height:1.6}
 .ccamp-cta{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.78rem;font-weight:700;opacity:.9}
 
+/* ── Booking section + form ──────────────────────────────────── */
+.book{background:var(--black);color:white;padding:clamp(3rem,7vw,5.5rem) 0}
+.book-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:start}
+@media(max-width:800px){.book-grid{grid-template-columns:1fr}}
+.book h2{color:white;font-size:clamp(1.75rem,3.5vw,2.75rem)}
+.book-lead{color:rgba(255,255,255,.55);font-size:1rem;line-height:1.75;margin-top:1rem;max-width:42ch}
+.book-contact{margin-top:1.75rem;font-size:.9rem;color:rgba(255,255,255,.7)}
+.book-contact a{color:var(--yellow);font-weight:600}
+.book-form{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);padding:clamp(1.5rem,3vw,2rem)}
+.book-form label{display:block;font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:1rem 0 .4rem}
+.book-form label:first-child{margin-top:0}
+.book-form input,.book-form textarea{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:white;padding:.7rem .85rem;font-family:var(--font-sans);font-size:.9rem;border-radius:0}
+.book-form input:focus,.book-form textarea:focus{outline:none;border-color:var(--yellow)}
+.book-form input[type=date]{color-scheme:dark}
+.slots{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.4rem}
+.slot{padding:.5rem .85rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .12s;font-family:var(--font-heading)}
+.slot:hover{border-color:var(--yellow)}
+.slot.active{background:var(--yellow);color:var(--black);border-color:var(--yellow)}
+.book-submit{width:100%;margin-top:1.5rem;background:var(--yellow);color:var(--black);border:none;padding:.95rem;font-family:var(--font-heading);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:1rem;cursor:pointer;transition:background .15s}
+.book-submit:hover{background:#fff}
+
+/* ── Floating booking button + modal ─────────────────────────── */
+.fab{position:fixed;right:1.5rem;bottom:1.5rem;z-index:400;background:var(--yellow);color:var(--black);border:none;padding:.9rem 1.4rem;font-family:var(--font-heading);font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:.9rem;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.3);display:inline-flex;align-items:center;gap:.5rem;transition:transform .15s,background .15s}
+.fab:hover{transform:translateY(-2px);background:#fff}
+@media(max-width:600px){.fab{right:1rem;bottom:1rem;padding:.8rem 1.1rem;font-size:.8rem}}
+.book-modal-form label{display:block;font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--grey-500);margin:1rem 0 .4rem}
+.book-modal-form label:first-child{margin-top:0}
+.book-modal-form input,.book-modal-form textarea{width:100%;background:var(--grey-100);border:1px solid var(--grey-200);color:var(--black);padding:.7rem .85rem;font-family:var(--font-sans);font-size:.9rem;border-radius:0}
+.book-modal-form input:focus,.book-modal-form textarea:focus{outline:none;border-color:var(--yellow-dark)}
+.book-modal-form .slot{background:var(--grey-100);border:1px solid var(--grey-200);color:var(--grey-700)}
+.book-modal-form .slot.active{background:var(--yellow);color:var(--black);border-color:var(--yellow)}
+
 /* ── Scroll animations ───────────────────────────────────────── */
 .fade-up{opacity:0;transform:translateY(28px);transition:opacity .55s ease,transform .55s ease}
 .fade-up.visible{opacity:1;transform:translateY(0)}
@@ -759,6 +791,85 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
   </div>
 </div>
 
+<!-- ── Book a Demo ────────────────────────────────────────────────────── -->
+<section id="book" class="book">
+  <div class="container">
+    <div class="book-grid">
+      <div>
+        <div class="label" style="color:rgba(255,224,0,.6)">Let's talk</div>
+        <h2 style="margin-top:.4rem">Book a demo</h2>
+        <p class="book-lead">Want to walk through this analysis together, or talk about how I'd approach digital marketing for HYROX Benelux? Pick a time that works and I'll confirm by email.</p>
+        <div class="book-contact">
+          Prefer email? Reach me directly at<br>
+          <a href="mailto:gaoleiting@hotmail.com">gaoleiting@hotmail.com</a>
+        </div>
+      </div>
+      <form class="book-form" onsubmit="return submitBooking(event,'book')">
+        <label>Your name</label>
+        <input type="text" id="book-name" required placeholder="Jane de Vries">
+        <label>Your email</label>
+        <input type="email" id="book-email" required placeholder="you@company.com">
+        <label>Preferred date</label>
+        <input type="date" id="book-date" required>
+        <label>Preferred time</label>
+        <div class="slots" id="book-slots">
+          <span class="slot" onclick="pickSlot(this,'book')">09:00</span>
+          <span class="slot" onclick="pickSlot(this,'book')">10:00</span>
+          <span class="slot" onclick="pickSlot(this,'book')">11:00</span>
+          <span class="slot" onclick="pickSlot(this,'book')">13:00</span>
+          <span class="slot" onclick="pickSlot(this,'book')">14:00</span>
+          <span class="slot" onclick="pickSlot(this,'book')">15:00</span>
+          <span class="slot" onclick="pickSlot(this,'book')">16:00</span>
+          <span class="slot" onclick="pickSlot(this,'book')">17:00</span>
+        </div>
+        <label>Message (optional)</label>
+        <textarea id="book-msg" rows="3" placeholder="A line about what you'd like to discuss"></textarea>
+        <button type="submit" class="book-submit">Request this slot</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── Floating booking button ────────────────────────────────────────── -->
+<button class="fab" onclick="openModal('modal-book')">📅 Book a demo</button>
+
+<!-- ── Booking modal ──────────────────────────────────────────────────── -->
+<div id="modal-book" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-book')">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header">
+      <div>
+        <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--grey-500);margin-bottom:.4rem">Let's talk</div>
+        <h2 style="font-size:1.4rem">Book a demo</h2>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-book')">✕</button>
+    </div>
+    <div class="modal-body">
+      <form class="book-modal-form" onsubmit="return submitBooking(event,'modal')">
+        <label>Your name</label>
+        <input type="text" id="modal-name" required placeholder="Jane de Vries">
+        <label>Your email</label>
+        <input type="email" id="modal-email" required placeholder="you@company.com">
+        <label>Preferred date</label>
+        <input type="date" id="modal-date" required>
+        <label>Preferred time</label>
+        <div class="slots" id="modal-slots">
+          <span class="slot" onclick="pickSlot(this,'modal')">09:00</span>
+          <span class="slot" onclick="pickSlot(this,'modal')">10:00</span>
+          <span class="slot" onclick="pickSlot(this,'modal')">11:00</span>
+          <span class="slot" onclick="pickSlot(this,'modal')">13:00</span>
+          <span class="slot" onclick="pickSlot(this,'modal')">14:00</span>
+          <span class="slot" onclick="pickSlot(this,'modal')">15:00</span>
+          <span class="slot" onclick="pickSlot(this,'modal')">16:00</span>
+          <span class="slot" onclick="pickSlot(this,'modal')">17:00</span>
+        </div>
+        <label>Message (optional)</label>
+        <textarea id="modal-msg" rows="3" placeholder="A line about what you'd like to discuss"></textarea>
+        <button type="submit" class="book-submit">Request this slot</button>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- ── Footer ────────────────────────────────────────────────────────── -->
 <footer>
   <div class="container">
@@ -788,6 +899,36 @@ const palette = ['#F5C000','#2563eb','#16a34a','#d97706','#7c3aed','#0891b2','#b
 
 function fmtNum(n){return n>=1000?(n/1000).toFixed(1).replace(/\.0$/,'')+'k':n}
 function minToHM(m){const h=Math.floor(m/60),mn=Math.round(m%60);return h>0?`${h}h ${mn}m`:`${mn}m`}
+
+// ── Booking: slot picker + mailto submit ─────────────────────────────────────
+const pickedSlot = { book: null, modal: null };
+function pickSlot(el, scope){
+  document.querySelectorAll('#'+scope+'-slots .slot').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  pickedSlot[scope] = el.textContent.trim();
+}
+function submitBooking(e, scope){
+  e.preventDefault();
+  const name = document.getElementById(scope+'-name').value.trim();
+  const email = document.getElementById(scope+'-email').value.trim();
+  const date = document.getElementById(scope+'-date').value;
+  const time = pickedSlot[scope];
+  const msg = document.getElementById(scope+'-msg').value.trim();
+  if (!time){ alert('Please pick a preferred time slot.'); return false; }
+  const subject = `Demo / interview request — ${name}`;
+  const body =
+    `Hi LT,\n\nI'd like to book a time to talk about the HYROX Benelux analysis.\n\n` +
+    `Name: ${name}\nEmail: ${email}\nPreferred date: ${date}\nPreferred time: ${time}\n\n` +
+    (msg ? `Message:\n${msg}\n\n` : '') +
+    `Sent from the HYROX Benelux report.`;
+  window.location.href = `mailto:gaoleiting@hotmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  return false;
+}
+// Prevent past dates
+window.addEventListener('load',()=>{
+  const today = new Date().toISOString().split('T')[0];
+  document.querySelectorAll('#book-date,#modal-date').forEach(d=>d.min=today);
+});
 
 const baseFont = {family:"Inter,system-ui,sans-serif",size:11};
 Chart.defaults.font = baseFont;

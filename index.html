@@ -70,8 +70,8 @@ nav{position:sticky;top:0;z-index:100;background:var(--black);color:var(--white)
 .hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
 @media(max-width:700px){.hero-inner{grid-template-columns:1fr}}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,224,0,.2);color:var(--yellow);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .8rem;border-radius:999px;margin-bottom:1.25rem;border:1px solid rgba(255,224,0,.4)}
-.hero h1{font-size:clamp(2rem,4.5vw,4.5rem);font-weight:700;line-height:1.1;letter-spacing:-0.04em;color:white;font-family:var(--font-heading)}
-.hero h1 em{font-style:normal;color:var(--yellow)}
+.hero h1{font-size:clamp(2rem,4.5vw,4.5rem);font-weight:700;line-height:1.1;letter-spacing:-0.03em;color:white;font-family:var(--font-heading)}
+.hero h1 em{font-style:normal;color:var(--yellow);font-weight:700}
 .hero p{color:rgba(255,255,255,.65);font-size:1.05rem;margin-top:1.25rem;max-width:42ch;line-height:1.75}
 .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 .hero-stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);padding:1.25rem;backdrop-filter:blur(8px)}
@@ -313,7 +313,7 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
         <div class="hero-eyebrow">
           <span>●</span> Benelux Market · S4–S8 · 2021–2026
         </div>
-        <h1>HYROX:<br>Growing Fast.<br><em>Going Deeper.</em></h1>
+        <h1>Growing Fast.<br><span style="color:var(--yellow)">Going Deeper.</span></h1>
         <p>5 seasons · 7 cities · 74,645 athletes · one question: what drives the next wave of growth?</p>
       </div>
       <div class="hero-stats" id="hero-stats">

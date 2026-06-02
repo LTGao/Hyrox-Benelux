@@ -87,10 +87,22 @@ nav{position:sticky;top:0;z-index:100;background:var(--black);color:var(--white)
 .hero-stat .trend{font-size:.8rem;color:#22c55e;margin-top:.25rem;font-weight:600}
 
 /* ── Photo split section ─────────────────────────────────────── */
-.photo-split{display:grid;grid-template-columns:1fr 1fr;min-height:520px}
+.photo-split{display:grid;grid-template-columns:1fr 1fr;min-height:520px;background:var(--black)}
 @media(max-width:700px){.photo-split{grid-template-columns:1fr}}
-.photo-split-img{background-size:cover;background-position:center}
+.photo-split-img{background-color:var(--black);background-position:center;background-repeat:no-repeat;background-size:cover}
 .photo-split-content{display:flex;flex-direction:column;justify-content:center;padding:clamp(2.5rem,6vw,5rem)}
+
+/* Full-bleed photo that fades behind text */
+.photo-hero{position:relative;min-height:540px;display:flex;align-items:center;background:var(--black);overflow:hidden}
+.photo-hero-bg{position:absolute;inset:0;background-size:cover;z-index:0}
+.photo-hero.right .photo-hero-bg{background-position:right center}
+.photo-hero.left .photo-hero-bg{background-position:left center}
+.photo-hero-overlay{position:absolute;inset:0;z-index:1}
+.photo-hero.right .photo-hero-overlay{background:linear-gradient(to right,#0d0d0d 0%,#0d0d0d 32%,rgba(13,13,13,.65) 55%,rgba(13,13,13,0) 100%)}
+.photo-hero.left .photo-hero-overlay{background:linear-gradient(to left,#0d0d0d 0%,#0d0d0d 32%,rgba(13,13,13,.65) 55%,rgba(13,13,13,0) 100%)}
+.photo-hero-content{position:relative;z-index:2;width:52%;padding:clamp(2.5rem,6vw,5rem);color:white}
+.photo-hero.left .photo-hero-content{margin-left:auto}
+@media(max-width:700px){.photo-hero-content{width:100%}.photo-hero.right .photo-hero-overlay{background:linear-gradient(to bottom,#0d0d0d 0%,rgba(13,13,13,.85) 60%,rgba(13,13,13,.7) 100%)}.photo-hero.left .photo-hero-overlay{background:linear-gradient(to bottom,#0d0d0d 0%,rgba(13,13,13,.85) 60%,rgba(13,13,13,.7) 100%)}}
 .photo-split-content h2{font-size:clamp(1.5rem,3vw,2.25rem);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin-bottom:1rem}
 .photo-split-content p{color:var(--grey-700);line-height:1.75;font-size:.975rem;max-width:44ch}
 .btn-outline{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.75rem;padding:.7rem 1.5rem;border-radius:0;border:2px solid var(--black);font-weight:700;font-size:.875rem;cursor:pointer;transition:background .15s,color .15s}
@@ -392,12 +404,11 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
 </section>
 
 <!-- ── Section 2: Audience entry ─────────────────────────────────────── -->
-<div id="audience" class="photo-split">
-<div class="photo-split-img" style="background-image:linear-gradient(to right,#0d0d0d 0%,#0d0d0d 12%,rgba(13,13,13,.7) 38%,rgba(13,13,13,.35) 62%,rgba(13,13,13,0) 90%),url('images/Athletes.jpg');min-height:500px;order:2"></div>
-  <div class="photo-split-content" style="background:var(--black);color:white;order:1">
-    <div class="label" style="color:rgba(255,192,0,.6);margin-bottom:.75rem">
-     02 · The Audience
-   </div>
+<div id="audience" class="photo-hero right">
+  <div class="photo-hero-bg" style="background-image:url('images/Athletes.jpg')"></div>
+  <div class="photo-hero-overlay"></div>
+  <div class="photo-hero-content">
+    <div class="label" style="color:rgba(255,224,0,.6);margin-bottom:.75rem">02 · The Audience</div>
     <h2 style="color:white">147 nationalities.<br>One shared obsession.</h2>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0">
       <div>
@@ -417,7 +428,7 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
         <div style="font-size:.75rem;color:rgba(255,255,255,.5);margin-top:.2rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase">Nationalities</div>
       </div>
     </div>
-   <a href="audience.html" style="display:inline-flex;align-items:center;justify-content:center;margin-top:1.75rem;background:var(--black);color:var(--yellow);padding:.9rem 1.4rem;border:2px solid var(--yellow);font-family:var(--font-heading);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:1rem;text-decoration:none;transition:all .15s;width:fit-content" onmouseover="this.style.background='var(--yellow)';this.style.color='var(--black)'" onmouseout="this.style.background='var(--black)';this.style.color='var(--yellow)'">
+    <a href="audience.html" style="display:inline-flex;align-items:center;justify-content:center;margin-top:1.75rem;background:transparent;color:var(--yellow);padding:.9rem 1.4rem;border:2px solid var(--yellow);font-family:var(--font-heading);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:1rem;text-decoration:none;transition:all .15s;width:fit-content" onmouseover="this.style.background='var(--yellow)';this.style.color='var(--black)'" onmouseout="this.style.background='transparent';this.style.color='var(--yellow)'">
       Explore Audience Profile
     </a>
   </div>
@@ -648,11 +659,12 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
   </div>
 </section>
 
-<!-- ── Audience photo split ───────────────────────────────────────────── -->
-<div class="photo-split">
-  <div class="photo-split-img" style="background-image:linear-gradient(to left,#0d0d0d 0%,#0d0d0d 12%,rgba(13,13,13,.7) 38%,rgba(13,13,13,.35) 62%,rgba(13,13,13,0) 90%),url('images/Audience.jpg');min-height:480px"></div>
-  <div class="photo-split-content" style="background:var(--black);color:white">
-    <div class="label" style="color:rgba(255,255,255,.4);margin-bottom:.75rem">The opportunity hiding in plain sight</div>
+<!-- ── Audience photo (opportunity) ───────────────────────────────────── -->
+<div class="photo-hero left">
+  <div class="photo-hero-bg" style="background-image:url('images/Audience.jpg')"></div>
+  <div class="photo-hero-overlay"></div>
+  <div class="photo-hero-content">
+    <div class="label" style="color:rgba(255,224,0,.6);margin-bottom:.75rem">The opportunity hiding in plain sight</div>
     <h2 style="color:white">They came to cheer.<br>They are your warmest leads.</h2>
     <p style="color:rgba(255,255,255,.6);margin-top:.75rem">Every HYROX event sells audience tickets. These people already showed up. They stood at the finish line, watched someone they know cross it, and thought — even briefly — "I could do that." Few audiences are warmer than someone who paid to be in the room.</p>
   </div>

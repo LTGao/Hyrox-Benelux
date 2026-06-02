@@ -1,8 +1,8 @@
-# HYROX Benelux · Market Intelligence Dashboard
+# HYROX Benelux · Market Intelligence Report
 
 A data-driven case study analysing five seasons of HYROX race results across Amsterdam, Rotterdam, Maastricht, and Utrecht — built to demonstrate audience insight and digital marketing strategy for the Benelux sports market.
 
-**[→ View Live Dashboard](https://ltgao.github.io/Hyrox-Benelux)**
+**[→ View Report](https://ltgao.github.io/Hyrox-Benelux)**
 
 ---
 
@@ -13,11 +13,6 @@ A data-driven case study analysing five seasons of HYROX race results across Ams
 The dashboard covers:
 - Participation growth per event and season
 - Gender split evolution (S4 → S8)
-- Top 15 nationalities with local vs. international breakdown
-- Age group distribution by gender
-- Finish time distribution (open division)
-- Division breakdown (open / doubles / pro / relay)
-- Audience personas derived from the data
 - Data-backed campaign concepts
 - Strategic insights for the Benelux market
 

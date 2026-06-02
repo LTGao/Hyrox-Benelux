@@ -59,8 +59,10 @@ nav{position:sticky;top:0;z-index:100;background:var(--black);color:var(--white)
 .nav-logo svg{width:22px;height:22px;fill:white}
 .nav-title{font-weight:700;font-size:.95rem;line-height:1.2;font-family:var(--font-heading);letter-spacing:.05em;text-transform:uppercase}
 .nav-title span{display:block;color:var(--grey-500);font-weight:400;font-size:.75rem}
-.nav-links{display:flex;gap:1.5rem;font-size:.85rem;color:var(--grey-500)}
+.nav-links{display:flex;align-items:center;gap:1.5rem;font-size:.85rem;color:var(--grey-500)}
 .nav-links a:hover{color:var(--white)}
+.nav-cta{background:var(--yellow);color:var(--black)!important;font-family:var(--font-heading);font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:.45rem 1rem;transition:background .15s}
+.nav-cta:hover{background:#fff;color:var(--black)!important}
 
 /* ── Season selector buttons ─────────────────────────────────── */
 .season-btn{font-family:var(--font-heading);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;padding:.5rem 1.1rem;background:transparent;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.2);cursor:pointer;transition:all .15s}
@@ -273,7 +275,14 @@ section:nth-child(odd) .card{background:var(--grey-100);border-color:var(--grey-
 .ccamp p{font-size:.83rem;opacity:.8;line-height:1.6}
 .ccamp-cta{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.78rem;font-weight:700;opacity:.9}
 
-/* ── Booking section + form ──────────────────────────────────── */
+/* ── Book a Demo CTA band ────────────────────────────────────── */
+.book-cta{background:var(--yellow);color:var(--black);padding:clamp(3rem,7vw,5rem) 0;text-align:center}
+.book-cta h2{color:var(--black);font-size:clamp(1.75rem,4vw,3rem);margin-top:.5rem}
+.book-cta p{max-width:48ch;margin:1rem auto 0;color:rgba(0,0,0,.7);font-size:1rem;line-height:1.7}
+.book-cta-btn{display:inline-block;margin-top:1.75rem;background:var(--black);color:var(--yellow);padding:1rem 2.5rem;font-family:var(--font-heading);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:1.05rem;text-decoration:none;transition:transform .15s}
+.book-cta-btn:hover{transform:translateY(-2px)}
+
+/* ── Booking section + form (legacy, unused) ─────────────────── */
 .book{background:var(--black);color:white;padding:clamp(3rem,7vw,5.5rem) 0}
 .book-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:start}
 @media(max-width:800px){.book-grid{grid-template-columns:1fr}}
@@ -350,6 +359,7 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
         <a href="audience.html">Audience</a>
         <a href="#opportunity">Loyalty</a>
         <a href="#campaigns">Campaigns</a>
+        <a href="contact.html" class="nav-cta">Contact</a>
       </div>
     </div>
   </div>
@@ -791,84 +801,18 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
   </div>
 </div>
 
-<!-- ── Book a Demo ────────────────────────────────────────────────────── -->
-<section id="book" class="book">
+<!-- ── Book a Demo CTA ───────────────────────────────────────────────── -->
+<section id="book" class="book-cta">
   <div class="container">
-    <div class="book-grid">
-      <div>
-        <div class="label" style="color:rgba(255,224,0,.6)">Let's talk</div>
-        <h2 style="margin-top:.4rem">Book a demo</h2>
-        <p class="book-lead">Want to walk through this analysis together, or talk about how I'd approach digital marketing for HYROX Benelux? Pick a time that works and I'll confirm by email.</p>
-        <div class="book-contact">
-          Prefer email? Reach me directly at<br>
-          <a href="mailto:gaoleiting@hotmail.com">gaoleiting@hotmail.com</a>
-        </div>
-      </div>
-      <form class="book-form" onsubmit="return submitBooking(event,'book')">
-        <label>Your name</label>
-        <input type="text" id="book-name" required placeholder="Jane de Vries">
-        <label>Your email</label>
-        <input type="email" id="book-email" required placeholder="you@company.com">
-        <label>Preferred date</label>
-        <input type="date" id="book-date" required>
-        <label>Preferred time</label>
-        <div class="slots" id="book-slots">
-          <span class="slot" onclick="pickSlot(this,'book')">09:00</span>
-          <span class="slot" onclick="pickSlot(this,'book')">10:00</span>
-          <span class="slot" onclick="pickSlot(this,'book')">11:00</span>
-          <span class="slot" onclick="pickSlot(this,'book')">13:00</span>
-          <span class="slot" onclick="pickSlot(this,'book')">14:00</span>
-          <span class="slot" onclick="pickSlot(this,'book')">15:00</span>
-          <span class="slot" onclick="pickSlot(this,'book')">16:00</span>
-          <span class="slot" onclick="pickSlot(this,'book')">17:00</span>
-        </div>
-        <label>Message (optional)</label>
-        <textarea id="book-msg" rows="3" placeholder="A line about what you'd like to discuss"></textarea>
-        <button type="submit" class="book-submit">Request this slot</button>
-      </form>
-    </div>
+    <div class="label" style="color:rgba(0,0,0,.55)">Let's talk</div>
+    <h2>Like what you see?<br>Let's talk about it.</h2>
+    <p>Book a time to walk through this analysis together, or to discuss how I'd approach digital marketing for HYROX Benelux.</p>
+    <a href="contact.html" class="book-cta-btn">Book a Demo</a>
   </div>
 </section>
 
-<!-- ── Floating booking button ────────────────────────────────────────── -->
-<button class="fab" onclick="openModal('modal-book')">📅 Book a demo</button>
-
-<!-- ── Booking modal ──────────────────────────────────────────────────── -->
-<div id="modal-book" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-book')">
-  <div class="modal" style="max-width:480px">
-    <div class="modal-header">
-      <div>
-        <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--grey-500);margin-bottom:.4rem">Let's talk</div>
-        <h2 style="font-size:1.4rem">Book a demo</h2>
-      </div>
-      <button class="modal-close" onclick="closeModal('modal-book')">✕</button>
-    </div>
-    <div class="modal-body">
-      <form class="book-modal-form" onsubmit="return submitBooking(event,'modal')">
-        <label>Your name</label>
-        <input type="text" id="modal-name" required placeholder="Jane de Vries">
-        <label>Your email</label>
-        <input type="email" id="modal-email" required placeholder="you@company.com">
-        <label>Preferred date</label>
-        <input type="date" id="modal-date" required>
-        <label>Preferred time</label>
-        <div class="slots" id="modal-slots">
-          <span class="slot" onclick="pickSlot(this,'modal')">09:00</span>
-          <span class="slot" onclick="pickSlot(this,'modal')">10:00</span>
-          <span class="slot" onclick="pickSlot(this,'modal')">11:00</span>
-          <span class="slot" onclick="pickSlot(this,'modal')">13:00</span>
-          <span class="slot" onclick="pickSlot(this,'modal')">14:00</span>
-          <span class="slot" onclick="pickSlot(this,'modal')">15:00</span>
-          <span class="slot" onclick="pickSlot(this,'modal')">16:00</span>
-          <span class="slot" onclick="pickSlot(this,'modal')">17:00</span>
-        </div>
-        <label>Message (optional)</label>
-        <textarea id="modal-msg" rows="3" placeholder="A line about what you'd like to discuss"></textarea>
-        <button type="submit" class="book-submit">Request this slot</button>
-      </form>
-    </div>
-  </div>
-</div>
+<!-- ── Floating contact button ────────────────────────────────────────── -->
+<a class="fab" href="contact.html">📅 Book a demo</a>
 
 <!-- ── Footer ────────────────────────────────────────────────────────── -->
 <footer>

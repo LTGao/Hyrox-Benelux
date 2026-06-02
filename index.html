@@ -56,16 +56,33 @@ nav{position:sticky;top:0;z-index:100;background:var(--black);color:var(--white)
 .nav-links a:hover{color:var(--white)}
 
 /* ── Hero ────────────────────────────────────────────────────── */
-.hero{background:var(--black);color:var(--white);padding:clamp(3rem,8vw,6rem) 0}
+.hero{position:relative;color:var(--white);padding:clamp(4rem,10vw,8rem) 0;overflow:hidden;min-height:90vh;display:flex;align-items:center}
+.hero-bg{position:absolute;inset:0;background-image:url('Athletes.jpg');background-size:cover;background-position:center 30%;z-index:0}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.55) 55%,rgba(0,0,0,.25) 100%)}
+.hero .container{position:relative;z-index:1;width:100%}
 .hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
 @media(max-width:700px){.hero-inner{grid-template-columns:1fr}}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(232,0,13,.15);color:var(--red);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .8rem;border-radius:999px;margin-bottom:1.25rem;border:1px solid rgba(232,0,13,.3)}
-.hero p{color:var(--grey-500);font-size:1.05rem;margin-top:1rem;max-width:38ch;line-height:1.7}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(232,0,13,.2);color:#ff4d57;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .8rem;border-radius:999px;margin-bottom:1.25rem;border:1px solid rgba(232,0,13,.4)}
+.hero h1{font-size:clamp(2rem,4.5vw,3.75rem);font-weight:900;line-height:1.08;letter-spacing:-0.03em;color:white}
+.hero h1 em{font-style:normal;color:var(--red)}
+.hero p{color:rgba(255,255,255,.65);font-size:1.05rem;margin-top:1.25rem;max-width:42ch;line-height:1.75}
 .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.hero-stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:1.25rem}
+.hero-stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);padding:1.25rem;backdrop-filter:blur(8px)}
 .hero-stat .num{color:var(--white)}
-.hero-stat .label{color:var(--grey-500);margin-top:.25rem}
+.hero-stat .label{color:rgba(255,255,255,.5);margin-top:.25rem}
 .hero-stat .trend{font-size:.8rem;color:#22c55e;margin-top:.25rem;font-weight:600}
+
+/* ── Photo split section ─────────────────────────────────────── */
+.photo-split{display:grid;grid-template-columns:1fr 1fr;min-height:520px}
+@media(max-width:700px){.photo-split{grid-template-columns:1fr}}
+.photo-split-img{background-size:cover;background-position:center}
+.photo-split-content{display:flex;flex-direction:column;justify-content:center;padding:clamp(2.5rem,6vw,5rem)}
+.photo-split-content h2{font-size:clamp(1.5rem,3vw,2.25rem);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin-bottom:1rem}
+.photo-split-content p{color:var(--grey-700);line-height:1.75;font-size:.975rem;max-width:44ch}
+.btn-outline{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.75rem;padding:.7rem 1.5rem;border-radius:999px;border:2px solid var(--black);font-weight:700;font-size:.875rem;cursor:pointer;transition:background .15s,color .15s}
+.btn-outline:hover{background:var(--black);color:var(--white)}
+.btn-red{background:var(--red);color:white;border:none;display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.75rem;border-radius:999px;font-weight:700;font-size:.875rem;cursor:pointer;transition:background .15s}
+.btn-red:hover{background:var(--red-dark)}
 
 /* ── Section ─────────────────────────────────────────────────── */
 section{padding:clamp(2.5rem,6vw,5rem) 0}
@@ -197,6 +214,38 @@ section:nth-child(odd) .card{background:var(--grey-100);border-color:var(--grey-
 .about-card p{color:rgba(255,255,255,.72);font-size:.875rem;line-height:1.7}
 .about-tag{display:inline-flex;align-items:center;gap:.35rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:.28rem .7rem;font-size:.73rem;font-weight:600;color:rgba(255,255,255,.85);margin:.25rem .25rem 0 0}
 
+/* ── Campaign modals ─────────────────────────────────────────── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);border-radius:16px;width:100%;max-width:860px;max-height:90vh;overflow-y:auto;position:relative}
+.modal-header{padding:2rem 2rem 1.5rem;border-bottom:1px solid var(--grey-200);position:sticky;top:0;background:var(--white);z-index:10;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.modal-close{width:36px;height:36px;border:none;background:var(--grey-100);border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--grey-700)}
+.modal-close:hover{background:var(--grey-200)}
+.modal-body{padding:2rem}
+.modal-tabs{display:flex;gap:.25rem;margin-bottom:1.75rem;background:var(--grey-100);padding:.3rem;border-radius:8px;width:fit-content}
+.modal-tab{padding:.4rem 1.1rem;border-radius:6px;border:none;background:transparent;font-size:.82rem;font-weight:600;color:var(--grey-500);cursor:pointer;transition:background .15s,color .15s}
+.modal-tab.active{background:var(--white);color:var(--black);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.modal-panel{display:none}.modal-panel.active{display:block}
+.modal-tag{display:inline-flex;align-items:center;gap:.4rem;font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.25rem .7rem;border-radius:999px;margin-bottom:1rem}
+.idea-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem}
+@media(max-width:600px){.idea-grid{grid-template-columns:1fr}}
+.idea-card{background:var(--grey-100);border-radius:10px;padding:1.1rem}
+.idea-card h4{font-size:.85rem;font-weight:700;margin-bottom:.4rem}
+.idea-card p{font-size:.78rem;color:var(--grey-700);line-height:1.6}
+.idea-card .idea-tag{font-size:.65rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.15rem .5rem;border-radius:999px;margin-bottom:.5rem;display:inline-block}
+
+/* ── Campaign cards in funnel ───────────────────────────────── */
+.campaign-float{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:1.5rem 0}
+@media(max-width:700px){.campaign-float{grid-template-columns:1fr}}
+.ccamp{border-radius:var(--radius);padding:1.5rem;cursor:pointer;transition:transform .2s,box-shadow .2s;border:2px solid transparent}
+.ccamp:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.12)}
+.ccamp.acquisition{background:var(--black);color:white;border-color:var(--black)}
+.ccamp.retention{background:var(--red);color:white;border-color:var(--red)}
+.ccamp-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.6;margin-bottom:.5rem}
+.ccamp h3{font-size:1.1rem;font-weight:800;margin-bottom:.6rem}
+.ccamp p{font-size:.83rem;opacity:.8;line-height:1.6}
+.ccamp-cta{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.78rem;font-weight:700;opacity:.9}
+
 /* ── Scroll animations ───────────────────────────────────────── */
 .fade-up{opacity:0;transform:translateY(28px);transition:opacity .55s ease,transform .55s ease}
 .fade-up.visible{opacity:1;transform:translateY(0)}
@@ -238,14 +287,11 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
         </div>
       </div>
       <div class="nav-links">
-        <a href="#growth">Growth</a>
+        <a href="#growth">The Market</a>
         <a href="#audience">Audience</a>
-        <a href="#insights">Insights</a>
-        <a href="#personas">Personas</a>
-        <a href="#campaigns">Campaigns</a>
-        <a href="#opportunity">Retention</a>
         <a href="#funnel">Funnel</a>
         <a href="#email">Email</a>
+        <a href="#opportunity">Retention</a>
         <a href="#community">Community</a>
       </div>
     </div>
@@ -254,14 +300,15 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
 
 <!-- ── Hero ─────────────────────────────────────────────────────────── -->
 <div class="hero">
+  <div class="hero-bg"></div>
   <div class="container">
     <div class="hero-inner">
       <div>
         <div class="hero-eyebrow">
-          <span>●</span> Benelux Market · S4–S8
+          <span>●</span> Benelux Market · S4–S8 · 2021–2026
         </div>
-        <h1>HYROX is the fastest-growing fitness race in Benelux</h1>
-        <p>Five seasons of data across seven Benelux cities — Amsterdam, Rotterdam, Maastricht, Utrecht, Heerenveen, Gent and Mechelen — reveal explosive growth and a premium, locally-rooted athlete community ready to be activated.</p>
+        <h1>The race is thriving.<br>Five seasons of data on who's racing, who's returning, and who's <em>still watching from the sidelines.</em></h1>
+        <p>Seven Benelux cities. 74,645 participants. One question: what turns a finish line into a starting point?</p>
       </div>
       <div class="hero-stats" id="hero-stats">
         <div class="hero-stat">
@@ -306,6 +353,17 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
       <div class="num" id="kpi2-local">—%</div>
       <div class="label">Benelux-Origin Athletes (NL/BE/LU)</div>
     </div>
+  </div>
+</div>
+
+<!-- ── Audience photo split ───────────────────────────────────────────── -->
+<div class="photo-split">
+  <div class="photo-split-img" style="background-image:url('Audience.jpg');min-height:420px"></div>
+  <div class="photo-split-content" style="background:var(--black);color:white">
+    <div class="label" style="color:rgba(255,255,255,.4);margin-bottom:.75rem">02 · The Audience</div>
+    <h2 style="color:white">147 nationalities.<br>One shared obsession.</h2>
+    <p style="color:rgba(255,255,255,.6);margin-top:.75rem">81% Dutch, Belgian or Luxembourgish. 38% female and growing. The 30–44 age group dominates. And the largest share finishes between 75 and 115 minutes — motivated, brand-engaged, and not yet at their peak.</p>
+    <a href="#audience" class="btn-outline" style="color:white;border-color:rgba(255,255,255,.3);margin-top:1.75rem">Explore the full audience profile ↓</a>
   </div>
 </div>
 
@@ -803,245 +861,21 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
   </div>
 </section>
 
-<!-- ── Section 4: Strategic Insights ────────────────────────────────── -->
-<section id="insights">
-  <div class="container">
-    <div class="section-header">
-      <div class="label">04 · Strategic Insights for House of Sports</div>
-      <h2>Data-driven opportunities for the Benelux market</h2>
-    </div>
-
-    <div class="marketing-grid">
-      <div class="mcard red">
-        <div class="mcard-num">40.2×</div>
-        <h3>Ride the Growth Wave</h3>
-        <p>Seasonal participant volume has grown 40.2× from S4 to S8. The addition of Heerenveen, Gent and Mechelen in S7 and S8 shows the format expanding rapidly beyond its original Dutch strongholds into Belgium. Early partnerships in new host cities lock in audience share before competitors arrive.</p>
-      </div>
-      <div class="mcard dark">
-        <div class="mcard-num">19%</div>
-        <h3>International Layer on a Local Base</h3>
-        <p>Around 81% of athletes are Dutch, Belgian, or Luxembourgish, confirming HYROX as a genuine local community event. The 19% international segment, led by Germany, UK, and France, justifies an additional pan-European digital layer on top of Dutch-first campaigns.</p>
-      </div>
-      <div class="mcard light">
-        <div class="mcard-num">39%</div>
-        <h3>Growing Female Segment</h3>
-        <p>Female participation has grown steadily season-on-season and represents the fastest-growing demographic in fitness race formats globally. Women-first campaign assets and category-specific sponsorship (apparel, wellness) are underserved and high-ROI.</p>
-      </div>
-      <div class="mcard light">
-        <div class="mcard-num">117</div>
-        <h3>Nations. One Race Day.</h3>
-        <p>Athletes from 117 nationalities compete in Benelux venues. This creates unique social amplification: a Dutch race finish shared in Germany, the UK, or France multiplies the organic reach of any branded activation beyond the event footprint.</p>
-      </div>
-      <div class="mcard light">
-        <div class="mcard-num">30–44</div>
-        <h3>Premium Demographic</h3>
-        <p>The 30–44 age band is HYROX's core. These are established professionals with disposable income, high brand loyalty, and influence in their social networks. They spend on gear, travel, nutrition, and experience, making them ideal for premium and lifestyle brand alignment.</p>
-      </div>
-      <div class="mcard light">
-        <div class="mcard-num">7 Cities</div>
-        <h3>Multi-Market Presence</h3>
-        <p>Amsterdam, Rotterdam, Maastricht, Utrecht, Heerenveen, Gent and Mechelen give House of Sports seven annual touchpoints across the Netherlands and Belgium. Each city carries a distinct local fitness community that responds to city-specific creative, local gym partnerships, and community activations.</p>
-      </div>
-    </div>
+<!-- ── Campaign cards (float into funnel) ─────────────────────────────── -->
+<div class="campaign-float container" style="margin-top:3rem;margin-bottom:0">
+  <div class="ccamp acquisition fade-up" onclick="openModal('modal-acq')">
+    <div class="ccamp-label">Campaign 01 · Acquisition</div>
+    <h3>From the Sidelines to the Start Line</h3>
+    <p>Audience ticket holders are the warmest leads HYROX has. They showed up. They watched. They almost certainly thought "I could do that." This campaign converts the spectator into the next season's athlete.</p>
+    <div class="ccamp-cta">View full campaign plan →</div>
   </div>
-</section>
-
-<!-- ── Section 5: Audience Personas ─────────────────────────────────── -->
-<section id="personas">
-  <div class="container">
-    <div class="section-header">
-      <div class="label">05 · Audience Personas</div>
-      <h2>Three athletes. Three different activation strategies.</h2>
-      <p>Behind every data point is a person. These personas, built directly from the race results, translate segments into targetable human profiles with distinct channel affinities.</p>
-    </div>
-
-    <div class="persona-grid">
-
-      <!-- Persona 1 -->
-      <div class="persona">
-        <div class="persona-header">
-          <div class="persona-avatar" style="background:#dbeafe">🏃‍♂️</div>
-          <div class="persona-meta">
-            <h3>The Performance Chaser</h3>
-            <span class="persona-tag" style="background:#dbeafe;color:#1d4ed8">Male · 35–44 · Open</span>
-          </div>
-        </div>
-        <div class="persona-body">
-          <p>Works in finance or tech. Tracks every split on Garmin. Drove from Düsseldorf to Amsterdam specifically to race. His LinkedIn reads "amateur triathlete." Finishes in 75–90 min and immediately checks the leaderboard.</p>
-          <div class="persona-stats">
-            <div>
-              <div class="persona-stat-label">Largest Segment</div>
-              <div class="persona-stat-val">35–44 male</div>
-            </div>
-            <div>
-              <div class="persona-stat-label">Typical Finish</div>
-              <div class="persona-stat-val">75–90 min</div>
-            </div>
-            <div>
-              <div class="persona-stat-label">Top Origin</div>
-              <div class="persona-stat-val">GER / GBR / NLD</div>
-            </div>
-            <div>
-              <div class="persona-stat-label">Division</div>
-              <div class="persona-stat-val">Open (solo)</div>
-            </div>
-          </div>
-          <div class="persona-channels">
-            <span class="ch-pill">Strava</span>
-            <span class="ch-pill">Instagram</span>
-            <span class="ch-pill">YouTube</span>
-            <span class="ch-pill">Garmin Connect</span>
-            <span class="ch-pill">LinkedIn</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Persona 2 -->
-      <div class="persona">
-        <div class="persona-header">
-          <div class="persona-avatar" style="background:#fce7f3">🏋️‍♀️</div>
-          <div class="persona-meta">
-            <h3>The Lifestyle Athlete</h3>
-            <span class="persona-tag" style="background:#fce7f3;color:#9d174d">Female · 30–39 · Open</span>
-          </div>
-        </div>
-        <div class="persona-body">
-          <p>CrossFit 3×/week, podcast listener, oat milk latte. She follows fitness creators on Instagram and TikTok. Signed up after seeing a friend finish Amsterdam 2024. The race is a social experience as much as an athletic one.</p>
-          <div class="persona-stats">
-            <div>
-              <div class="persona-stat-label">Fastest Growing</div>
-              <div class="persona-stat-val">Female +S4→S8</div>
-            </div>
-            <div>
-              <div class="persona-stat-label">Typical Finish</div>
-              <div class="persona-stat-val">90–115 min</div>
-            </div>
-            <div>
-              <div class="persona-stat-label">Top Origin</div>
-              <div class="persona-stat-val">NLD / GBR / BEL</div>
-            </div>
-            <div>
-              <div class="persona-stat-label">Decision Driver</div>
-              <div class="persona-stat-val">Social proof</div>
-            </div>
-          </div>
-          <div class="persona-channels">
-            <span class="ch-pill">Instagram</span>
-            <span class="ch-pill">TikTok</span>
-            <span class="ch-pill">Pinterest</span>
-            <span class="ch-pill">WhatsApp communities</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Persona 3 -->
-      <div class="persona">
-        <div class="persona-header">
-          <div class="persona-avatar" style="background:#dcfce7">👫</div>
-          <div class="persona-meta">
-            <h3>The Social Racer</h3>
-            <span class="persona-tag" style="background:#dcfce7;color:#166534">Mixed · 25–34 · Doubles</span>
-          </div>
-        </div>
-        <div class="persona-body">
-          <p>Signed up with a partner, colleague, or gym friend. The finish line photo is going on Instagram. Community is the product for this persona. They come for the race and stay for the identity. High organic share rate post-event.</p>
-          <div class="persona-stats">
-            <div>
-              <div class="persona-stat-label">Division Share</div>
-              <div class="persona-stat-val">Doubles ~30%</div>
-            </div>
-            <div>
-              <div class="persona-stat-label">Motivation</div>
-              <div class="persona-stat-val">Community</div>
-            </div>
-            <div>
-              <div class="persona-stat-label">Age Range</div>
-              <div class="persona-stat-val">25–34 peak</div>
-            </div>
-            <div>
-              <div class="persona-stat-label">Amplification</div>
-              <div class="persona-stat-val">Very High</div>
-            </div>
-          </div>
-          <div class="persona-channels">
-            <span class="ch-pill">Instagram</span>
-            <span class="ch-pill">TikTok</span>
-            <span class="ch-pill">Facebook groups</span>
-            <span class="ch-pill">Gym communities</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
+  <div class="ccamp retention fade-up" onclick="openModal('modal-ret')">
+    <div class="ccamp-label">Campaign 02 · Retention</div>
+    <h3>Your Next PB is One Race Away</h3>
+    <p>89% of Benelux athletes raced only one season. This campaign re-engages them with the one thing they still think about: their finish time. Personalised, performance-driven, and timed for peak motivation.</p>
+    <div class="ccamp-cta">View full campaign plan →</div>
   </div>
-</section>
-
-<!-- ── Section 6: Campaign Concepts ──────────────────────────────────── -->
-<section id="campaigns">
-  <div class="container">
-    <div class="section-header">
-      <div class="label">06 · Campaign Concepts</div>
-      <h2>Data-informed ideas, ready to activate</h2>
-      <p>Each concept is rooted directly in the data above: specific opportunities the Benelux audience reveals, not generic sports marketing.</p>
-    </div>
-
-    <div class="campaign-grid">
-
-      <div class="camp">
-        <div class="camp-top">
-          <div class="camp-num">01</div>
-          <div class="camp-title">"Recruit From The Results"</div>
-          <div class="camp-body">
-            <p>Every finisher who crosses the line in Amsterdam or Rotterdam is a warm lead for the next event. A retargeting campaign using race-day email data + Instagram Custom Audiences, timed 48–72 hours post-finish when endorphins are still high, converts at 3–5× the rate of cold acquisition.</p>
-            <p style="margin-top:.75rem"><strong>Data backing:</strong> 74k+ named finishers across Benelux, a built-in retargeting pool that grows every season.</p>
-          </div>
-        </div>
-        <div class="camp-bottom">
-          <div class="label">Channels & Format</div>
-          <span class="camp-tag" style="background:#dbeafe;color:#1d4ed8">Meta retargeting</span>
-          <span class="camp-tag" style="background:#dbeafe;color:#1d4ed8">Email automation</span>
-          <span class="camp-tag" style="background:#dbeafe;color:#1d4ed8">Strava ads</span>
-        </div>
-      </div>
-
-      <div class="camp">
-        <div class="camp-top">
-          <div class="camp-num">02</div>
-          <div class="camp-title">"The 90-Minute Club"</div>
-          <div class="camp-body">
-            <p>The largest group of open-division athletes finishes between 75 and 105 minutes: aspirational, motivated, and the clear majority of the field. A content series built around this achiever segment (training guides, station breakdowns, pacing tips) speaks directly to the majority, not just the podium. Partner with mid-range gear and nutrition brands whose audience matches exactly.</p>
-            <p style="margin-top:.75rem"><strong>Data backing:</strong> Histogram peak at 80–100 min for males, 90–110 min for females.</p>
-          </div>
-        </div>
-        <div class="camp-bottom">
-          <div class="label">Channels & Format</div>
-          <span class="camp-tag" style="background:#dcfce7;color:#166534">YouTube series</span>
-          <span class="camp-tag" style="background:#dcfce7;color:#166534">Instagram Reels</span>
-          <span class="camp-tag" style="background:#dcfce7;color:#166534">TikTok</span>
-          <span class="camp-tag" style="background:#dcfce7;color:#166534">Brand partnership</span>
-        </div>
-      </div>
-
-      <div class="camp">
-        <div class="camp-top">
-          <div class="camp-num">03</div>
-          <div class="camp-title">"Benelux Homecoming"</div>
-          <div class="camp-body">
-            <p>Around 19% of athletes come from outside Benelux, with Germany, UK, and France as the top feeder markets. A geo-targeted pre-event campaign in those markets, in German, English, and French, captures athletes who specifically travel to race. Even a small uplift in this segment fills hundreds of extra bibs per event.</p>
-            <p style="margin-top:.75rem"><strong>Data backing:</strong> GER, GBR, FRA consistently rank in the top 5 nationalities across all seasons.</p>
-          </div>
-        </div>
-        <div class="camp-bottom">
-          <div class="label">Channels & Format</div>
-          <span class="camp-tag" style="background:#fce7f3;color:#9d174d">Google Ads (DE/UK/FR)</span>
-          <span class="camp-tag" style="background:#fce7f3;color:#9d174d">Meta geo-targeting</span>
-          <span class="camp-tag" style="background:#fce7f3;color:#9d174d">Travel co-marketing</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
+</div>
 
 <!-- ── Section 7: Retention ────────────────────────────────────────────── -->
 <section id="opportunity">
@@ -1176,6 +1010,241 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
     </div>
   </div>
 </section>
+
+<!-- ── Modal: Acquisition Campaign ──────────────────────────────────── -->
+<div id="modal-acq" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-acq')">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--grey-500);margin-bottom:.4rem">Campaign 01 · Acquisition</div>
+        <h2 style="font-size:1.4rem">From the Sidelines to the Start Line</h2>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-acq')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-tabs">
+        <button class="modal-tab active" onclick="switchModalTab('acq','brief',this)">Campaign Brief</button>
+        <button class="modal-tab" onclick="switchModalTab('acq','email',this)">Email Flow</button>
+        <button class="modal-tab" onclick="switchModalTab('acq','paid',this)">Paid &amp; SEO</button>
+      </div>
+
+      <!-- Brief -->
+      <div id="acq-brief" class="modal-panel active">
+        <div class="modal-tag" style="background:#f0fdf4;color:#166534">Target: Audience ticket holders + athletes' networks</div>
+        <h3 style="margin-bottom:.75rem">The insight</h3>
+        <p style="font-size:.9rem;color:var(--grey-700);line-height:1.75;margin-bottom:1.25rem">Every HYROX event sells audience tickets. These people are not random bystanders — they came to watch someone they know. They stood at the finish line. They saw the t-shirts, the timing screens, the community. Research on live sports attendance consistently shows that spectators who know a participant personally have the highest conversion rate to first-time participant of any cold audience. Yet no follow-up email exists for audience ticket buyers. That is the gap.</p>
+        <h3 style="margin-bottom:.75rem">The hook: identity, not discount</h3>
+        <p style="font-size:.9rem;color:var(--grey-700);line-height:1.75;margin-bottom:1.25rem">Audience ticket holders are not price-sensitive — they already paid to watch. The lever is identity and exclusivity. Not "register now and save 10%" but "you were there at the start. Become part of it."</p>
+        <div class="idea-grid">
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#f0fdf4;color:#166534">Mechanic 01</div>
+            <h4>Audience-to-Athlete Badge</h4>
+            <p>Athletes who convert from audience ticket holder to racer receive a special "Sidelines to Start Line" digital badge on their HYROX profile. Visible on the leaderboard. Shareable. Creates social proof for the next wave of spectators.</p>
+          </div>
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#dbeafe;color:#1e40af">Mechanic 02</div>
+            <h4>Early Bird + Priority Wave</h4>
+            <p>Audience ticket buyers get 48-hour early access to the next event's registration before it opens publicly, plus priority start wave placement. Scarcity and status combined. No discount needed.</p>
+          </div>
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#fef9c3;color:#92400e">Mechanic 03</div>
+            <h4>Bring a Buddy — Athlete Edition</h4>
+            <p>Existing athletes receive a personalised "bring a friend" link after their race. When their friend registers, both get a small registration credit and a "Race Together" badge. Converts 1 registration into 2. The friend is a pre-warmed lead who already has social proof from someone they trust.</p>
+          </div>
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#fce7f3;color:#9d174d">Mechanic 04</div>
+            <h4>Gym Partnership Awareness</h4>
+            <p>Partner with Basic-Fit, SportCity, and CrossFit boxes city by city. Gyms promote HYROX registration to their members via in-app banners, email, and front-desk QR codes. Affiliated gym members get a partner entry discount code. Gym gets co-branding on race day. Both sides win.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Email flow -->
+      <div id="acq-email" class="modal-panel">
+        <div class="modal-tag" style="background:#f0fdf4;color:#166534">Trigger: Audience ticket purchase confirmed</div>
+        <div style="display:flex;flex-direction:column;gap:.75rem">
+          <div style="display:grid;grid-template-columns:64px 1fr;gap:1rem;align-items:start">
+            <div style="background:var(--black);color:white;border-radius:8px;padding:.6rem;text-align:center;font-size:.7rem;font-weight:800">D+0<br><span style="font-weight:400;opacity:.6">same day</span></div>
+            <div class="flow-card" style="margin:0">
+              <div class="flow-card-head"><div class="flow-subject">See you at the finish line 🏁</div><div class="flow-segment" style="background:#f0fdf4;color:#166534">All audience buyers</div></div>
+              <div class="flow-body">Race day logistics, what to expect as a spectator, best viewing points, and a subtle intro to what it feels like to race. No CTA — purely hospitality.</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:64px 1fr;gap:1rem;align-items:start">
+            <div style="background:var(--black);color:white;border-radius:8px;padding:.6rem;text-align:center;font-size:.7rem;font-weight:800">D+1<br><span style="font-weight:400;opacity:.6">post-event</span></div>
+            <div class="flow-card" style="margin:0">
+              <div class="flow-card-head"><div class="flow-subject">You were there. Now imagine crossing that line yourself.</div><div class="flow-segment" style="background:#f0fdf4;color:#166534">All audience buyers</div></div>
+              <div class="flow-body">Emotional recap of race day. Photos of finish line moments. "The person you watched trained for 12 weeks. Here's what that looks like." Soft introduction to HYROX as a participant, not a spectator.</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:64px 1fr;gap:1rem;align-items:start">
+            <div style="background:var(--red);color:white;border-radius:8px;padding:.6rem;text-align:center;font-size:.7rem;font-weight:800">D+4<br><span style="font-weight:400;opacity:.6">day 4</span></div>
+            <div class="flow-card" style="margin:0">
+              <div class="flow-card-head"><div class="flow-subject">You have 48-hour early access — next season is open</div><div class="flow-segment" style="background:#fef2f2;color:#b91c1c">Audience buyers only</div></div>
+              <div class="flow-body">Exclusive early registration window with priority wave placement. The badge is mentioned. "Athletes who convert from audience to racer get a permanent mark on their HYROX profile." Identity over discount.</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:64px 1fr;gap:1rem;align-items:start">
+            <div style="background:#2563eb;color:white;border-radius:8px;padding:.6rem;text-align:center;font-size:.7rem;font-weight:800">D+10<br><span style="font-weight:400;opacity:.6">day 10</span></div>
+            <div class="flow-card" style="margin:0">
+              <div class="flow-card-head"><div class="flow-subject">Your 12-week plan starts here</div><div class="flow-segment" style="background:#dbeafe;color:#1e40af">Not yet registered</div></div>
+              <div class="flow-body">Beginner training overview showing exactly what 12 weeks of HYROX prep looks like. Demystifies the race. CTA links to registration with early-bird window still active.</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:64px 1fr;gap:1rem;align-items:start">
+            <div style="background:#16a34a;color:white;border-radius:8px;padding:.6rem;text-align:center;font-size:.7rem;font-weight:800">D+21<br><span style="font-weight:400;opacity:.6">day 21</span></div>
+            <div class="flow-card" style="margin:0">
+              <div class="flow-card-head"><div class="flow-subject">Someone from your gym is racing next season</div><div class="flow-segment" style="background:#dcfce7;color:#166534">Not yet registered</div></div>
+              <div class="flow-body">Gym partnership activation. If the audience buyer's gym is a HYROX partner, this email surfaces their gym community's registrations. Social proof from people they already train with.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paid & SEO -->
+      <div id="acq-paid" class="modal-panel">
+        <div class="modal-tag" style="background:#dbeafe;color:#1e40af">Paid Media + SEO + Social</div>
+        <div class="idea-grid">
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#dbeafe;color:#1e40af">Meta Ads</div>
+            <h4>Audience Ticket Retargeting</h4>
+            <p>Custom audience built from audience ticket buyer email list. Served post-event Instagram and Facebook ads with finish line video content. Lookalike audience from past audience buyers for cold acquisition at gyms and fitness interest segments.</p>
+          </div>
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#fef9c3;color:#92400e">Google Search</div>
+            <h4>Intent Keywords</h4>
+            <p>"HYROX first time", "HYROX how to start", "HYROX Amsterdam register", "HYROX training beginners". These are the searches someone makes after watching a friend race. Low competition, high conversion intent.</p>
+          </div>
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#fce7f3;color:#9d174d">Instagram Reels / TikTok</div>
+            <h4>"From Audience to Athlete" Content Series</h4>
+            <p>Documentary-style short-form content following a first-timer from spectator to finisher over 12 weeks. Authentic, shareable, and builds FOMO in the exact audience of people who know someone who races HYROX.</p>
+          </div>
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#f0fdf4;color:#166534">SEO</div>
+            <h4>Landing Page: First-Timer Hub</h4>
+            <p>Dedicated SEO-optimised page for "HYROX beginner", "HYROX for beginners Benelux", "how to prepare for HYROX". Captures organic traffic from warm audience and feeds directly into the email flow above.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Modal: Retention Campaign ─────────────────────────────────────── -->
+<div id="modal-ret" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-ret')">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--grey-500);margin-bottom:.4rem">Campaign 02 · Retention</div>
+        <h2 style="font-size:1.4rem">Your Next PB is One Race Away</h2>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-ret')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-tabs">
+        <button class="modal-tab active" onclick="switchModalTab('ret','brief',this)">Campaign Brief</button>
+        <button class="modal-tab" onclick="switchModalTab('ret','email',this)">Email Flow</button>
+        <button class="modal-tab" onclick="switchModalTab('ret','paid',this)">Paid &amp; SEO</button>
+      </div>
+
+      <!-- Brief -->
+      <div id="ret-brief" class="modal-panel active">
+        <div class="modal-tag" style="background:#fef2f2;color:#b91c1c">Target: Previous Benelux finishers who have not re-registered</div>
+        <h3 style="margin-bottom:.75rem">The insight</h3>
+        <p style="font-size:.9rem;color:var(--grey-700);line-height:1.75;margin-bottom:1.25rem">89% of Benelux athletes race once and do not return to a Benelux event. But most of them did not stop being athletes. They are still training, still tracking their fitness, still following HYROX on Instagram. The gap is not motivation — it is activation. Nobody reminded them at the right moment with the right message. This campaign fixes that with a single hook: your finish time, and the specific number it could become.</p>
+        <h3 style="margin-bottom:.75rem">The hook: the PB they know is possible</h3>
+        <p style="font-size:.9rem;color:var(--grey-700);line-height:1.75;margin-bottom:1.25rem">Every athlete who has finished HYROX knows roughly what they could shave off their time. Data from the Benelux dataset shows that repeat athletes improve by an average of 7 to 12 minutes on their second race. That is a concrete, believable number. The campaign makes it personal: "You finished in 1:34:22. Athletes with your profile average 1:24 on their second race."</p>
+        <div class="idea-grid">
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#fef2f2;color:#b91c1c">Mechanic 01</div>
+            <h4>Personalised PB Projection</h4>
+            <p>Email built from the athlete's actual split data. Identifies their slowest station, shows average improvement for their age group and finish-time tier, and presents a realistic target time for their second race. Data-driven and deeply personal.</p>
+          </div>
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#dbeafe;color:#1e40af">Mechanic 02</div>
+            <h4>Returning Athlete Badge</h4>
+            <p>"Season X Veteran" badge on the race profile for athletes returning to HYROX Benelux. Visible to other athletes on the leaderboard. Simple identity signal that rewards loyalty with status rather than price.</p>
+          </div>
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#fef9c3;color:#92400e">Mechanic 03</div>
+            <h4>Upgrade Path: Solo to Doubles</h4>
+            <p>For solo open finishers who have not returned: offer the doubles entry as a lower-commitment re-entry point. Racing with a partner reduces the psychological barrier of "starting over alone" and converts one lapsed athlete into two new registrations.</p>
+          </div>
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#f0fdf4;color:#166534">Mechanic 04</div>
+            <h4>Station-Specific Training Content</h4>
+            <p>Based on the athlete's weakest split, serve a targeted 4-week training guide for that specific station. Useful, free, and keeps HYROX top of mind during the training window before next season opens.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Email flow -->
+      <div id="ret-email" class="modal-panel">
+        <div class="modal-tag" style="background:#fef2f2;color:#b91c1c">Trigger: 60 days after last HYROX Benelux finish, no new registration</div>
+        <div style="display:flex;flex-direction:column;gap:.75rem">
+          <div style="display:grid;grid-template-columns:64px 1fr;gap:1rem;align-items:start">
+            <div style="background:var(--black);color:white;border-radius:8px;padding:.6rem;text-align:center;font-size:.7rem;font-weight:800">D+60<br><span style="font-weight:400;opacity:.6">2 months</span></div>
+            <div class="flow-card" style="margin:0">
+              <div class="flow-card-head"><div class="flow-subject">It has been 60 days since you crossed the finish line</div><div class="flow-segment" style="background:#fef2f2;color:#b91c1c">All lapsed finishers</div></div>
+              <div class="flow-body">Subtle re-engagement. References their specific finish city and season. No CTA yet — just a nudge that HYROX remembers them. Includes their official finish time as a visual reminder.</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:64px 1fr;gap:1rem;align-items:start">
+            <div style="background:var(--red);color:white;border-radius:8px;padding:.6rem;text-align:center;font-size:.7rem;font-weight:800">D+75<br><span style="font-weight:400;opacity:.6">2.5 months</span></div>
+            <div class="flow-card" style="margin:0">
+              <div class="flow-card-head"><div class="flow-subject">You finished [1:34:22]. Here is what 1:24 looks like.</div><div class="flow-segment" style="background:#fef2f2;color:#b91c1c">Segmented by finish time</div></div>
+              <div class="flow-body">The core email. Personalised PB projection using their actual result. Shows the specific station where they lost the most time. Gives a 6-week improvement plan for that station. Soft CTA to next event registration.</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:64px 1fr;gap:1rem;align-items:start">
+            <div style="background:#2563eb;color:white;border-radius:8px;padding:.6rem;text-align:center;font-size:.7rem;font-weight:800">D+90<br><span style="font-weight:400;opacity:.6">3 months</span></div>
+            <div class="flow-card" style="margin:0">
+              <div class="flow-card-head"><div class="flow-subject">Race with someone this time — doubles is open</div><div class="flow-segment" style="background:#dbeafe;color:#1e40af">Solo open finishers</div></div>
+              <div class="flow-body">For solo finishers only: presents the doubles format as a lower-barrier re-entry. "Bring a training partner. Your combined goal: both of you beat your solo times." Social mechanic reduces drop-off risk on both sides.</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:64px 1fr;gap:1rem;align-items:start">
+            <div style="background:#16a34a;color:white;border-radius:8px;padding:.6rem;text-align:center;font-size:.7rem;font-weight:800">Pre-S<br><span style="font-weight:400;opacity:.6">season open</span></div>
+            <div class="flow-card" style="margin:0">
+              <div class="flow-card-head"><div class="flow-subject">Season [X] Benelux is open. Your returning athlete badge is waiting.</div><div class="flow-segment" style="background:#dcfce7;color:#166534">Not yet registered</div></div>
+              <div class="flow-body">Triggered when next season's Benelux registration opens. Combines urgency (early slots filling) with identity reward (Veteran badge). Athletes who register get an immediate confirmation that includes their badge and their PB target for the season.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paid & SEO -->
+      <div id="ret-paid" class="modal-panel">
+        <div class="modal-tag" style="background:#dbeafe;color:#1e40af">Paid Media + SEO + Social</div>
+        <div class="idea-grid">
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#dbeafe;color:#1e40af">Meta Ads</div>
+            <h4>Finisher Retargeting</h4>
+            <p>Custom audience from all named Benelux finishers (74k+ records). Dynamic creative shows their finish city and season. Ad copy: "You raced [city]. Season [X+1] is open. Your PB window starts now." Highly personalised at scale.</p>
+          </div>
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#fef9c3;color:#92400e">Google Search</div>
+            <h4>Intent Keywords</h4>
+            <p>"HYROX PB improvement", "HYROX second race tips", "how to improve HYROX time", "HYROX sled push training". These are searches from athletes actively thinking about their next race. High intent, ready to convert.</p>
+          </div>
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#fce7f3;color:#9d174d">Instagram / Strava</div>
+            <h4>Progress Content</h4>
+            <p>Before-and-after content series featuring real Benelux athletes who improved their time season-on-season. Data-backed ("improved 11 minutes, S7 to S8") and authentic. Strava segment ads target the exact athlete profile during their training window.</p>
+          </div>
+          <div class="idea-card">
+            <div class="idea-tag" style="background:#f0fdf4;color:#166534">SEO</div>
+            <h4>PB Content Hub</h4>
+            <p>Station-specific improvement guides optimised for long-tail search: "how to improve HYROX ski erg time", "HYROX sled push technique". Each guide ends with a CTA to the next Benelux event. Builds authority and captures athletes mid-training cycle.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- ── Footer ────────────────────────────────────────────────────────── -->
 <footer>
@@ -1376,6 +1445,25 @@ document.getElementById('kpi2-local').textContent = D.kpis.local_pct + '%';
   });
 })();
 
+
+// ── Modal open/close ─────────────────────────────────────────────────────────
+function openModal(id){
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));document.body.style.overflow='';}});
+
+function switchModalTab(campaign, panel, btn){
+  const prefix = campaign + '-';
+  btn.closest('.modal-tabs').querySelectorAll('.modal-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll(`#modal-${campaign} .modal-panel`).forEach(p=>p.classList.remove('active'));
+  document.getElementById(prefix+panel).classList.add('active');
+}
 
 // ── Email flow tabs ───────────────────────────────────────────────────────────
 function switchFlow(key, btn) {

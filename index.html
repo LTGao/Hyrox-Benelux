@@ -62,10 +62,17 @@ nav{position:sticky;top:0;z-index:100;background:var(--black);color:var(--white)
 .nav-links{display:flex;gap:1.5rem;font-size:.85rem;color:var(--grey-500)}
 .nav-links a:hover{color:var(--white)}
 
+/* ── Season selector buttons ─────────────────────────────────── */
+.season-btn{font-family:var(--font-heading);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;padding:.5rem 1.1rem;background:transparent;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.2);cursor:pointer;transition:all .15s}
+.season-btn:hover{border-color:var(--yellow);color:var(--yellow)}
+.season-btn.active{background:var(--yellow);color:var(--black);border-color:var(--yellow)}
+.season-btn.play{background:rgba(255,224,0,.12);color:var(--yellow);border-color:rgba(255,224,0,.4)}
+.season-btn.play:hover{background:var(--yellow);color:var(--black)}
+.leaflet-container{background:#0d0d0d !important}
+
 /* ── Hero ────────────────────────────────────────────────────── */
-.hero{position:relative;color:var(--white);padding:clamp(4rem,10vw,8rem) 0;overflow:hidden;min-height:90vh;display:flex;align-items:center}
-.hero-bg{position:absolute;inset:0;background-image:url('Athletes.jpg');background-size:cover;background-position:center 30%;z-index:0}
-.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.55) 55%,rgba(0,0,0,.25) 100%)}
+.hero{position:relative;color:var(--white);background:var(--black);padding:clamp(3.5rem,8vw,6rem) 0;overflow:hidden;display:flex;align-items:center}
+.hero::before{content:'';position:absolute;top:-30%;right:-10%;width:60%;height:160%;background:radial-gradient(circle,rgba(255,224,0,.12) 0%,transparent 65%);z-index:0}
 .hero .container{position:relative;z-index:1;width:100%}
 .hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
 @media(max-width:700px){.hero-inner{grid-template-columns:1fr}}
@@ -298,7 +305,6 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
         <a href="audience.html">Audience</a>
         <a href="#funnel">Funnel</a>
         <a href="#opportunity">Retention</a>
-        <a href="#community">Community</a>
       </div>
     </div>
   </div>
@@ -306,7 +312,6 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
 
 <!-- ── Hero ─────────────────────────────────────────────────────────── -->
 <div class="hero">
-  <div class="hero-bg"></div>
   <div class="container">
     <div class="hero-inner">
       <div>
@@ -340,78 +345,57 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
   </div>
 </div>
 
-<!-- ── KPI Strip ─────────────────────────────────────────────────────── -->
-<div class="container">
-  <div class="kpi-row">
-    <div class="kpi">
-      <div class="num" id="kpi2-events">—</div>
-      <div class="label">Benelux Events Analysed</div>
-    </div>
-    <div class="kpi">
-      <div class="num" id="kpi2-female">—%</div>
-      <div class="label">Female Participation</div>
-    </div>
-    <div class="kpi">
-      <div class="num" id="kpi2-seasons">5</div>
-      <div class="label">Seasons Covered</div>
-    </div>
-    <div class="kpi">
-      <div class="num" id="kpi2-local">—%</div>
-      <div class="label">Benelux-Origin Athletes (NL/BE/LU)</div>
-    </div>
-  </div>
-</div>
-
-<!-- ── Section 1: Growth ─────────────────────────────────────────────── -->
-<section id="growth">
+<!-- ── Section 1: Growth + Map ───────────────────────────────────────── -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<section id="growth" style="padding-bottom:0">
   <div class="container">
     <div class="section-header">
       <div class="label">01 · Participation Growth</div>
-      <h2>From niche to mainstream: Benelux field sizes explode</h2>
-      <p>Season 4 marked HYROX's Benelux debut with two events in the Netherlands. By Season 8, seven cities across the Netherlands and Belgium host the race, with each venue drawing thousands of athletes.</p>
+      <h2>7 Cities. 2 Countries. One Community.</h2>
+      <p>Season 4 marked HYROX's Benelux debut with two events in the Netherlands. By Season 8, seven cities across the Netherlands and Belgium host the race, with each venue drawing thousands of athletes. Press play, or pick a season, to watch the map come alive.</p>
     </div>
+  </div>
 
-    <div style="gap:1.5rem;display:grid;grid-template-columns:2fr 1fr">
-      <div class="card fade-up">
-        <div class="card-title">Participants per Event · All Benelux (S4–S8)</div>
-        <div class="chart-wrap-tall"><canvas id="chart-participation"></canvas></div>
-      </div>
-      <div class="card fade-up">
-        <div class="card-title">Total Participants by Season</div>
-        <div class="chart-wrap-tall"><canvas id="chart-growth"></canvas></div>
+  <!-- Interactive map -->
+  <div style="background:var(--black);position:relative">
+    <div class="container" style="padding-top:1.5rem;padding-bottom:1.5rem">
+      <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+        <button class="season-btn" data-season="all" onclick="selectSeason('all',this)">All Seasons</button>
+        <button class="season-btn" data-season="4" onclick="selectSeason('4',this)">S4</button>
+        <button class="season-btn" data-season="5" onclick="selectSeason('5',this)">S5</button>
+        <button class="season-btn" data-season="6" onclick="selectSeason('6',this)">S6</button>
+        <button class="season-btn" data-season="7" onclick="selectSeason('7',this)">S7</button>
+        <button class="season-btn active" data-season="8" onclick="selectSeason('8',this)">S8</button>
+        <button class="season-btn play" onclick="playSeasons(this)">▶ Play growth</button>
+        <div id="season-readout" style="margin-left:auto;font-family:var(--font-heading);font-weight:700;color:var(--yellow);font-size:1.1rem"></div>
       </div>
     </div>
+    <div style="display:grid;grid-template-columns:1fr 1.4fr;min-height:520px">
+      <div style="padding:clamp(2rem,4vw,3rem);display:flex;flex-direction:column;justify-content:center">
+        <div id="map-city-info" style="background:rgba(255,224,0,.08);border:1px solid rgba(255,224,0,.2);padding:1.5rem;min-height:120px;transition:all .3s">
+          <div style="font-size:.85rem;color:rgba(255,255,255,.4)">Click any city marker to see its full race history, or use the season buttons above to watch the field grow.</div>
+        </div>
+        <div style="margin-top:1.25rem;font-size:.8rem;color:rgba(255,255,255,.35);line-height:1.6">Dot size scales with the number of participants at each event. Cities with no event in the selected season are hidden.</div>
+      </div>
+      <div id="benelux-map" style="min-height:520px;z-index:1"></div>
+    </div>
+  </div>
 
+  <div class="container" style="padding-top:clamp(2.5rem,6vw,5rem);padding-bottom:clamp(2.5rem,6vw,5rem)">
     <div class="insight fade-up">
       <div class="insight-icon">💡</div>
       <div>
         <strong>Marketing Opportunity: Expansion Momentum</strong>
-        <p>Each new city (Rotterdam S5, Maastricht S7, Utrecht S8) attracted thousands of first-time Benelux participants, signalling strong latent demand. Pre-event campaigns in new markets convert quickly, as audiences are already race-curious.</p>
+        <p>Each new city (Rotterdam S5, Maastricht and Heerenveen S7, Utrecht, Gent and Mechelen S8) attracted thousands of first-time Benelux participants, signalling strong latent demand. Pre-event campaigns in new markets convert quickly, as audiences are already race-curious.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ── Benelux Map ────────────────────────────────────────────────────── -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<section id="map" style="padding:0;background:var(--black)">
-  <div style="display:grid;grid-template-columns:1fr 1fr;min-height:520px">
-    <div style="padding:clamp(2.5rem,6vw,4rem);display:flex;flex-direction:column;justify-content:center">
-      <div class="label" style="color:rgba(255,224,0,.6);margin-bottom:.75rem">Race Locations · S4 to S8</div>
-      <h2 style="color:white;font-family:var(--font-heading);text-transform:uppercase;font-size:clamp(1.5rem,3vw,2.5rem)">7 Cities.<br>2 Countries.<br>One Community.</h2>
-      <p style="color:rgba(255,255,255,.5);margin-top:1rem;font-size:.9rem;line-height:1.75;max-width:38ch">From Amsterdam to Gent, HYROX Benelux spans the Netherlands and Belgium across 17 events since 2021. Click any city to see its race history.</p>
-      <div id="map-city-info" style="margin-top:1.5rem;background:rgba(255,224,0,.08);border:1px solid rgba(255,224,0,.2);padding:1.25rem;min-height:90px;transition:all .3s">
-        <div style="font-size:.8rem;color:rgba(255,255,255,.35)">Click a city marker on the map</div>
-      </div>
-    </div>
-    <div id="benelux-map" style="min-height:520px;z-index:1"></div>
   </div>
 </section>
 
 <!-- ── Section 2: Audience entry ─────────────────────────────────────── -->
 <div id="audience" class="photo-split">
-  <div class="photo-split-img" style="background-image:url('Audience.jpg');min-height:500px;order:2"></div>
+  <div class="photo-split-img" style="background-image:url('Athletes.jpg');min-height:500px;order:2"></div>
   <div class="photo-split-content" style="background:var(--black);color:white;order:1">
     <div class="label" style="color:rgba(255,192,0,.6);margin-bottom:.75rem">02 · The Audience</div>
     <h2 style="color:white">147 nationalities.<br>One shared obsession.</h2>
@@ -434,7 +418,7 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
       </div>
     </div>
     <p style="color:rgba(255,255,255,.55);font-size:.9rem;line-height:1.7">Behind every data point is a real person. Explore the full demographic breakdown, nationality split, age profile, and athletic level of the HYROX Benelux community.</p>
-    <a href="audience.html" style="display:inline-flex;align-items:center;gap:.6rem;margin-top:1.75rem;background:var(--yellow);color:var(--black);padding:.8rem 1.75rem;border-radius:0;font-weight:800;font-size:.9rem;text-decoration:none;transition:background .15s">
+    <a href="audience.html" style="display:inline-flex;align-items:center;gap:.6rem;margin-top:1.75rem;background:var(--black);color:var(--yellow);padding:.9rem 1.9rem;border:2px solid var(--yellow);font-family:var(--font-heading);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:1rem;text-decoration:none;transition:all .15s" onmouseover="this.style.background='var(--yellow)';this.style.color='var(--black)'" onmouseout="this.style.background='var(--black)';this.style.color='var(--yellow)'">
       Explore Audience Profile →
     </a>
   </div>
@@ -608,33 +592,6 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
   </div>
 </section>
 
-<!-- ── Audience photo split ───────────────────────────────────────────── -->
-<div class="photo-split">
-  <div class="photo-split-img" style="background-image:url('Audience.jpg');min-height:480px"></div>
-  <div class="photo-split-content" style="background:var(--black);color:white">
-    <div class="label" style="color:rgba(255,255,255,.4);margin-bottom:.75rem">The opportunity hiding in plain sight</div>
-    <h2 style="color:white">They came to cheer.<br>They are your warmest leads.</h2>
-    <p style="color:rgba(255,255,255,.6);margin-top:.75rem">Every HYROX event sells audience tickets. These people already showed up. They stood at the finish line, watched someone they know cross it, and thought — even briefly — "I could do that." No other channel gives you a warmer lead than someone who paid to be in the room.</p>
-    <p style="color:rgba(255,255,255,.4);font-size:.85rem;margin-top:1rem">Yet no follow-up email exists for audience ticket buyers. The two campaigns below are built around closing that gap.</p>
-  </div>
-</div>
-
-<!-- ── Campaign cards (float into funnel) ─────────────────────────────── -->
-<div class="campaign-float container" style="margin-top:3rem;margin-bottom:0">
-  <div class="ccamp acquisition fade-up" onclick="openModal('modal-acq')">
-    <div class="ccamp-label">Campaign 01 · Acquisition</div>
-    <h3>From the Sidelines to the Start Line</h3>
-    <p>Audience ticket holders are the warmest leads HYROX has. They showed up. They watched. They almost certainly thought "I could do that." This campaign converts the spectator into the next season's athlete.</p>
-    <div class="ccamp-cta">View full campaign plan →</div>
-  </div>
-  <div class="ccamp retention fade-up" onclick="openModal('modal-ret')">
-    <div class="ccamp-label">Campaign 02 · Retention</div>
-    <h3>Your Next PB is One Race Away</h3>
-    <p>89% of Benelux athletes raced only one season. This campaign re-engages them with the one thing they still think about: their finish time. Personalised, performance-driven, and timed for peak motivation.</p>
-    <div class="ccamp-cta">View full campaign plan →</div>
-  </div>
-</div>
-
 <!-- ── Section 7: Retention ────────────────────────────────────────────── -->
 <section id="opportunity">
   <div class="container">
@@ -689,85 +646,34 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
 
     </div>
 
-    <!-- About -->
-    <div class="about-card fade-up">
-      <h3>About This Analysis</h3>
-      <p>This dashboard was built as a case study for a digital marketing role application, demonstrating the ability to go from raw data to audience insight to actionable strategy. The analysis covers 74,645 participants across 17 Benelux events and 7 cities (Seasons 4 to 8, 2021 to 2026). Data was sourced from Kaggle (S4 to S6) and scraped directly from the HYROX platform (S7 to S8), including previously unreported events in Heerenveen, Gent and Mechelen. All seasons were additionally scraped for athlete names to enable cross-season retention analysis across 61,661 unique athletes.</p>
-      <p style="margin-top:.75rem">The retention analysis is grounded in the Benelux data specifically, not benchmarks borrowed from other markets. The strategic recommendations reflect experience working in the Dutch sports industry and understanding how local fitness communities make decisions.</p>
-      <div style="margin-top:1.25rem">
-        <span class="about-tag">🇳🇱 Based in Netherlands</span>
-        <span class="about-tag">📊 Data Analysis</span>
-        <span class="about-tag">🏋️ Sports Industry</span>
-        <span class="about-tag">🎯 Digital Marketing</span>
-        <span class="about-tag">Python · pandas</span>
-        <span class="about-tag">Chart.js</span>
-      </div>
-    </div>
-
   </div>
 </section>
 
-<!-- ── Section 8: Community ──────────────────────────────────────────── -->
-<section id="community">
-  <div class="container">
-    <div class="section-header">
-      <div class="label">08 · Community Growth</div>
-      <h2>The shift from solo racing to social sport</h2>
-      <p>Doubles participation has grown from 24% of the Benelux field in Season 4 to 43% in Season 8. Almost half of all athletes now race with a partner. This is not just a format preference — it is a structural shift in how people experience HYROX, and it opens a direct path for community-driven growth.</p>
-    </div>
-
-    <div style="display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;margin-bottom:1.5rem">
-      <div class="card fade-up">
-        <div class="card-title">Division Split by Season: Open vs Doubles vs Pro</div>
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>Open</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#e8000d"></div>Doubles</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Pro</div>
-        </div>
-        <div class="chart-wrap-tall"><canvas id="chart-division-trend"></canvas></div>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:1.5rem">
-        <div class="card fade-up">
-          <div style="font-size:2rem;font-weight:800;color:var(--red);line-height:1;margin-bottom:.5rem">+18pp</div>
-          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--grey-500);margin-bottom:.6rem">Doubles share growth across 5 seasons</div>
-          <p style="font-size:.875rem;color:var(--grey-700);line-height:1.65">Doubles grew from 24% to 43% of the Benelux field over five seasons, an 18 percentage point increase. Solo open participation dropped from 56% to 50% over the same period. Athletes are actively choosing to race as a pair rather than alone.</p>
-        </div>
-        <div class="card fade-up">
-          <div style="font-size:2rem;font-weight:800;color:var(--red);line-height:1;margin-bottom:.5rem">2 in 1</div>
-          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--grey-500);margin-bottom:.6rem">Each doubles conversion is two registrations</div>
-          <p style="font-size:.875rem;color:var(--grey-700);line-height:1.65">Converting a solo participant into a doubles entry means one athlete recruits another. At the S8 field size of 28,897 participants, the 43% doubles share already represents over 12,000 athletes who came because someone brought them. That social recruitment loop is the most cost-effective acquisition channel available.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid-3" style="margin-bottom:1.5rem">
-      <div class="card fade-up">
-        <div style="font-size:1.5rem;margin-bottom:.75rem">🤝</div>
-        <h3 style="margin-bottom:.6rem">Bring a Friend Discount</h3>
-        <p style="font-size:.875rem;color:var(--grey-700);line-height:1.7">A targeted post-race email to solo finishers offering a reduced doubles entry for the next event converts individual participants into recruiting agents. The athlete who signs up gets a better price. The friend they bring is a brand new participant. Both are more likely to return because their commitment is now shared.</p>
-      </div>
-      <div class="card fade-up">
-        <div style="font-size:1.5rem;margin-bottom:.75rem">🏆</div>
-        <h3 style="margin-bottom:.6rem">First-Timer to Doubles Pathway</h3>
-        <p style="font-size:.875rem;color:var(--grey-700);line-height:1.7">First-time open finishers are the largest pool of potential doubles recruits. A follow-up campaign that celebrates their result, shows what doubles looks like in practice, and offers a time-limited discount on paired entry meets the athlete at peak motivation, shortly after their first finish line experience.</p>
-      </div>
-      <div class="card fade-up">
-        <div style="font-size:1.5rem;margin-bottom:.75rem">📍</div>
-        <h3 style="margin-bottom:.6rem">Gym and Club Partnerships</h3>
-        <p style="font-size:.875rem;color:var(--grey-700);line-height:1.7">Doubles and group entries are a natural fit for gym communities, running clubs, and CrossFit boxes. A partnership programme that gives affiliated gyms a referral discount code for team entries turns local fitness communities into recurring sourcing channels, city by city across Amsterdam, Rotterdam, Maastricht, Utrecht, Heerenveen, Gent and Mechelen.</p>
-      </div>
-    </div>
-
-    <div class="insight fade-up">
-      <div class="insight-icon">📈</div>
-      <div>
-        <strong>The Community Flywheel</strong>
-        <p>Doubles athletes recruit their partner before the race. Both athletes share the experience during the race. Both are more likely to return because the social bond with their partner carries through to the next season. The 10.9% multi-season return rate in the data is almost certainly higher among doubles participants than solo ones. Building campaigns around team formats does not just grow the field in one season — it compounds across seasons.</p>
-      </div>
-    </div>
+<!-- ── Audience photo split ───────────────────────────────────────────── -->
+<div class="photo-split">
+  <div class="photo-split-img" style="background-image:url('Audience.jpg');min-height:480px"></div>
+  <div class="photo-split-content" style="background:var(--black);color:white">
+    <div class="label" style="color:rgba(255,255,255,.4);margin-bottom:.75rem">The opportunity hiding in plain sight</div>
+    <h2 style="color:white">They came to cheer.<br>They are your warmest leads.</h2>
+    <p style="color:rgba(255,255,255,.6);margin-top:.75rem">Every HYROX event sells audience tickets. These people already showed up. They stood at the finish line, watched someone they know cross it, and thought — even briefly — "I could do that." Few audiences are warmer than someone who paid to be in the room.</p>
   </div>
-</section>
+</div>
+
+<!-- ── Campaign cards (float into funnel) ─────────────────────────────── -->
+<div class="campaign-float container" style="margin-top:3rem;margin-bottom:0">
+  <div class="ccamp acquisition fade-up" onclick="openModal('modal-acq')">
+    <div class="ccamp-label">Campaign 01 · Acquisition</div>
+    <h3>From the Sidelines to the Start Line</h3>
+    <p>Audience ticket holders are the warmest leads HYROX has. They showed up. They watched. They almost certainly thought "I could do that." This campaign converts the spectator into the next season's athlete.</p>
+    <div class="ccamp-cta">View full campaign plan →</div>
+  </div>
+  <div class="ccamp retention fade-up" onclick="openModal('modal-ret')">
+    <div class="ccamp-label">Campaign 02 · Retention</div>
+    <h3>Your Next PB is One Race Away</h3>
+    <p>89% of Benelux athletes raced only one season. This campaign re-engages them with the one thing they still think about: their finish time. Personalised, performance-driven, and timed for peak motivation.</p>
+    <div class="ccamp-cta">View full campaign plan →</div>
+  </div>
+</div>
 
 <!-- ── Modal: Acquisition Campaign ──────────────────────────────────── -->
 <div id="modal-acq" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-acq')">
@@ -1051,55 +957,11 @@ function barOpts(opts={}){
   };
 }
 
-// ── KPIs ─────────────────────────────────────────────────────────────────
+// ── Hero KPIs ─────────────────────────────────────────────────────────────
 document.getElementById('kpi-total').textContent = fmtNum(D.kpis.total_participants);
 document.getElementById('kpi-nations').textContent = D.kpis.unique_nationalities;
 document.getElementById('kpi-growth').textContent = D.kpis.growth_multiple + '×';
 document.getElementById('kpi-intl').textContent = D.kpis.intl_pct + '%';
-document.getElementById('kpi2-events').textContent = D.kpis.events_covered;
-document.getElementById('kpi2-female').textContent = D.kpis.female_pct + '%';
-document.getElementById('kpi2-local').textContent = D.kpis.local_pct + '%';
-
-// ── 1. Participation per event ────────────────────────────────────────────
-(function(){
-  const labels = D.participation.map(p=>p.event);
-  const counts = D.participation.map(p=>p.participants);
-  // Shade by season so the 5 eras are readable without per-city rainbow
-  const seasonAlpha = {'4':'cc','5':'bb','6':'aa','7':'88','8':'e8000d'};
-  const bgColors = D.participation.map(p=>{
-    const s = p.season;
-    return s==='8' ? '#F5C000' : s==='7' ? '#F5C000bb' : s==='6' ? '#F5C00088' : s==='5' ? '#F5C00055' : '#F5C00033';
-  });
-  new Chart(document.getElementById('chart-participation'),{
-    type:'bar',
-    data:{labels,datasets:[{data:counts,backgroundColor:bgColors,borderRadius:6,borderSkipped:false}]},
-    options:{
-      ...barOpts({
-        yTicks:{callback:v=>fmtNum(v)},
-        xTicks:{maxRotation:35,minRotation:35,font:{size:10}},
-        tooltip:{callbacks:{label:c=>`${c.raw.toLocaleString()} participants`}}
-      }),
-      plugins:{ legend:{display:false} }
-    }
-  });
-})();
-
-// ── 2. Season growth ──────────────────────────────────────────────────────
-(function(){
-  const labels = D.growth.map(g=>g.season);
-  const data = D.growth.map(g=>g.participants);
-  new Chart(document.getElementById('chart-growth'),{
-    type:'bar',
-    data:{labels,datasets:[{
-      data,backgroundColor:labels.map((_,i)=>i===data.length-1?RED:'#222'),
-      borderRadius:6,borderSkipped:false
-    }]},
-    options:barOpts({
-      yTicks:{callback:v=>fmtNum(v)},
-      tooltip:{callbacks:{label:c=>`${c.raw.toLocaleString()} participants`}}
-    })
-  });
-})();
 
 // ── Modal open/close ─────────────────────────────────────────────────────────
 function openModal(id){
@@ -1160,34 +1022,6 @@ function switchFlow(key, btn) {
   });
 })();
 
-// ── Division trend chart ─────────────────────────────────────────────────────
-(function(){
-  const DS = D.div_by_season;
-  new Chart(document.getElementById('chart-division-trend'), {
-    type: 'bar',
-    data: {
-      labels: DS.seasons,
-      datasets: [
-        { label: 'Open',    data: DS.open_pct,    backgroundColor: '#2563eb', borderRadius: 4, borderSkipped: false, stack: 's' },
-        { label: 'Doubles', data: DS.doubles_pct, backgroundColor: RED,       borderRadius: 4, borderSkipped: false, stack: 's' },
-        { label: 'Pro',     data: DS.pro_pct,     backgroundColor: '#16a34a', borderRadius: 4, borderSkipped: false, stack: 's' },
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: c => `${c.dataset.label}: ${c.raw}%` } }
-      },
-      scales: {
-        x: { stacked: true, grid: { display: false }, ticks: { font: baseFont } },
-        y: { stacked: true, max: 100, grid: { color: '#eee' }, border: { dash: [4,4] },
-             ticks: { callback: v => v + '%', font: baseFont } }
-      }
-    }
-  });
-})();
-
 // ── Scroll-triggered fade-up animations ──────────────────────────────────────
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
@@ -1217,72 +1051,127 @@ const heroObserver = new IntersectionObserver((entries) => {
     if (id === 'kpi-nations') animateCounter(e.target, D.kpis.unique_nationalities, 1000);
     if (id === 'kpi-growth')  animateCounter(e.target, D.kpis.growth_multiple, 1200, true, '×');
     if (id === 'kpi-intl')    animateCounter(e.target, D.kpis.intl_pct, 1000, true, '%');
-    if (id === 'kpi2-events') animateCounter(e.target, D.kpis.events_covered, 800);
-    if (id === 'kpi2-female') animateCounter(e.target, D.kpis.female_pct, 900, false, '%');
-    if (id === 'kpi2-local')  animateCounter(e.target, D.kpis.local_pct, 1000, true, '%');
   });
 }, { threshold: 0.5 });
-['kpi-total','kpi-nations','kpi-growth','kpi-intl','kpi2-events','kpi2-female','kpi2-local']
+['kpi-total','kpi-nations','kpi-growth','kpi-intl']
   .forEach(id => { const el = document.getElementById(id); if (el) heroObserver.observe(el); });
 
-// ── Benelux interactive map ───────────────────────────────────────────────────
+// ── Benelux interactive map with season animation ────────────────────────────
+let selectSeason, playSeasons;
 window.addEventListener('load', function(){
-  const CITIES = [
-    { name: 'Amsterdam', lat: 52.3676, lng: 4.9041, seasons: ['S4','S5','S6','S7','S8'], participants: 481+1353+2363+5876+8299, flag: 'NL' },
-    { name: 'Rotterdam', lat: 51.9244, lng: 4.4777, seasons: ['S5','S6','S7','S8'], participants: 1385+2363+6591+9269, flag: 'NL' },
-    { name: 'Maastricht', lat: 50.8514, lng: 5.6909, seasons: ['S4','S5','S6','S7','S8'], participants: 679+1174+2522+3848+5590, flag: 'NL' },
-    { name: 'Utrecht', lat: 52.0907, lng: 5.1214, seasons: ['S8'], participants: 5739, flag: 'NL' },
-    { name: 'Heerenveen', lat: 52.9571, lng: 5.3933, seasons: ['S7','S8'], participants: 4309+6580, flag: 'NL' },
-    { name: 'Gent', lat: 51.0543, lng: 3.7174, seasons: ['S8'], participants: 5190, flag: 'BE' },
-    { name: 'Mechelen', lat: 51.0259, lng: 4.4776, seasons: ['S8'], participants: 5919, flag: 'BE' },
-  ];
-
-  const map = L.map('benelux-map', {
-    center: [52.0, 4.9],
-    zoom: 7,
-    zoomControl: true,
-    attributionControl: false,
-    scrollWheelZoom: false,
-  });
-
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap contributors © CARTO',
-    maxZoom: 12,
-  }).addTo(map);
-
-  const markerIcon = (size, color='#FFE000') => L.divIcon({
-    html: `<div style="width:${size}px;height:${size}px;background:${color};border:3px solid #0d0d0d;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:${Math.round(size*0.4)}px;color:#0d0d0d;font-family:Space Grotesk,sans-serif;cursor:pointer"></div>`,
-    className: '',
-    iconAnchor: [size/2, size/2],
-    popupAnchor: [0, -size/2],
-  });
-
+  const COORDS = {
+    amsterdam:  [52.3676, 4.9041],
+    rotterdam:  [51.9244, 4.4777],
+    maastricht: [50.8514, 5.6909],
+    utrecht:    [52.0907, 5.1214],
+    heerenveen: [52.9571, 5.3933],
+    gent:       [51.0543, 3.7174],
+    mechelen:   [51.0259, 4.4776],
+  };
+  const FLAG = { gent:'🇧🇪', mechelen:'🇧🇪' };
+  const NAME = { amsterdam:'Amsterdam', rotterdam:'Rotterdam', maastricht:'Maastricht', utrecht:'Utrecht', heerenveen:'Heerenveen', gent:'Gent', mechelen:'Mechelen' };
   const fmtK = n => n >= 1000 ? (n/1000).toFixed(1).replace(/\.0$/,'')+'k' : n;
 
-  CITIES.forEach(city => {
-    const size = Math.max(28, Math.min(52, Math.round(city.participants / 500)));
-    const marker = L.marker([city.lat, city.lng], { icon: markerIcon(size) }).addTo(map);
-
-    marker.on('click', () => {
-      const info = document.getElementById('map-city-info');
-      const flag = city.flag === 'BE' ? '🇧🇪' : '🇳🇱';
-      info.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap">
-          <div>
-            <div style="font-size:1.1rem;font-weight:800;color:#FFE000;font-family:Space Grotesk,sans-serif;text-transform:uppercase;letter-spacing:.05em">${flag} ${city.name}</div>
-            <div style="font-size:.78rem;color:rgba(255,255,255,.5);margin-top:.2rem">Seasons: ${city.seasons.join(' · ')}</div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:1.5rem;font-weight:900;color:#FFE000;font-family:Space Grotesk,sans-serif;line-height:1">${fmtK(city.participants)}</div>
-            <div style="font-size:.7rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.07em">participants</div>
-          </div>
-        </div>`;
-    });
+  // Build per-city totals (all seasons) and per-season lookups from participation data
+  const P = D.participation; // [{event, season, location, year, participants}]
+  const cities = Object.keys(COORDS);
+  const totalByCity = {};
+  const bySeasonCity = {}; // bySeasonCity['8']['amsterdam'] = n
+  const seasonsByCity = {}; // amsterdam: ['S4','S5'...]
+  cities.forEach(c => { totalByCity[c] = 0; seasonsByCity[c] = []; });
+  P.forEach(p => {
+    const loc = p.location;
+    if (!COORDS[loc]) return;
+    totalByCity[loc] += p.participants;
+    (bySeasonCity[p.season] = bySeasonCity[p.season] || {})[loc] = (bySeasonCity[p.season]?.[loc] || 0) + p.participants;
+    if (!seasonsByCity[loc].includes('S'+p.season)) seasonsByCity[loc].push('S'+p.season);
   });
 
-  // Attribution
+  const map = L.map('benelux-map', {
+    center: [52.0, 4.7], zoom: 7, zoomControl: true,
+    attributionControl: false, scrollWheelZoom: false,
+  });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 12 }).addTo(map);
   L.control.attribution({prefix:'© CARTO · © OSM'}).addTo(map);
-})();
+
+  const sizeFor = n => n <= 0 ? 0 : Math.max(22, Math.min(64, Math.sqrt(n) * 0.7));
+
+  const markerEls = {}; // location -> inner div element
+  const markers = {};
+  cities.forEach(loc => {
+    const icon = L.divIcon({
+      html: `<div class="map-dot" data-loc="${loc}" style="width:0px;height:0px;background:#FFE000;border-radius:50%;border:2px solid #0d0d0d;box-shadow:0 0 0 1px rgba(255,224,0,.3);transition:width .6s cubic-bezier(.34,1.56,.64,1),height .6s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0;cursor:pointer"></div>`,
+      className: '', iconSize: [0,0],
+    });
+    const m = L.marker(COORDS[loc], { icon }).addTo(map);
+    markers[loc] = m;
+    m.on('click', () => showCity(loc));
+  });
+
+  // Grab the inner DOM nodes after they render
+  setTimeout(() => {
+    document.querySelectorAll('.map-dot').forEach(el => { markerEls[el.dataset.loc] = el; });
+    render('8');
+  }, 100);
+
+  function render(season) {
+    const lookup = season === 'all' ? totalByCity : (bySeasonCity[season] || {});
+    document.getElementById('season-readout').textContent =
+      season === 'all' ? 'All Seasons · ' + fmtK(Object.values(totalByCity).reduce((a,b)=>a+b,0)) + ' athletes'
+                       : 'Season ' + season + ' · ' + fmtK(Object.values(lookup).reduce((a,b)=>a+b,0)) + ' athletes';
+    cities.forEach(loc => {
+      const el = markerEls[loc];
+      if (!el) return;
+      const n = lookup[loc] || 0;
+      const s = sizeFor(n);
+      el.style.width = s + 'px';
+      el.style.height = s + 'px';
+      el.style.opacity = n > 0 ? '0.92' : '0';
+    });
+  }
+
+  function showCity(loc) {
+    const info = document.getElementById('map-city-info');
+    const flag = FLAG[loc] || '🇳🇱';
+    info.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap">
+        <div>
+          <div style="font-size:1.2rem;font-weight:800;color:#FFE000;font-family:Space Grotesk,sans-serif;text-transform:uppercase;letter-spacing:.05em">${flag} ${NAME[loc]}</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.5);margin-top:.3rem">Hosted: ${seasonsByCity[loc].join(' · ')}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:1.6rem;font-weight:900;color:#FFE000;font-family:Space Grotesk,sans-serif;line-height:1">${fmtK(totalByCity[loc])}</div>
+          <div style="font-size:.7rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.07em">total participants</div>
+        </div>
+      </div>`;
+  }
+
+  selectSeason = function(season, btn){
+    document.querySelectorAll('.season-btn[data-season]').forEach(b=>b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    render(season);
+  };
+
+  let playing = false;
+  playSeasons = function(btn){
+    if (playing) return;
+    playing = true;
+    const seq = ['4','5','6','7','8'];
+    let i = 0;
+    const btns = {};
+    document.querySelectorAll('.season-btn[data-season]').forEach(b=>btns[b.dataset.season]=b);
+    function step(){
+      if (i >= seq.length) { playing = false; return; }
+      const s = seq[i];
+      document.querySelectorAll('.season-btn[data-season]').forEach(b=>b.classList.remove('active'));
+      if (btns[s]) btns[s].classList.add('active');
+      render(s);
+      i++;
+      setTimeout(step, 1100);
+    }
+    step();
+  };
+});
 
 </script>
 </body>

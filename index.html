@@ -240,7 +240,6 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
       <div class="nav-links">
         <a href="#growth">Growth</a>
         <a href="#audience">Audience</a>
-        <a href="#performance">Performance</a>
         <a href="#insights">Insights</a>
         <a href="#personas">Personas</a>
         <a href="#campaigns">Campaigns</a>
@@ -344,9 +343,9 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
 <section id="audience">
   <div class="container">
     <div class="section-header">
-      <div class="label">02 · Audience Profile</div>
+      <div class="label">02 · The Audience</div>
       <h2>Who is the HYROX Benelux athlete?</h2>
-      <p>Understanding nationality, age, and gender unlocks targeted sponsorship activations, media buying, and community-building strategies.</p>
+      <p>Demographics, nationality, fitness level and behaviour in one profile. Understanding who is in the field is the foundation for every targeting, content, and partnership decision that follows.</p>
     </div>
 
     <!-- Gender -->
@@ -383,7 +382,29 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
       <div class="chart-wrap-tall"><canvas id="chart-nationality"></canvas></div>
     </div>
 
+    <!-- Finish time — athletic profile -->
+    <div class="card fade-up" style="margin-bottom:1.5rem">
+      <div class="card-title">What level are they at? Finish Time Distribution: Open Division</div>
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchHistTab('both',this)">Both</button>
+        <button class="tab-btn" onclick="switchHistTab('male',this)">Male</button>
+        <button class="tab-btn" onclick="switchHistTab('female',this)">Female</button>
+      </div>
+      <div class="legend" style="margin-top:.5rem">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--male)"></div>Male</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--female)"></div>Female</div>
+      </div>
+      <div class="chart-wrap-tall"><canvas id="chart-histogram"></canvas></div>
+    </div>
+
     <div class="grid-2">
+      <div class="insight fade-up">
+        <div class="insight-icon">⏱️</div>
+        <div>
+          <strong>Insight: The Achiever Middle</strong>
+          <p>The largest share of open-division athletes finish between 75 and 100 minutes (male) and 85 and 115 minutes (female). This is not the elite podium — it is the motivated recreational majority. Brands and campaigns that speak to improvement and personal achievement resonate most with this group.</p>
+        </div>
+      </div>
       <div class="insight fade-up">
         <div class="insight-icon">🎯</div>
         <div>
@@ -397,50 +418,6 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
           <strong>Insight: A Local Community with an International Layer</strong>
           <p>Around 81% of Benelux HYROX athletes are Dutch, Belgian, or Luxembourgish. This is a locally-rooted community event. The remaining 19% are international athletes led by Germany, UK, and France, adding a cross-border layer on top of a strong domestic base.</p>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Section 3: Performance ────────────────────────────────────────── -->
-<section id="performance">
-  <div class="container">
-    <div class="section-header">
-      <div class="label">03 · Performance Data</div>
-      <h2>Race times reveal an aspirational, improvement-driven community</h2>
-      <p>The broad finish-time distribution signals a large recreational middle segment, extending well beyond the elite podium. Brands that speak to the "I finished" moment resonate with the majority.</p>
-    </div>
-
-    <div style="gap:1.5rem;display:grid;grid-template-columns:1fr 1fr;margin-bottom:1.5rem">
-      <div class="card fade-up">
-        <div class="card-title">Finish Time Distribution: Open Division</div>
-        <div class="tab-bar">
-          <button class="tab-btn active" onclick="switchHistTab('both',this)">Both</button>
-          <button class="tab-btn" onclick="switchHistTab('male',this)">Male</button>
-          <button class="tab-btn" onclick="switchHistTab('female',this)">Female</button>
-        </div>
-        <div class="chart-wrap-tall"><canvas id="chart-histogram"></canvas></div>
-      </div>
-      <div class="card fade-up">
-        <div class="card-title">Division Breakdown (Overall)</div>
-        <div class="chart-wrap-tall"><canvas id="chart-division"></canvas></div>
-      </div>
-    </div>
-
-    <div class="card fade-up">
-      <div class="card-title">Median Finish Time (Open Division) per Event · Male vs Female</div>
-      <div class="legend">
-        <div class="legend-item"><div class="legend-dot" style="background:var(--male)"></div>Male median</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--female)"></div>Female median</div>
-      </div>
-      <div class="chart-wrap-tall"><canvas id="chart-finish-time"></canvas></div>
-    </div>
-
-    <div class="insight fade-up" style="margin-top:1.5rem">
-      <div class="insight-icon">⏱️</div>
-      <div>
-        <strong>Insight: The 75–100 Min Sweet Spot</strong>
-        <p>The largest share of open-division athletes finish between 75 and 100 minutes (male) and 85 and 115 minutes (female). This is the achiever segment: highly motivated, brand-engaged, and the largest addressable group in the field. Post-race recovery, apparel, and nutrition campaigns targeting this window deliver outsized reach.</p>
       </div>
     </div>
   </div>
@@ -1406,53 +1383,6 @@ document.getElementById('kpi2-local').textContent = D.kpis.local_pct + '%';
   });
 })();
 
-// ── 7. Division ───────────────────────────────────────────────────────────
-(function(){
-  const labels = D.division.map(d=>d.division);
-  const counts = D.division.map(d=>d.participants);
-  new Chart(document.getElementById('chart-division'),{
-    type:'doughnut',
-    data:{labels,datasets:[{data:counts,backgroundColor:palette,borderWidth:2,borderColor:'#fff',hoverOffset:6}]},
-    options:{
-      responsive:true,maintainAspectRatio:false,cutout:'55%',
-      plugins:{
-        legend:{display:true,position:'right',labels:{boxWidth:12,boxHeight:12,font:baseFont,padding:8}},
-        tooltip:{callbacks:{label:c=>`${c.label}: ${c.raw.toLocaleString()}`}}
-      }
-    }
-  });
-})();
-
-// ── 8. Median finish time ─────────────────────────────────────────────────
-(function(){
-  const T = D.finish_time;
-  const labels = T.events;
-  const maleData = T.male.map(d=>d?d.median:null);
-  const femaleData = T.female.map(d=>d?d.median:null);
-  new Chart(document.getElementById('chart-finish-time'),{
-    type:'line',
-    data:{
-      labels,
-      datasets:[
-        {label:'Male',data:maleData,borderColor:MALE_COLOR,backgroundColor:MALE_COLOR+'20',tension:.3,pointRadius:5,pointHoverRadius:7,fill:false},
-        {label:'Female',data:femaleData,borderColor:FEMALE_COLOR,backgroundColor:FEMALE_COLOR+'20',tension:.3,pointRadius:5,pointHoverRadius:7,fill:false},
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{
-        legend:{display:true,labels:{boxWidth:10,boxHeight:10,font:baseFont}},
-        tooltip:{callbacks:{label:c=>c.raw!==null?`${c.dataset.label}: ${minToHM(c.raw)}`:'No data'}}
-      },
-      scales:{
-        x:{grid:{display:false},ticks:{maxRotation:35,font:{size:9}}},
-        y:{grid:{color:'#eee'},border:{dash:[4,4]},
-          ticks:{callback:v=>minToHM(v),font:baseFont},
-          title:{display:true,text:'Finish Time',font:{size:10}}}
-      }
-    }
-  });
-})();
 
 // ── Email flow tabs ───────────────────────────────────────────────────────────
 function switchFlow(key, btn) {

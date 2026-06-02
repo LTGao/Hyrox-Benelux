@@ -361,22 +361,20 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
   <div style="background:var(--black);position:relative">
     <div class="container" style="padding-top:1.5rem;padding-bottom:1.5rem">
       <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
-        <button class="season-btn" data-season="all" onclick="selectSeason('all',this)">All Seasons</button>
+        <span style="font-family:var(--font-heading);text-transform:uppercase;font-size:.8rem;letter-spacing:.05em;color:rgba(255,255,255,.4);margin-right:.5rem">Cumulative through:</span>
         <button class="season-btn" data-season="4" onclick="selectSeason('4',this)">S4</button>
         <button class="season-btn" data-season="5" onclick="selectSeason('5',this)">S5</button>
         <button class="season-btn" data-season="6" onclick="selectSeason('6',this)">S6</button>
         <button class="season-btn" data-season="7" onclick="selectSeason('7',this)">S7</button>
         <button class="season-btn active" data-season="8" onclick="selectSeason('8',this)">S8</button>
         <button class="season-btn play" onclick="playSeasons(this)">▶ Play growth</button>
-        <div id="season-readout" style="margin-left:auto;font-family:var(--font-heading);font-weight:700;color:var(--yellow);font-size:1.1rem"></div>
+        <div id="season-readout" style="margin-left:auto;font-family:var(--font-heading);font-weight:500;color:var(--yellow);font-size:1.1rem"></div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1.4fr;min-height:520px">
-      <div style="padding:clamp(2rem,4vw,3rem);display:flex;flex-direction:column;justify-content:center">
-        <div id="map-city-info" style="background:rgba(255,224,0,.08);border:1px solid rgba(255,224,0,.2);padding:1.5rem;min-height:120px;transition:all .3s">
-          <div style="font-size:.85rem;color:rgba(255,255,255,.4)">Click any city marker to see its full race history, or use the season buttons above to watch the field grow.</div>
-        </div>
-        <div style="margin-top:1.25rem;font-size:.8rem;color:rgba(255,255,255,.35);line-height:1.6">Dot size scales with the number of participants at each event. Cities with no event in the selected season are hidden.</div>
+      <div style="padding:clamp(1.5rem,3vw,2.5rem);display:flex;flex-direction:column;justify-content:center">
+        <div style="font-family:var(--font-heading);text-transform:uppercase;font-size:.8rem;letter-spacing:.05em;color:rgba(255,255,255,.5);margin-bottom:1rem" id="breakdown-title">Cumulative participants by city</div>
+        <div style="position:relative;height:380px"><canvas id="chart-map-breakdown"></canvas></div>
       </div>
       <div id="benelux-map" style="min-height:520px;z-index:1"></div>
     </div>
@@ -1072,20 +1070,21 @@ window.addEventListener('load', function(){
   const NAME = { amsterdam:'Amsterdam', rotterdam:'Rotterdam', maastricht:'Maastricht', utrecht:'Utrecht', heerenveen:'Heerenveen', gent:'Gent', mechelen:'Mechelen' };
   const fmtK = n => n >= 1000 ? (n/1000).toFixed(1).replace(/\.0$/,'')+'k' : n;
 
-  // Build per-city totals (all seasons) and per-season lookups from participation data
+  // Build cumulative per-city totals from participation data
   const P = D.participation; // [{event, season, location, year, participants}]
   const cities = Object.keys(COORDS);
-  const totalByCity = {};
-  const bySeasonCity = {}; // bySeasonCity['8']['amsterdam'] = n
-  const seasonsByCity = {}; // amsterdam: ['S4','S5'...]
-  cities.forEach(c => { totalByCity[c] = 0; seasonsByCity[c] = []; });
-  P.forEach(p => {
-    const loc = p.location;
-    if (!COORDS[loc]) return;
-    totalByCity[loc] += p.participants;
-    (bySeasonCity[p.season] = bySeasonCity[p.season] || {})[loc] = (bySeasonCity[p.season]?.[loc] || 0) + p.participants;
-    if (!seasonsByCity[loc].includes('S'+p.season)) seasonsByCity[loc].push('S'+p.season);
-  });
+
+  // cumulative[season][loc] = total participants in that loc through that season
+  function cumulativeThrough(season) {
+    const maxS = parseInt(season);
+    const out = {};
+    cities.forEach(c => out[c] = 0);
+    P.forEach(p => {
+      if (!COORDS[p.location]) return;
+      if (parseInt(p.season) <= maxS) out[p.location] += p.participants;
+    });
+    return out;
+  }
 
   const map = L.map('benelux-map', {
     center: [52.0, 4.7], zoom: 7, zoomControl: true,
@@ -1094,56 +1093,67 @@ window.addEventListener('load', function(){
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 12 }).addTo(map);
   L.control.attribution({prefix:'© CARTO · © OSM'}).addTo(map);
 
-  const sizeFor = n => n <= 0 ? 0 : Math.max(22, Math.min(64, Math.sqrt(n) * 0.7));
+  const sizeFor = n => n <= 0 ? 0 : Math.max(22, Math.min(64, Math.sqrt(n) * 0.55));
 
-  const markerEls = {}; // location -> inner div element
-  const markers = {};
+  const markerEls = {};
   cities.forEach(loc => {
     const icon = L.divIcon({
-      html: `<div class="map-dot" data-loc="${loc}" style="width:0px;height:0px;background:#FFE000;border-radius:50%;border:2px solid #0d0d0d;box-shadow:0 0 0 1px rgba(255,224,0,.3);transition:width .6s cubic-bezier(.34,1.56,.64,1),height .6s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0;cursor:pointer"></div>`,
+      html: `<div class="map-dot" data-loc="${loc}" style="width:0px;height:0px;background:#FFE000;border-radius:50%;border:2px solid #0d0d0d;box-shadow:0 0 0 1px rgba(255,224,0,.3);transition:width .6s cubic-bezier(.34,1.56,.64,1),height .6s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0"></div>`,
       className: '', iconSize: [0,0],
     });
-    const m = L.marker(COORDS[loc], { icon }).addTo(map);
-    markers[loc] = m;
-    m.on('click', () => showCity(loc));
+    L.marker(COORDS[loc], { icon }).addTo(map);
   });
 
-  // Grab the inner DOM nodes after they render
+  // Breakdown bar chart (left panel)
+  let breakdownChart;
+  function buildBreakdownChart(data) {
+    const sorted = cities.map(c=>({c,n:data[c]})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n);
+    breakdownChart = new Chart(document.getElementById('chart-map-breakdown'), {
+      type: 'bar',
+      data: {
+        labels: sorted.map(x=>NAME[x.c]),
+        datasets: [{ data: sorted.map(x=>x.n), backgroundColor:'#FFE000', borderRadius:3, borderSkipped:false }]
+      },
+      options: {
+        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        animation: { duration: 600 },
+        plugins: { legend:{display:false}, tooltip:{callbacks:{label:c=>fmtK(c.raw)+' participants'}} },
+        scales: {
+          x: { grid:{color:'rgba(255,255,255,.08)'}, ticks:{color:'rgba(255,255,255,.5)',callback:v=>fmtK(v),font:{size:10}} },
+          y: { grid:{display:false}, ticks:{color:'rgba(255,255,255,.8)',font:{family:'Space Grotesk,sans-serif',size:12,weight:'500'}} }
+        }
+      }
+    });
+  }
+
   setTimeout(() => {
     document.querySelectorAll('.map-dot').forEach(el => { markerEls[el.dataset.loc] = el; });
+    const init = cumulativeThrough('8');
+    buildBreakdownChart(init);
     render('8');
   }, 100);
 
   function render(season) {
-    const lookup = season === 'all' ? totalByCity : (bySeasonCity[season] || {});
-    document.getElementById('season-readout').textContent =
-      season === 'all' ? 'All Seasons · ' + fmtK(Object.values(totalByCity).reduce((a,b)=>a+b,0)) + ' athletes'
-                       : 'Season ' + season + ' · ' + fmtK(Object.values(lookup).reduce((a,b)=>a+b,0)) + ' athletes';
+    const data = cumulativeThrough(season);
+    const total = Object.values(data).reduce((a,b)=>a+b,0);
+    const nCities = Object.values(data).filter(n=>n>0).length;
+    document.getElementById('season-readout').textContent = 'S4–S' + season + ' · ' + fmtK(total) + ' athletes · ' + nCities + ' cities';
+    document.getElementById('breakdown-title').textContent = 'Cumulative participants by city (through S' + season + ')';
     cities.forEach(loc => {
       const el = markerEls[loc];
       if (!el) return;
-      const n = lookup[loc] || 0;
+      const n = data[loc] || 0;
       const s = sizeFor(n);
       el.style.width = s + 'px';
       el.style.height = s + 'px';
       el.style.opacity = n > 0 ? '0.92' : '0';
     });
-  }
-
-  function showCity(loc) {
-    const info = document.getElementById('map-city-info');
-    const flag = FLAG[loc] || '🇳🇱';
-    info.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap">
-        <div>
-          <div style="font-size:1.2rem;font-weight:800;color:#FFE000;font-family:Space Grotesk,sans-serif;text-transform:uppercase;letter-spacing:.05em">${flag} ${NAME[loc]}</div>
-          <div style="font-size:.78rem;color:rgba(255,255,255,.5);margin-top:.3rem">Hosted: ${seasonsByCity[loc].join(' · ')}</div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-size:1.6rem;font-weight:900;color:#FFE000;font-family:Space Grotesk,sans-serif;line-height:1">${fmtK(totalByCity[loc])}</div>
-          <div style="font-size:.7rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.07em">total participants</div>
-        </div>
-      </div>`;
+    if (breakdownChart) {
+      const sorted = cities.map(c=>({c,n:data[c]})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n);
+      breakdownChart.data.labels = sorted.map(x=>NAME[x.c]);
+      breakdownChart.data.datasets[0].data = sorted.map(x=>x.n);
+      breakdownChart.update();
+    }
   }
 
   selectSeason = function(season, btn){

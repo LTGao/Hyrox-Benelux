@@ -113,6 +113,30 @@ section:nth-child(odd) .card{background:var(--grey-100);border-color:var(--grey-
 .mcard.dark p{color:rgba(255,255,255,.7)}
 .mcard.light{background:var(--white)}
 
+/* ── Funnel ──────────────────────────────────────────────────── */
+.funnel-wrap{display:grid;grid-template-columns:1fr 320px;gap:2rem;align-items:start}
+@media(max-width:900px){.funnel-wrap{grid-template-columns:1fr}}
+.funnel{display:flex;flex-direction:column;gap:0}
+.funnel-stage{position:relative;padding:1.25rem 1.5rem;border-radius:0;cursor:default;transition:filter .15s}
+.funnel-stage:first-child{border-radius:var(--radius) var(--radius) 0 0}
+.funnel-stage:last-child{border-radius:0 0 var(--radius) var(--radius)}
+.funnel-stage:hover{filter:brightness(1.07)}
+.fs-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.fs-label{font-size:.95rem;font-weight:700;color:white}
+.fs-metric{font-size:1.3rem;font-weight:800;color:white;line-height:1}
+.fs-sub{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:.1rem}
+.fs-channels{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.75rem}
+.fs-ch{font-size:.68rem;font-weight:700;padding:.2rem .55rem;border-radius:999px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.9)}
+.fs-arrow{text-align:center;font-size:1rem;color:var(--grey-300);padding:.15rem 0;background:var(--grey-100);line-height:1}
+.funnel-legend{display:flex;flex-direction:column;gap:1rem}
+.fl-item{background:var(--white);border:1px solid var(--grey-200);border-radius:var(--radius);padding:1.25rem}
+.fl-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-top:.15rem}
+.fl-item-head{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.5rem}
+.fl-item h4{font-size:.875rem;font-weight:700}
+.fl-item p{font-size:.8rem;color:var(--grey-700);line-height:1.6}
+.re-entry{border:2px dashed var(--grey-300);border-radius:var(--radius);padding:1rem 1.25rem;background:rgba(232,0,13,.04)}
+.re-entry-label{font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--red);margin-bottom:.4rem}
+
 /* ── Persona cards ───────────────────────────────────────────── */
 .persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 @media(max-width:900px){.persona-grid{grid-template-columns:1fr}}
@@ -200,6 +224,7 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
         <a href="#personas">Personas</a>
         <a href="#campaigns">Campaigns</a>
         <a href="#opportunity">Retention</a>
+        <a href="#funnel">Funnel</a>
         <a href="#community">Community</a>
       </div>
     </div>
@@ -394,6 +419,174 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
       <div>
         <strong>Insight: The 75–100 Min Sweet Spot</strong>
         <p>The largest share of open-division athletes finish between 75 and 100 minutes (male) and 85 and 115 minutes (female). This is the achiever segment: highly motivated, brand-engaged, and the largest addressable group in the field. Post-race recovery, apparel, and nutrition campaigns targeting this window deliver outsized reach.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 3b: The Funnel ────────────────────────────────────────── -->
+<section id="funnel">
+  <div class="container">
+    <div class="section-header">
+      <div class="label">04 · The Marketing Funnel</div>
+      <h2>From first impression to loyal community member</h2>
+      <p>One funnel, two audiences. New athletes enter at the top. Returning athletes re-enter after race day with a personalised trigger based on their result. Each stage has distinct channels, content needs, and measurable outcomes.</p>
+    </div>
+
+    <div class="funnel-wrap">
+      <!-- Funnel diagram -->
+      <div>
+        <div class="funnel fade-up">
+
+          <div class="funnel-stage" style="background:#1a1a2e">
+            <div class="fs-top">
+              <div>
+                <div class="fs-label">01 · Awareness</div>
+                <div class="fs-sub">New audience · Broad reach</div>
+              </div>
+              <div style="text-align:right">
+                <div class="fs-metric">52.6k+</div>
+                <div class="fs-sub">Benelux finishers on record</div>
+              </div>
+            </div>
+            <div class="fs-channels">
+              <span class="fs-ch">Instagram</span>
+              <span class="fs-ch">TikTok</span>
+              <span class="fs-ch">YouTube</span>
+              <span class="fs-ch">Strava</span>
+              <span class="fs-ch">Gym partnerships</span>
+              <span class="fs-ch">Word of mouth</span>
+            </div>
+          </div>
+
+          <div class="fs-arrow">▼</div>
+
+          <div class="funnel-stage" style="background:#16213e;padding-left:2.5rem;padding-right:2.5rem">
+            <div class="fs-top">
+              <div>
+                <div class="fs-label">02 · Interest</div>
+                <div class="fs-sub">Content · Education · Community</div>
+              </div>
+              <div style="text-align:right">
+                <div class="fs-metric">30–44</div>
+                <div class="fs-sub">Core age segment to target</div>
+              </div>
+            </div>
+            <div class="fs-channels">
+              <span class="fs-ch">Race recap content</span>
+              <span class="fs-ch">Training guides</span>
+              <span class="fs-ch">Athlete stories</span>
+              <span class="fs-ch">Email nurture</span>
+            </div>
+          </div>
+
+          <div class="fs-arrow">▼</div>
+
+          <div class="funnel-stage" style="background:#0f3460;padding-left:4rem;padding-right:4rem">
+            <div class="fs-top">
+              <div>
+                <div class="fs-label">03 · Registration</div>
+                <div class="fs-sub">Conversion · Urgency · Social proof</div>
+              </div>
+              <div style="text-align:right">
+                <div class="fs-metric">43%</div>
+                <div class="fs-sub">Register as doubles in S8</div>
+              </div>
+            </div>
+            <div class="fs-channels">
+              <span class="fs-ch">Bring-a-friend discount</span>
+              <span class="fs-ch">Early bird offer</span>
+              <span class="fs-ch">Gym referral codes</span>
+              <span class="fs-ch">Retargeting ads</span>
+            </div>
+          </div>
+
+          <div class="fs-arrow">▼</div>
+
+          <div class="funnel-stage" style="background:#e8000d;padding-left:5.5rem;padding-right:5.5rem">
+            <div class="fs-top">
+              <div>
+                <div class="fs-label">04 · Race Day</div>
+                <div class="fs-sub">Experience · Brand · Community</div>
+              </div>
+              <div style="text-align:right">
+                <div class="fs-metric">4 cities</div>
+                <div class="fs-sub">AMS · RTD · MST · UTR</div>
+              </div>
+            </div>
+            <div class="fs-channels">
+              <span class="fs-ch">On-site activation</span>
+              <span class="fs-ch">Branded moments</span>
+              <span class="fs-ch">Social sharing</span>
+              <span class="fs-ch">Partner exposure</span>
+            </div>
+          </div>
+
+          <div class="fs-arrow">▼</div>
+
+          <div class="funnel-stage" style="background:#b5000a;padding-left:7rem;padding-right:7rem;border-radius:0 0 var(--radius) var(--radius)">
+            <div class="fs-top">
+              <div>
+                <div class="fs-label">05 · Retention</div>
+                <div class="fs-sub">Re-engagement · Loyalty · Growth</div>
+              </div>
+              <div style="text-align:right">
+                <div class="fs-metric">10.9%</div>
+                <div class="fs-sub">Return across seasons (Benelux)</div>
+              </div>
+            </div>
+            <div class="fs-channels">
+              <span class="fs-ch">Post-race result email</span>
+              <span class="fs-ch">Next event early access</span>
+              <span class="fs-ch">Division upgrade prompt</span>
+              <span class="fs-ch">Doubles invite</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Re-entry arrow -->
+        <div class="re-entry fade-up" style="margin-top:1rem">
+          <div class="re-entry-label">↩ Returning athlete re-entry point</div>
+          <p style="font-size:.8rem;color:var(--grey-700);line-height:1.6">After race day, returning athletes receive a personalised result email referencing their previous season finish time and suggesting a next goal. This re-enters them at the Interest stage with a warm, data-driven trigger rather than a cold awareness campaign. The 10.9% multi-season return rate is the current baseline. Personalised post-race flows are the lever to grow it.</p>
+        </div>
+      </div>
+
+      <!-- Legend / annotations -->
+      <div class="funnel-legend">
+
+        <div class="fl-item fade-up">
+          <div class="fl-item-head">
+            <div class="fl-dot" style="background:#1a1a2e"></div>
+            <h4>New athlete acquisition</h4>
+          </div>
+          <p>The top of the funnel is already performing. Field sizes grew 25 times in five seasons, largely driven by first-time participants entering at Awareness. The growth lever here is the quality of content and the social proof that comes from a growing doubles community sharing their experience.</p>
+        </div>
+
+        <div class="fl-item fade-up">
+          <div class="fl-item-head">
+            <div class="fl-dot" style="background:#e8000d"></div>
+            <h4>Registration conversion</h4>
+          </div>
+          <p>43% of the S8 field registered as doubles, meaning the bring-a-friend mechanic is already working organically. A structured discount programme for paired and group entries turns this organic behaviour into a measurable acquisition channel.</p>
+        </div>
+
+        <div class="fl-item fade-up">
+          <div class="fl-item-head">
+            <div class="fl-dot" style="background:#b5000a"></div>
+            <h4>Retention and re-engagement</h4>
+          </div>
+          <p>The largest growth opportunity in the funnel. 89.1% of Benelux athletes participated in only one season. A post-race personalised email flow, timed 48 to 72 hours after the finish, is the highest-ROI channel to move this number. Each percentage point recovered is thousands of additional registrations per season.</p>
+        </div>
+
+        <div class="fl-item fade-up" style="border-color:var(--red);background:rgba(232,0,13,.03)">
+          <div class="fl-item-head">
+            <div class="fl-dot" style="background:var(--red)"></div>
+            <h4>Data sources for this funnel</h4>
+          </div>
+          <p>Stage metrics are drawn from the Benelux race results dataset (S4 to S8, 52,647 participants, 46,069 unique named athletes). Channel and content recommendations reflect current digital marketing practice for sports events. Conversion rates between stages are indicative benchmarks where direct data is unavailable.</p>
+        </div>
+
       </div>
     </div>
   </div>

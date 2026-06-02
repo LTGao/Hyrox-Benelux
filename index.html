@@ -393,10 +393,23 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
 
 <!-- ── Section 2: Audience entry ─────────────────────────────────────── -->
 <div id="audience" class="photo-split">
-  <div class="photo-split-img audience-image"></div>
+  <div class="photo-split-img" style="
+      background-image:
+        linear-gradient(
+          to right,
+          var(--black) 0%,
+          rgba(13,13,13,.85) 20%,
+          rgba(13,13,13,.45) 40%,
+          rgba(13,13,13,0) 70%
+        ),
+        url('Athletes.jpg');
+      background-size:cover;
+      background-position:center;
+      min-height:500px;
+      order:2;
+  "></div>
 
   <div class="photo-split-content" style="background:var(--black);color:white;order:1">
-    <div class="label" style="color:rgba(255,224,0,.7);margin-bottom:1rem">
       02 · THE AUDIENCE
     </div>
 

@@ -1237,9 +1237,11 @@ document.getElementById('kpi2-local').textContent = D.kpis.local_pct + '%';
 (function(){
   const labels = D.participation.map(p=>p.event);
   const counts = D.participation.map(p=>p.participants);
+  // Shade by season so the 5 eras are readable without per-city rainbow
+  const seasonAlpha = {'4':'cc','5':'bb','6':'aa','7':'88','8':'e8000d'};
   const bgColors = D.participation.map(p=>{
-    const loc = p.location;
-    return {amsterdam:'#e8000d',rotterdam:'#2563eb',maastricht:'#16a34a',utrecht:'#d97706',heerenveen:'#7c3aed',gent:'#0891b2',mechelen:'#be185d'}[loc]||'#888';
+    const s = p.season;
+    return s==='8' ? '#e8000d' : s==='7' ? '#e8000daa' : s==='6' ? '#e8000d77' : s==='5' ? '#e8000d55' : '#e8000d33';
   });
   new Chart(document.getElementById('chart-participation'),{
     type:'bar',
@@ -1250,16 +1252,7 @@ document.getElementById('kpi2-local').textContent = D.kpis.local_pct + '%';
         xTicks:{maxRotation:35,minRotation:35,font:{size:10}},
         tooltip:{callbacks:{label:c=>`${c.raw.toLocaleString()} participants`}}
       }),
-      plugins:{
-        legend:{display:true,
-          labels:{generateLabels:()=>[
-            {text:'Amsterdam',fillStyle:'#e8000d',strokeStyle:'#e8000d'},
-            {text:'Rotterdam',fillStyle:'#2563eb',strokeStyle:'#2563eb'},
-            {text:'Maastricht',fillStyle:'#16a34a',strokeStyle:'#16a34a'},
-            {text:'Utrecht',fillStyle:'#d97706',strokeStyle:'#d97706'},
-          ]}
-        }
-      }
+      plugins:{ legend:{display:false} }
     }
   });
 })();

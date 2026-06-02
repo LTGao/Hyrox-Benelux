@@ -12,6 +12,9 @@
 :root{
   --black:#0d0d0d;
   --white:#ffffff;
+  --yellow:#F5C000;
+  --yellow-dark:#c99d00;
+  --yellow-light:#fff8d6;
   --red:#e8000d;
   --red-dark:#b5000a;
   --grey-100:#f5f5f5;
@@ -20,6 +23,7 @@
   --grey-700:#444;
   --male:#2563eb;
   --female:#db2777;
+  --accent:var(--yellow);
   --font-sans:'Inter',system-ui,-apple-system,sans-serif;
   --max-w:1280px;
   --radius:12px;
@@ -48,7 +52,7 @@ h3{font-size:1.1rem;font-weight:700}
 nav{position:sticky;top:0;z-index:100;background:var(--black);color:var(--white)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0;gap:1rem;flex-wrap:wrap}
 .nav-brand{display:flex;align-items:center;gap:.75rem}
-.nav-logo{width:36px;height:36px;background:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:center}
+.nav-logo{width:36px;height:36px;background:var(--yellow);border-radius:6px;display:flex;align-items:center;justify-content:center}
 .nav-logo svg{width:22px;height:22px;fill:white}
 .nav-title{font-weight:700;font-size:.95rem;line-height:1.2}
 .nav-title span{display:block;color:var(--grey-500);font-weight:400;font-size:.75rem}
@@ -62,9 +66,9 @@ nav{position:sticky;top:0;z-index:100;background:var(--black);color:var(--white)
 .hero .container{position:relative;z-index:1;width:100%}
 .hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
 @media(max-width:700px){.hero-inner{grid-template-columns:1fr}}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(232,0,13,.2);color:#ff4d57;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .8rem;border-radius:999px;margin-bottom:1.25rem;border:1px solid rgba(232,0,13,.4)}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(245,192,0,.2);color:var(--yellow);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .8rem;border-radius:999px;margin-bottom:1.25rem;border:1px solid rgba(245,192,0,.4)}
 .hero h1{font-size:clamp(2rem,4.5vw,3.75rem);font-weight:900;line-height:1.08;letter-spacing:-0.03em;color:white}
-.hero h1 em{font-style:normal;color:var(--red)}
+.hero h1 em{font-style:normal;color:var(--yellow)}
 .hero p{color:rgba(255,255,255,.65);font-size:1.05rem;margin-top:1.25rem;max-width:42ch;line-height:1.75}
 .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 .hero-stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);padding:1.25rem;backdrop-filter:blur(8px)}
@@ -99,9 +103,9 @@ section:nth-child(odd) .card{background:var(--grey-100);border-color:var(--grey-
 .chart-wrap-tall{position:relative;height:340px}
 
 /* ── Insight banner ──────────────────────────────────────────── */
-.insight{display:flex;gap:1rem;background:rgba(232,0,13,.05);border:1px solid rgba(232,0,13,.2);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-top:1.5rem}
+.insight{display:flex;gap:1rem;background:rgba(232,0,13,.05);border:1px solid rgba(245,192,0,.2);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-top:1.5rem}
 .insight-icon{font-size:1.5rem;flex-shrink:0;margin-top:.1rem}
-.insight strong{display:block;font-size:.9rem;color:var(--red-dark);margin-bottom:.25rem}
+.insight strong{display:block;font-size:.9rem;color:var(--yellow-dark);margin-bottom:.25rem}
 .insight p{font-size:.85rem;color:var(--grey-700);line-height:1.6}
 
 /* ── KPI row ─────────────────────────────────────────────────── */
@@ -288,9 +292,8 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
       </div>
       <div class="nav-links">
         <a href="#growth">The Market</a>
-        <a href="#audience">Audience</a>
+        <a href="audience.html">Audience</a>
         <a href="#funnel">Funnel</a>
-        <a href="#email">Email</a>
         <a href="#opportunity">Retention</a>
         <a href="#community">Community</a>
       </div>
@@ -386,89 +389,36 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
   </div>
 </section>
 
-<!-- ── Section 2: Audience ───────────────────────────────────────────── -->
-<section id="audience">
-  <div class="container">
-    <div class="section-header">
-      <div class="label">02 · The Audience</div>
-      <h2>Who is the HYROX Benelux athlete?</h2>
-      <p>Demographics, nationality, fitness level and behaviour in one profile. Understanding who is in the field is the foundation for every targeting, content, and partnership decision that follows.</p>
-    </div>
-
-    <!-- Gender -->
-    <div class="grid-2" style="margin-bottom:1.5rem">
-      <div class="card fade-up">
-        <div class="card-title">Gender Split by Season</div>
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background:var(--male)"></div>Male</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--female)"></div>Female</div>
-        </div>
-        <div class="chart-wrap"><canvas id="chart-gender"></canvas></div>
+<!-- ── Section 2: Audience entry ─────────────────────────────────────── -->
+<div id="audience" class="photo-split">
+  <div class="photo-split-img" style="background-image:url('Athletes.jpg');min-height:500px;order:2"></div>
+  <div class="photo-split-content" style="background:var(--black);color:white;order:1">
+    <div class="label" style="color:rgba(255,192,0,.6);margin-bottom:.75rem">02 · The Audience</div>
+    <h2 style="color:white">147 nationalities.<br>One shared obsession.</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0">
+      <div>
+        <div style="font-size:1.75rem;font-weight:800;color:var(--yellow);line-height:1">81%</div>
+        <div style="font-size:.75rem;color:rgba(255,255,255,.5);margin-top:.2rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase">Local (NL/BE/LU)</div>
       </div>
-      <div class="card fade-up">
-        <div class="card-title">Age Group Distribution (All Genders)</div>
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background:var(--male)"></div>Male</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--female)"></div>Female</div>
-        </div>
-        <div class="chart-wrap"><canvas id="chart-age"></canvas></div>
+      <div>
+        <div style="font-size:1.75rem;font-weight:800;color:var(--yellow);line-height:1">38%</div>
+        <div style="font-size:.75rem;color:rgba(255,255,255,.5);margin-top:.2rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase">Female &amp; growing</div>
+      </div>
+      <div>
+        <div style="font-size:1.75rem;font-weight:800;color:var(--yellow);line-height:1">30–44</div>
+        <div style="font-size:.75rem;color:rgba(255,255,255,.5);margin-top:.2rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase">Core age group</div>
+      </div>
+      <div>
+        <div style="font-size:1.75rem;font-weight:800;color:var(--yellow);line-height:1">147</div>
+        <div style="font-size:.75rem;color:rgba(255,255,255,.5);margin-top:.2rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase">Nationalities</div>
       </div>
     </div>
-
-    <!-- Nationality with tabs -->
-    <div class="card fade-up" style="margin-bottom:1.5rem">
-      <div class="card-title">Top 15 Nationalities: Benelux Events</div>
-      <div class="tab-bar">
-        <button class="tab-btn active" onclick="switchNatTab('all',this)">All Seasons</button>
-        <button class="tab-btn" onclick="switchNatTab('S4',this)">S4</button>
-        <button class="tab-btn" onclick="switchNatTab('S5',this)">S5</button>
-        <button class="tab-btn" onclick="switchNatTab('S6',this)">S6</button>
-        <button class="tab-btn" onclick="switchNatTab('S7',this)">S7</button>
-        <button class="tab-btn" onclick="switchNatTab('S8',this)">S8</button>
-      </div>
-      <div class="chart-wrap-tall"><canvas id="chart-nationality"></canvas></div>
-    </div>
-
-    <!-- Finish time — athletic profile -->
-    <div class="card fade-up" style="margin-bottom:1.5rem">
-      <div class="card-title">What level are they at? Finish Time Distribution: Open Division</div>
-      <div class="tab-bar">
-        <button class="tab-btn active" onclick="switchHistTab('both',this)">Both</button>
-        <button class="tab-btn" onclick="switchHistTab('male',this)">Male</button>
-        <button class="tab-btn" onclick="switchHistTab('female',this)">Female</button>
-      </div>
-      <div class="legend" style="margin-top:.5rem">
-        <div class="legend-item"><div class="legend-dot" style="background:var(--male)"></div>Male</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--female)"></div>Female</div>
-      </div>
-      <div class="chart-wrap-tall"><canvas id="chart-histogram"></canvas></div>
-    </div>
-
-    <div class="grid-2">
-      <div class="insight fade-up">
-        <div class="insight-icon">⏱️</div>
-        <div>
-          <strong>Insight: The Achiever Middle</strong>
-          <p>The largest share of open-division athletes finish between 75 and 100 minutes (male) and 85 and 115 minutes (female). This is not the elite podium — it is the motivated recreational majority. Brands and campaigns that speak to improvement and personal achievement resonate most with this group.</p>
-        </div>
-      </div>
-      <div class="insight fade-up">
-        <div class="insight-icon">🎯</div>
-        <div>
-          <strong>Insight: The 30–44 Core</strong>
-          <p>The 30–44 age band consistently dominates participation. This is prime career age, high disposable income, strong fitness identity. This demographic responds to premium race-day experience, travel packages, and recovery/nutrition brands.</p>
-        </div>
-      </div>
-      <div class="insight fade-up">
-        <div class="insight-icon">🌍</div>
-        <div>
-          <strong>Insight: A Local Community with an International Layer</strong>
-          <p>Around 81% of Benelux HYROX athletes are Dutch, Belgian, or Luxembourgish. This is a locally-rooted community event. The remaining 19% are international athletes led by Germany, UK, and France, adding a cross-border layer on top of a strong domestic base.</p>
-        </div>
-      </div>
-    </div>
+    <p style="color:rgba(255,255,255,.55);font-size:.9rem;line-height:1.7">Behind every data point is a real person. Explore the full demographic breakdown, nationality split, age profile, and athletic level of the HYROX Benelux community.</p>
+    <a href="audience.html" style="display:inline-flex;align-items:center;gap:.6rem;margin-top:1.75rem;background:var(--yellow);color:var(--black);padding:.8rem 1.75rem;border-radius:999px;font-weight:800;font-size:.9rem;text-decoration:none;transition:background .15s">
+      Explore Audience Profile →
+    </a>
   </div>
-</section>
+</div>
 
 <!-- ── Section 3b: The Funnel ────────────────────────────────────────── -->
 <section id="funnel">
@@ -631,218 +581,6 @@ footer a{color:var(--grey-500)}footer a:hover{color:white}
             <h4>Data sources for this funnel</h4>
           </div>
           <p>Stage metrics are drawn from the Benelux race results dataset (S4 to S8, 74,645 participants across 17 events and 7 cities, 61,661 unique named athletes). Channel and content recommendations reflect current digital marketing practice for sports events. Conversion rates between stages are indicative benchmarks where direct data is unavailable.</p>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Section 4b: Email Automation ─────────────────────────────────── -->
-<section id="email">
-  <div class="container">
-    <div class="section-header">
-      <div class="label">05 · Email Automation Flows</div>
-      <h2>The right message, to the right athlete, at the right moment</h2>
-      <p>Two automated flows cover the full athlete journey. The post-race flow capitalises on peak motivation in the days after finishing. The pre-event flow builds anticipation and reduces no-shows in the weeks before race day.</p>
-    </div>
-
-    <div class="flow-tabs">
-      <button class="flow-tab active" onclick="switchFlow('post',this)">Post-Race Flow</button>
-      <button class="flow-tab" onclick="switchFlow('pre',this)">Pre-Event Flow</button>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 340px;gap:2rem;align-items:start">
-
-      <!-- Flow diagram -->
-      <div>
-
-        <!-- POST-RACE FLOW -->
-        <div id="flow-post" class="flow active">
-
-          <div class="flow-trigger fade-up">
-            <span class="flow-trigger-icon">⚡</span>
-            <div><strong>Trigger:</strong> Athlete crosses the finish line — result registered in race timing system</div>
-          </div>
-
-          <div class="flow-step">
-            <div class="flow-line"></div>
-            <div class="flow-dot-wrap">
-              <div class="flow-dot" style="color:#e8000d">1h</div>
-              <div class="flow-day">same day</div>
-            </div>
-            <div class="flow-card fade-up">
-              <div class="flow-card-head">
-                <div class="flow-subject">Your official result is in 🏁</div>
-                <div class="flow-segment" style="background:#fef2f2;color:#b91c1c">All finishers</div>
-              </div>
-              <div class="flow-body">Personal finish time, split breakdown, city ranking, and a shareable finish card. No call to action — just celebration. This is the email athletes forward to friends and post in WhatsApp groups.</div>
-              <div class="flow-goal">Goal: <span>Deliver value, generate organic sharing</span></div>
-            </div>
-          </div>
-
-          <div class="flow-step">
-            <div class="flow-line"></div>
-            <div class="flow-dot-wrap">
-              <div class="flow-dot" style="color:#e8000d">D+2</div>
-              <div class="flow-day">day 2</div>
-            </div>
-            <div class="flow-card fade-up">
-              <div class="flow-card-head">
-                <div class="flow-subject">You finished in [time]. Here is what it means.</div>
-                <div class="flow-segment" style="background:#fef2f2;color:#b91c1c">All finishers</div>
-              </div>
-              <div class="flow-body">Contextualises the result: where the athlete sits in their age group and gender ranking, which stations took the most time, and a personalised next goal (e.g. "Athletes with your profile typically improve 8–12 minutes on their second race"). Segmented by finish time bucket — sub-80 min athletes see different content than 90–110 min athletes.</div>
-              <div class="flow-goal">Goal: <span>Create personal relevance, set up the next registration</span></div>
-            </div>
-          </div>
-
-          <div class="flow-step">
-            <div class="flow-line"></div>
-            <div class="flow-dot-wrap">
-              <div class="flow-dot" style="color:#d97706">D+5</div>
-              <div class="flow-day">day 5</div>
-            </div>
-            <div class="flow-card fade-up">
-              <div class="flow-card-head">
-                <div class="flow-subject">Bring a friend — race together next season</div>
-                <div class="flow-segment" style="background:#fef9c3;color:#92400e">Open solo finishers</div>
-              </div>
-              <div class="flow-body">Introduces the doubles format to solo finishers with a limited-time paired entry discount. Includes athlete testimonials from doubles participants and a simple "invite your training partner" CTA. Only sent to athletes who registered solo — doubles finishers skip this step.</div>
-              <div class="flow-goal">Goal: <span>Convert solo finishers to doubles, grow field size by 2x per conversion</span></div>
-            </div>
-          </div>
-
-          <div class="flow-step">
-            <div class="flow-line"></div>
-            <div class="flow-dot-wrap">
-              <div class="flow-dot" style="color:#2563eb">D+14</div>
-              <div class="flow-day">day 14</div>
-            </div>
-            <div class="flow-card fade-up">
-              <div class="flow-card-head">
-                <div class="flow-subject">Your 12-week plan to beat [time]</div>
-                <div class="flow-segment" style="background:#dbeafe;color:#1e40af">All finishers</div>
-              </div>
-              <div class="flow-body">Training content matched to the athlete's finish time and weakest stations from their split data. Sub-80 min athletes receive pro division information. 90–110 min athletes receive an 8-station weakness guide. First-timers receive a "your first training block" starter plan. Soft CTA: next event date and early-bird window.</div>
-              <div class="flow-goal">Goal: <span>Build habit, maintain engagement, warm toward next registration</span></div>
-            </div>
-          </div>
-
-          <div class="flow-step">
-            <div class="flow-dot-wrap">
-              <div class="flow-dot" style="color:#16a34a">D+30</div>
-              <div class="flow-day">day 30</div>
-            </div>
-            <div class="flow-card fade-up">
-              <div class="flow-card-head">
-                <div class="flow-subject">Early bird closes in 48 hours — [next city] is filling up</div>
-                <div class="flow-segment" style="background:#dcfce7;color:#166534">Not yet registered</div>
-              </div>
-              <div class="flow-body">Final urgency email sent only to athletes who have not yet registered for the next event. References their personal result, shows remaining spots, and applies scarcity framing. Athletes who already re-registered receive a loyalty thank-you email instead — acknowledging their return before the broader field does.</div>
-              <div class="flow-goal">Goal: <span>Close registration, reward loyalty, reduce churn</span></div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- PRE-EVENT FLOW -->
-        <div id="flow-pre" class="flow">
-
-          <div class="flow-trigger fade-up">
-            <span class="flow-trigger-icon">📋</span>
-            <div><strong>Trigger:</strong> Athlete completes registration for an upcoming Benelux event</div>
-          </div>
-
-          <div class="flow-step">
-            <div class="flow-line"></div>
-            <div class="flow-dot-wrap">
-              <div class="flow-dot" style="color:#2563eb">W-8</div>
-              <div class="flow-day">8 weeks out</div>
-            </div>
-            <div class="flow-card fade-up">
-              <div class="flow-card-head">
-                <div class="flow-subject">You are registered — your 8-week countdown starts now</div>
-                <div class="flow-segment" style="background:#dbeafe;color:#1e40af">All registrants</div>
-              </div>
-              <div class="flow-body">Welcome email with event details, what to expect, and an 8-week training overview. For returning athletes, references their previous result: "Last time you finished in [time] — here is your 8-week plan to improve." First-timers receive a beginner-friendly format breakdown with station explainers.</div>
-              <div class="flow-goal">Goal: <span>Set expectations, personalise for returners vs first-timers</span></div>
-            </div>
-          </div>
-
-          <div class="flow-step">
-            <div class="flow-line"></div>
-            <div class="flow-dot-wrap">
-              <div class="flow-dot" style="color:#2563eb">W-4</div>
-              <div class="flow-day">4 weeks out</div>
-            </div>
-            <div class="flow-card fade-up">
-              <div class="flow-card-head">
-                <div class="flow-subject">4 weeks out — the stations that decide your finish time</div>
-                <div class="flow-segment" style="background:#dbeafe;color:#1e40af">All registrants</div>
-              </div>
-              <div class="flow-body">Station-specific training focus matched to the athlete's profile. For returners, highlights their slowest station from the previous race. For first-timers, covers the two most time-consuming stations on average in the Benelux data (Ski Erg and Sled Push based on split analysis). Includes a city-specific logistics preview.</div>
-              <div class="flow-goal">Goal: <span>Increase preparation quality, reduce race-day anxiety</span></div>
-            </div>
-          </div>
-
-          <div class="flow-step">
-            <div class="flow-line"></div>
-            <div class="flow-dot-wrap">
-              <div class="flow-dot" style="color:#d97706">W-1</div>
-              <div class="flow-day">1 week out</div>
-            </div>
-            <div class="flow-card fade-up">
-              <div class="flow-card-head">
-                <div class="flow-subject">One week to go — everything you need for [city]</div>
-                <div class="flow-segment" style="background:#fef9c3;color:#92400e">All registrants</div>
-              </div>
-              <div class="flow-body">City-specific logistics: venue address, check-in times, gear requirements, parking and transport. For doubles athletes, includes partner coordination tips. Reduces support requests and no-shows. This email has the highest open rate of the pre-event sequence because athletes are actively looking for it.</div>
-              <div class="flow-goal">Goal: <span>Reduce no-shows, cut support volume, create a smooth race-day experience</span></div>
-            </div>
-          </div>
-
-          <div class="flow-step">
-            <div class="flow-dot-wrap">
-              <div class="flow-dot" style="color:#e8000d">D-1</div>
-              <div class="flow-day">day before</div>
-            </div>
-            <div class="flow-card fade-up">
-              <div class="flow-card-head">
-                <div class="flow-subject">Tomorrow is race day. You are ready.</div>
-                <div class="flow-segment" style="background:#fef2f2;color:#b91c1c">All registrants</div>
-              </div>
-              <div class="flow-body">Short motivational email with a final checklist, start wave time, and a reminder to share their race on social media using the event hashtag. For doubles athletes, includes a shared checklist for both partners. Minimal text, high energy. This email is designed to be read on a phone the evening before.</div>
-              <div class="flow-goal">Goal: <span>Build excitement, maximise social sharing, reduce drop-outs</span></div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- Sidebar notes -->
-      <div style="display:flex;flex-direction:column;gap:1.25rem">
-
-        <div class="card fade-up">
-          <div class="card-title">Segmentation logic</div>
-          <p style="font-size:.82rem;color:var(--grey-700);line-height:1.65;margin-bottom:.75rem">Each email in both flows is segmented by at least one variable from the race data. Sending the same message to all 52,000+ finishers wastes the data advantage. The segments that matter most:</p>
-          <div style="display:flex;flex-direction:column;gap:.5rem">
-            <div style="display:flex;gap:.6rem;align-items:center;font-size:.78rem"><div style="width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0"></div><div><strong>First-timer vs returner</strong> — fundamentally different message</div></div>
-            <div style="display:flex;gap:.6rem;align-items:center;font-size:.78rem"><div style="width:8px;height:8px;border-radius:50%;background:#2563eb;flex-shrink:0"></div><div><strong>Finish time bucket</strong> — sub-80 / 80–100 / 100+ min</div></div>
-            <div style="display:flex;gap:.6rem;align-items:center;font-size:.78rem"><div style="width:8px;height:8px;border-radius:50%;background:#16a34a;flex-shrink:0"></div><div><strong>Division</strong> — solo open vs doubles vs pro</div></div>
-            <div style="display:flex;gap:.6rem;align-items:center;font-size:.78rem"><div style="width:8px;height:8px;border-radius:50%;background:#d97706;flex-shrink:0"></div><div><strong>City</strong> — location-specific logistics and partners</div></div>
-          </div>
-        </div>
-
-        <div class="card fade-up">
-          <div class="card-title">Key timing principles</div>
-          <p style="font-size:.82rem;color:var(--grey-700);line-height:1.65">The post-race D+2 email is the most important send in the entire flow. Motivation to re-register peaks 24 to 72 hours after finishing and drops sharply after one week. Most race re-registrations happen within the first 10 days post-finish or not at all.</p>
-        </div>
-
-        <div class="card fade-up">
-          <div class="card-title">What this requires</div>
-          <p style="font-size:.82rem;color:var(--grey-700);line-height:1.65">Both flows assume race timing data (finish time, splits, city) is passed into the email platform on race day. With that data connected, all personalisation is automated. The flows described here can be built in any major ESP: Klaviyo, Braze, Mailchimp, or ActiveCampaign.</p>
         </div>
 
       </div>
@@ -1271,7 +1009,7 @@ const D = DASHBOARD_DATA;
 const MALE_COLOR = '#2563eb';
 const FEMALE_COLOR = '#db2777';
 const RED = '#e8000d';
-const palette = ['#e8000d','#2563eb','#16a34a','#d97706','#7c3aed','#0891b2','#be185d','#65a30d','#9333ea','#0369a1','#b45309','#047857','#6d28d9','#0e7490','#c2410c'];
+const palette = ['#F5C000','#2563eb','#16a34a','#d97706','#7c3aed','#0891b2','#be185d','#65a30d','#9333ea','#0369a1','#b45309','#047857','#6d28d9','#0e7490','#c2410c'];
 
 function fmtNum(n){return n>=1000?(n/1000).toFixed(1).replace(/\.0$/,'')+'k':n}
 function minToHM(m){const h=Math.floor(m/60),mn=Math.round(m%60);return h>0?`${h}h ${mn}m`:`${mn}m`}
@@ -1310,7 +1048,7 @@ document.getElementById('kpi2-local').textContent = D.kpis.local_pct + '%';
   const seasonAlpha = {'4':'cc','5':'bb','6':'aa','7':'88','8':'e8000d'};
   const bgColors = D.participation.map(p=>{
     const s = p.season;
-    return s==='8' ? '#e8000d' : s==='7' ? '#e8000daa' : s==='6' ? '#e8000d77' : s==='5' ? '#e8000d55' : '#e8000d33';
+    return s==='8' ? '#F5C000' : s==='7' ? '#F5C000bb' : s==='6' ? '#F5C00088' : s==='5' ? '#F5C00055' : '#F5C00033';
   });
   new Chart(document.getElementById('chart-participation'),{
     type:'bar',

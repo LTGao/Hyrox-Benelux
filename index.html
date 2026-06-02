@@ -98,9 +98,9 @@ nav{position:sticky;top:0;z-index:100;background:var(--black);color:var(--white)
 .photo-hero.right .photo-hero-bg{background-position:right center}
 .photo-hero.left .photo-hero-bg{background-position:left center}
 .photo-hero-overlay{position:absolute;inset:0;z-index:1}
-.photo-hero.right .photo-hero-overlay{background:linear-gradient(to right,#0d0d0d 0%,#0d0d0d 32%,rgba(13,13,13,.65) 55%,rgba(13,13,13,0) 100%)}
-.photo-hero.left .photo-hero-overlay{background:linear-gradient(to left,#0d0d0d 0%,#0d0d0d 32%,rgba(13,13,13,.65) 55%,rgba(13,13,13,0) 100%)}
-.photo-hero-content{position:relative;z-index:2;width:52%;padding:clamp(2.5rem,6vw,5rem);color:white}
+.photo-hero.right .photo-hero-overlay{background:linear-gradient(to right,#0d0d0d 0%,#0d0d0d 44%,rgba(13,13,13,.55) 58%,rgba(13,13,13,0) 78%)}
+.photo-hero.left .photo-hero-overlay{background:linear-gradient(to left,#0d0d0d 0%,#0d0d0d 44%,rgba(13,13,13,.55) 58%,rgba(13,13,13,0) 78%)}
+.photo-hero-content{position:relative;z-index:2;width:42%;padding:clamp(2.5rem,5vw,4.5rem);color:white}
 .photo-hero.left .photo-hero-content{margin-left:auto}
 @media(max-width:700px){.photo-hero-content{width:100%}.photo-hero.right .photo-hero-overlay{background:linear-gradient(to bottom,#0d0d0d 0%,rgba(13,13,13,.85) 60%,rgba(13,13,13,.7) 100%)}.photo-hero.left .photo-hero-overlay{background:linear-gradient(to bottom,#0d0d0d 0%,rgba(13,13,13,.85) 60%,rgba(13,13,13,.7) 100%)}}
 .photo-split-content h2{font-size:clamp(1.5rem,3vw,2.25rem);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin-bottom:1rem}
@@ -266,7 +266,8 @@ section:nth-child(odd) .card{background:var(--grey-100);border-color:var(--grey-
 .ccamp{border-radius:0;padding:1.5rem;cursor:pointer;transition:transform .2s,box-shadow .2s;border:2px solid transparent}
 .ccamp:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.12)}
 .ccamp.acquisition{background:var(--black);color:white;border-color:var(--black)}
-.ccamp.retention{background:var(--red);color:white;border-color:var(--red)}
+.ccamp.acquisition .ccamp-label{color:var(--yellow);opacity:1}
+.ccamp.retention{background:var(--yellow);color:var(--black);border-color:var(--yellow)}
 .ccamp-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.6;margin-bottom:.5rem}
 .ccamp h3{font-size:1.1rem;font-weight:800;margin-bottom:.6rem}
 .ccamp p{font-size:.83rem;opacity:.8;line-height:1.6}

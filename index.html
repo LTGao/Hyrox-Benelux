@@ -907,7 +907,8 @@ function pickSlot(el, scope){
   el.classList.add('active');
   pickedSlot[scope] = el.textContent.trim();
 }
-function submitBooking(e, scope){
+const WEB3FORMS_KEY = 'e4dcfd0b-d206-413b-b64f-47ed7afe8230';
+async function submitBooking(e, scope){
   e.preventDefault();
   const name = document.getElementById(scope+'-name').value.trim();
   const email = document.getElementById(scope+'-email').value.trim();
@@ -915,13 +916,42 @@ function submitBooking(e, scope){
   const time = pickedSlot[scope];
   const msg = document.getElementById(scope+'-msg').value.trim();
   if (!time){ alert('Please pick a preferred time slot.'); return false; }
-  const subject = `Demo / interview request — ${name}`;
-  const body =
-    `Hi LT,\n\nI'd like to book a time to talk about the HYROX Benelux analysis.\n\n` +
-    `Name: ${name}\nEmail: ${email}\nPreferred date: ${date}\nPreferred time: ${time}\n\n` +
-    (msg ? `Message:\n${msg}\n\n` : '') +
-    `Sent from the HYROX Benelux report.`;
-  window.location.href = `mailto:gaoleiting@hotmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  const form = e.target;
+  const btn = form.querySelector('.book-submit');
+  const original = btn.textContent;
+  btn.textContent = 'Sending…'; btn.disabled = true;
+
+  const payload = {
+    access_key: WEB3FORMS_KEY,
+    subject: `Demo / interview request — ${name}`,
+    from_name: 'HYROX Benelux Report',
+    name, email,
+    "Preferred date": date,
+    "Preferred time": time,
+    message: msg || '(no message)',
+  };
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (data.success){
+      form.innerHTML = `<div style="text-align:center;padding:1.5rem 0">
+        <div style="font-size:2.5rem;margin-bottom:.75rem">✅</div>
+        <div style="font-family:var(--font-heading);text-transform:uppercase;font-size:1.3rem;font-weight:700;margin-bottom:.5rem">Request sent</div>
+        <p style="opacity:.7;font-size:.9rem;line-height:1.6">Thanks ${name}. Your request for ${date} at ${time} is in. I'll confirm by email shortly.</p>
+      </div>`;
+    } else {
+      throw new Error(data.message || 'Submission failed');
+    }
+  } catch(err){
+    btn.textContent = original; btn.disabled = false;
+    alert('Something went wrong sending your request. Please email gaoleiting@hotmail.com directly.');
+  }
   return false;
 }
 // Prevent past dates
